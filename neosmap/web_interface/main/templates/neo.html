@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>NEO {{ desig }}</title>
+        <script src="static/js/neo.js"></script>
+        <script src="static/js/serverDate.js"></script>
+        <script src="static/js/main.js"></script>
+        <link rel="stylesheet" href="static/css/main.css">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <meta charset="UTF-8">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="designation" content={{ desig }}>
+    </head>
+    <body>
+        <!-- <img id="background" src="/static/img/background.jpg" alt="" onload="document.getElementById('background').style.opacity='1'"> -->
+        <div class="header">
+            <a href="/data" class="logo">NEOSMAP Web Interface</a>
+            <div class="header-right">
+                <a href="/data">Data Panel</a>
+                <a href="/info">Info</a>
+            </div>
+        </div>
+        <noscript>
+            <style type="text/css">
+                .main-container {display:none;}
+            </style>
+            <div class="no-js-container">
+                <p>
+                    You don't have javascript enabled.  Please enable javascript and reload the page.
+                </p>
+            </div>
+        </noscript>
+        <div class="main-container" style="align-items: stretch;">
+            {% include "includes/scripting-popup.html" %}
+            <div id="side-menu" class="side-menu">
+                <h3 class="nav-title">
+                    Navigation
+                </h3>
+                <div class="wait-for-eph container-col">
+                    <button class="tablinks" onclick="openContent(event,overview)" id="default-open">Overview</button>
+                    <button class="tablinks" onclick="openContent(event,ephemerides)">Ephemerides</button>
+                </div>
+                <h3 class="side-title">
+                    Clock [UTC]
+                </h3>
+                <p id="clock"></p>
+            </div>
+            <div id="overview" class="tabcontent container-col" style="margin-right: 30px;">
+                <div class="container-row" style="margin: 10px 0 10px 30px; flex-grow: 1; align-content: stretch; border-bottom: 2px whitesmoke solid;">
+                    <div class="container-col" style="align-self: flex-start;">
+                        <p class="title-header">
+                            Overview for NEO <a class="desig-title">{{ desig }}</a>
+                        </p>
+                    </div>
+                    <!-- <div class="container-row wait-for-eph" style="justify-content: flex-end; align-self: center; flex-grow: 1;">
+                        <button type="button" class="main-data-button animate drop-in" onclick="openPopup()" id="script">Generate Script</button>
+                    </div> -->
+                </div>
+                <div id="eph-loader" class="container-col" style="background-color: rgba(85, 85, 85, 0.6); padding: 15px; border-radius: 10px; margin-top: 20vh;">
+                    <div class="loader" style="align-self: center;">
+                    </div>
+                    <p style="align-self: center; color: whitesmoke !important; margin-bottom: 3px;">
+                        Fetching data...
+                    </p>
+                    <p style="align-self: center; color: whitesmoke !important; margin-top: 3px;">
+                        This may take a few seconds.
+                    </p>
+                </div>
+                <div class="container-row wait-for-eph" id="eph-content">
+                    <div class="container-col neo-left-col">
+                        <div class="container-row dashboard-item" id="gauge-row">
+                            {% for col in score_cols %}
+                            <div class="container-col gauge" id={{"gauge-"~col}}>
+                                {% set gauge_title = col.split('Score')[0] %}
+                                <p class="panel-section-title gauge-title">
+                                    {% if gauge_title in ['neo', 'pha', 'ieo'] %}
+                                        {{ gauge_title|upper }} Score
+                                    {% else %}
+                                        {{ gauge_title|capitalize }} Score
+                                    {% endif %}
+                                </p>
+                                <p class="gauge-value">
+                                    {% if data[col][0] %}
+                                        {{ '%d' % data[col][0]|int }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div id="overview-box" class="container-row dashboard-item">
+                            <div class="container-row" style="flex-wrap: wrap; align-items: center; justify-content: center; width: 100%;">
+                                <div id="vis-data" class="container-col">
+                                    <h3 class="panel-section-title">
+                                        Visibility (Median Orbit)
+                                    </h3>
+                                    {% if data["vis"][0] %}
+                                        <div class="vis-status-box">
+                                            <p>
+                                                Currently Visible
+                                            </p>
+                                        </div>
+                                    {% else %}
+                                        <div class="vis-status-box neo-invisible">
+                                            <p>
+                                                Not Currently Visible
+                                            </p>
+                                        </div>
+                                    {% endif %}
+                                    <h3 class="panel-section-title">
+                                        Median Orbit Data
+                                    </h3>
+                                    <table id="vis-table">
+                                    </table>
+                                </div>
+                                <div id="radec-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-col dashboard-item" id="plot-col"></div>
+                </div>
+            </div>
+            <div id="ephemerides" class="tabcontent container-col">
+                <div class="title-header-box" style="border-bottom: 2px solid whitesmoke; margin: 0 30px;">
+                    <p class="title-header" style="padding-bottom: 0; color: whitesmoke !important;">
+                        Raw Ephemerides for NEO <a class="desig-title">{{ desig }}</a>
+                    </p>
+                </div>
+                <div class="container-col" style="padding: 20px; flex-grow: 5;">
+                    <div id="eph-table">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    {% include "includes/footer.html" %}
+</html>

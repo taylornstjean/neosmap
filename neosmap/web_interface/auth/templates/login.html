@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>  
+        <title>Login</title>
+        <link rel="stylesheet" href="/static/css/main.css">
+        <link rel="shortcut icon" href="/favicon.ico">
+    </head>
+    <body>
+        <div class="header">
+            <a href="/data" class="logo">NEOSMAP Web Interface</a>
+        </div>
+        <div class="main-container-no-left">
+            <div class="login-box container-col">
+                <h3 style="color: white !important; margin-top: 5px; text-align: center; font-size: 2em;">
+                    Login
+                </h3>
+                <form method="POST" action="/auth/login">
+                    <div class="container-col">
+                        {{ form.csrf_token }}
+                        <div class="input-section container-col">
+                            {{ form.email.label(class_="login-label", style_="padding-bottom: 5px;") }}
+                            {{ form.email(class_="login-input") }}
+                        </div>
+                        <div class="input-section container-col">
+                            {{ form.password.label(class_="login-label", style_="padding-bottom: 5px;") }}
+                            {{ form.password(class_="login-input") }}
+                        </div>
+                        <div class="input-section container-row">
+                            {{ form.remember(class_="login-check-box") }}
+                            {{ form.remember.label(class_="login-label check-box-label") }}
+                        </div>
+                        <div style="width: 100%; margin: 10px 0;">
+                            {% for field, errors in form.errors.items() %}
+                            <div class="alert alert-error">
+                                {{ ', '.join(errors) }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {{ form.submit(class_="form-submit-button") }}
+                        <div style="width: 100%;">
+                            <p style="margin: 10px 0 10px 0; color: white !important; text-align: center;">
+                                New? <a class="register-link" href="/auth/register">Register here.</a>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+    {% include "includes/footer.html" %}
+</html>

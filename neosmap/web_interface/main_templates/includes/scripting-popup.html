@@ -1,0 +1,85 @@
+<div id="script-popup">
+    <div class="popup-content">
+        <div class="popup-top">
+            <p class="popup-title">
+                Generate Script
+            </p>
+        </div>
+        <div class="popup-body">
+            <h4 class="popup-section-title">
+                Image Options (applies to each individual image)
+            </h4>
+            <table>
+                <tr>
+                    <td style="width: 50%;">
+                        <label for="script-filter-selector" class="script-options-label">Filter:</label>
+                    </td>
+                    <td style="width: 50%;">
+                        <select name="script-filter-selector" id="script-filter-selector">
+                            <option value="bg40" selected>BG40</option>
+                            <option value="r">R</option>
+                            <option value="v">V</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="script-binning" class="script-options-label">Binning:</label>
+                    </td>
+                    <td>
+                        <input type="number" id="script-binning" value="2">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="script-interval" class="script-options-label">Exposure Time [s]:</label>
+                    </td>
+                    <td>
+                        <input type="number" id="script-interval" value="60">
+                    </td>
+                </tr>
+            </table>
+            <h4 class="popup-section-title">
+                Script Options
+            </h4>
+            <table>
+                <tr>
+                    <td style="width: 50%;">
+                        <label for="script-imaging-interval" class="script-options-label">Imaging Interval [s]:</label>
+                    </td>
+                    <td style="width: 50%;">
+                        <input type="number" id="script-imaging-interval" value="900">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="script-image-count" class="script-options-label">Image Count:</label>
+                    </td>
+                    <td>
+                        <input type="number" id="script-image-count" value="3">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="script-start-time" class="script-options-label">Observation Start Time [UTC]:</label>
+                    </td>
+                    <td>
+                        <input type="datetime-local" id="script-start-time">
+                    </td>
+                </tr>
+            </table>
+            <p>
+                (Leave start time field blank to schedule for 15 minutes from the current time)
+            </p>
+            <p id="popup-alert-box"></p>
+        </div>
+        <div class="popup-bottom">
+            <button class="popup-button" id="popup-confirm" onclick="generateScript()">
+                Confirm
+            </button>
+            <button class="popup-button close" id="popup-cancel" onclick="closePopup()">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>

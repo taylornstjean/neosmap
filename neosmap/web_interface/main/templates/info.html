@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Info</title>
+        <link rel="stylesheet" href="static/css/main.css">
+        <link rel="shortcut icon" href="/favicon.ico">
+    </head>
+    <body>
+        <!-- <img id="background" src="/static/img/background.jpg" alt="" onload="document.getElementById('background').style.opacity='1'"> -->
+        <div class="header">
+            <a href="/data" class="logo">NEOSMAP Web Interface</a>
+            <div class="header-right">
+                <a href="/data">Data Panel</a>
+                <a class="active" href="/info">Info</a>
+            </div>
+        </div>
+        <div class="main-container-no-left">
+            <div class="container-col" style="margin: 20px; background-color: rgba(70, 70, 70, 1); padding: 15px; border-radius: 10px;">
+                <p class="title-header" style="margin-left: 20px; margin-right: 20px; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 2px white solid;">
+                    About
+                </p>
+                <p style="margin: 0 20px; padding: 10px 10px 10px 0; color: white !important;">
+                    The Near-Earth Object Statistical Management Program (NEOSMAP) was built for the University of Washington NEO observation follow-up team to aid in object tracking and selection.
+                </p>
+            </div>
+            <div class="container-col" style="margin: 20px; background-color: rgba(70, 70, 70, 1); padding: 15px; border-radius: 10px;">
+                <p class="title-header" style="margin-left: 20px; margin-right: 20px; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 2px white solid;">
+                    Acknowledgements
+                </p>
+                <h3 style="margin: 0 20px; padding: 10px 10px 10px 0; flex-grow: 1;">
+                    <a href="https://www.jpl.nasa.gov/" style="text-decoration: none; color: white !important;" target="_blank">
+                        Jet Propulsion Laboratory (JPL)
+                    </a>
+                </h3>
+                <p style="margin: 0 20px; padding: 10px 10px 10px 0; color: white !important;">
+                    This software uses data retrieved from the CNEOS Scout API. The API is hosted by Jet Propulsion Laboratory (JPL), a research and development lab federally funded by NASA and managed by Caltech. This project is not affiliated with nor was it endorsed by NASA, JPL, or Caltech.
+                    <br><br>
+                    The API documentation can be accessed <a href="https://ssd-api.jpl.nasa.gov/doc/scout.html" target="_blank" style="color: white !important;">here</a>.
+                </p>
+            </div>
+            <div class="container-col" style="margin: 20px; background-color: rgba(70, 70, 70, 1); padding: 15px; border-radius: 10px;">
+                <p class="title-header" style="margin-left: 20px; margin-right: 20px; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 2px white solid;">
+                    Attributions
+                </p>
+                <p style="margin: 0 20px; padding: 10px 10px 10px 0; color: white !important;">
+                    The favicon for this website was obtained from <a href="https://www.flaticon.com/free-icons/comet" target="_blank" style="color: white !important;">flaticon.com</a>.
+                </p>
+            </div>
+        </div>
+    </body>
+    {% include "includes/footer.html" %}
+</html>

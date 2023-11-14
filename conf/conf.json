@@ -1,0 +1,147 @@
+{
+  "constraints": {
+    "min_observation_time": 1,
+    "max_observation_time": 48,
+    "min_minimum_altitude": 1,
+    "max_minimum_altitude": 89,
+    "min_time_increments": 16,
+    "max_time_increments": 512
+  },
+  "visualization": {
+    "plot": {
+      "observation_time": 24,
+      "time_increments": 200
+    }
+  },
+  "minor_planets_center": {
+    "neocp_url": "https://www.minorplanetcenter.net/Extended_Files/neocp.json"
+  },
+  "jpl": {
+    "scout_api": {
+      "url": "https://ssd-api.jpl.nasa.gov/scout.api",
+      "eph_time_increment": 30
+    },
+    "neo_list_keys": [
+      "objectName",
+      "nObs",
+      "arc",
+      "rmsN",
+      "H",
+      "rating",
+      "moid",
+      "caDist",
+      "vInf",
+      "phaScore",
+      "neoScore",
+      "geocentricScore",
+      "ieoScore",
+      "tisserandScore",
+      "lastRun",
+      "ra",
+      "dec",
+      "elong",
+      "rate",
+      "Vmag",
+      "unc",
+      "uncP1",
+      "vis",
+      "fullScore"
+    ],
+    "neo_list_keys_display": [
+      "objectName",
+      "nObs",
+      "arc",
+      "rmsN",
+      "H",
+      "neoScore",
+      "lastRun",
+      "ra",
+      "dec",
+      "elong",
+      "rate",
+      "Vmag",
+      "unc",
+      "uncP1",
+      "vis",
+      "fullScore"
+    ],
+    "neo_list_extended_keys": [
+      "Temporary Designation",
+      "Number of Observations",
+      "Observation Arc (hours)",
+      "rmsN",
+      "Absolute Magnitude (H)",
+      "Rating",
+      "Min Orbit Intersection Dist (au)",
+      "Close Approach Distance (au)",
+      "Hyperbolic Excess Velocity",
+      "PHA Score",
+      "NEO Score",
+      "Geocentric Score",
+      "IEO Score",
+      "Tisserand Score",
+      "Last Run",
+      "Current Right Ascension (ha)",
+      "Current Declination (deg)",
+      "Elongation",
+      "Rate of Precession",
+      "Apparent Magnitude (Vmag)",
+      "Uncertainty Current",
+      "Uncertainty +1 Day",
+      "Currently Visible (median orbit)",
+      "Observation Priority Score"
+    ],
+    "neo_list_scores":  [
+      "neoScore",
+      "tisserandScore",
+      "ieoScore",
+      "geocentricScore",
+      "phaScore"
+    ],
+    "neo_list_overview_table": {
+      "dra": "&Delta; Right Ascension [arcmin/h]",
+      "ddec": "&Delta; Declination [arcmin/h]",
+      "ra": "Right Ascension [deg]",
+      "dec": "Declination [deg]",
+      "vmag": "Apparent Magnitude"
+    },
+    "neo_list_numerically_filterable_keys": {
+      "neoScore": {
+        "min": 0,
+        "max": 100},
+      "ra": {
+        "min": 0,
+        "max": 24},
+      "dec": {
+        "min": -90,
+        "max": 90},
+      "unc": {
+        "min": 0,
+        "max": 10000},
+      "Vmag": {
+        "min": -50,
+        "max": 50},
+      "nObs": {
+        "min": 0,
+        "max": 1000},
+      "arc": {
+        "min": 0,
+        "max": 1000},
+      "H": {
+        "min": -50,
+        "max": 50},
+      "rmsN": {
+        "min": 0,
+        "max": 50},
+      "elong": {
+        "min": -50,
+        "max": 50},
+      "rate": {
+        "min": -50,
+        "max": 50},
+      "fullScore": {
+        "min": 0,
+        "max": 1}
+    }
+  }
+}

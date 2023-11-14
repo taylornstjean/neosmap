@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Data Panel</title>
+        <script src="/static/js/data.js"></script>
+        <script src="/static/js/serverDate.js"></script>
+        <link rel="stylesheet" href="/static/css/main.css">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <meta charset="UTF-8">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="header">
+            <a class="logo">NEOSMAP Web Interface</a>
+            <div class="header-right">
+                <a class="active">Data Panel</a>
+                <a href="/info">Info</a>
+            </div>
+        </div>
+        <noscript>
+            <style type="text/css">
+                .main-container {display:none;}
+            </style>
+            <div class="no-js-container">
+                <p>
+                    You don't have javascript enabled.  Please enable javascript and reload the page.
+                </p>
+            </div>
+        </noscript>
+        <div class="main-container" style="align-items: stretch;">
+            <div id="side-menu" class="side-menu">
+                <h3 class="nav-title">
+                    Navigation
+                </h3>
+                <button class="tablinks active">Data</button>
+                <button class="tablinks" onclick="window.location.href='/data/config';">Configuration</button>
+                <h3 class="side-title">
+                    Clock [UTC]
+                </h3>
+                <p id="clock"></p>
+                <h3 class="side-title">
+                    Data Options
+                </h3>
+                <div class="container-col data-manage-box">
+                    <div>
+                        <h4 class="side-subtitle">
+                            Display
+                        </h4>
+                    </div>
+                    <div class="container-col" style="padding: 0 10px 10px;">
+                        <div class="container-row">
+                            <p style="padding-left: 10px; font-size: 14px;">
+                                Sort by:
+                            </p>
+                            <select name="sort-selector" id="sort-selector">
+                                <option value="Index" selected>Index</option>
+                                {% for k in filt_cols %}
+                                    <option value={{k}}>{{k}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div style="align-self: flex-start; margin-bottom: 10px;">
+                            <input class="check-box" type="checkbox" id="visible-selector" name="visible" value="visible">
+                            <label class="check-box-label" for="visible-selector">Show Visible Only</label><br>
+                        </div>
+                        <div style="align-self: flex-start;">
+                            <input class="check-box" type="checkbox" id="force-update-selector" name="force" value="force">
+                            <label class="check-box-label" for="force-update-selector">Force Update</label><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-col data-manage-box">
+                    <div>
+                        <h4 class="side-subtitle">
+                            Filters
+                        </h4>
+                    </div>
+                    <div class="container-col filter-parent" id="filter-box">
+                        <div class="container-row" style="padding: 10px 0;">
+                            <select name="sort-selector" id="filter-selector">
+                                <option value="none" selected>-</option>
+                                {% for k in filt_cols %}
+                                    <option value={{k}}>{{k}}</option>
+                                {% endfor %}
+                            </select>
+                            <button id="add-filter" onclick="addFilter()">Add</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-col data-manage-box">
+                    <div>
+                        <h4 class="side-subtitle">
+                            Show Column(s)
+                        </h4>
+                    </div>
+                    <div class="container-col" style="padding: 20px 10px;">
+                        {% for i in columns %}
+                        <div style="margin-top: 3px;" translate="no">
+                            <input class="check-box" type="checkbox" id={{i}} name={{i}} value={{i}} checked>
+                            <label class="check-box-label" for={{i}}>{{i}}</label><br>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="container-row" style="margin: 20px; align-items: stretch;">
+                <div class="container-col" style="align-items: stretch; align-self: stretch; flex-grow: 1;">
+                    <div id="data" class="tabcontent">
+                        <div class="container-row" style="margin: 10px 20px 10px 20px; flex-grow: 1; align-content: stretch; border-bottom: 2px whitesmoke solid;">
+                            <div class="container-col" style="align-self: flex-start;">
+                                <p class="title-header">
+                                    Data Panel
+                                </p>
+                            </div>
+                            <div class="container-row" style="justify-content: flex-end; align-self: center; flex-grow: 1;">
+                                <button type="button" class="main-data-button animate drop-in" onclick="loadDoc()" id="table-generator">Generate Table</button>
+                                <button type="button" class="main-data-button animate drop-in time-400" onclick="exportFile(id)" id="csv">Export to CSV</button>
+                                <button type="button" class="main-data-button animate drop-in time-500" onclick="exportFile(id)" id="json">Export to JSON</button>
+                            </div>
+
+                        </div>
+                        <div class="container-col" id="table-loader-box">
+                            <div class="loader" id="table-loader">
+                            </div>
+                        </div>
+                        <div class="container-row" id="data-display">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    {% include "includes/footer.html" %}
+</html>

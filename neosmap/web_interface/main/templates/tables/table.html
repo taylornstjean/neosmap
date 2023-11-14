@@ -1,0 +1,18 @@
+<table class="full-table animate table-fade" id="main-data-table" style="margin: 0 20px 20px 0; padding: 0; width: 100%;" translate="no">
+    <tr style="font-size: 14px;" class="full-table sticky-header">
+    {% for i in data.keys() %}
+        <th class="full-table table-head">
+            {{i}}
+        </th>
+    {% endfor %}
+    </tr>
+    {% for k in data["objectName"].keys() %}
+        <tr onclick='document.location.href=`/neo?tdes={{ data["objectName"][k] }}`' class="full-table selectable-row table-body" style="font-size: 14px;">
+        {% for j in data.keys() %}
+            <td class="full-table">
+                {{ data[j][k] }}
+            </td>
+        {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
