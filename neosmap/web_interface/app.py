@@ -1,4 +1,6 @@
 from flask import Flask, render_template
+from flask_login import current_user
+from werkzeug.exceptions import HTTPException
 
 from neosmap.web_interface.config import DefaultConfig
 
@@ -49,9 +51,19 @@ def apply_caching(response):
     return response
 
 
+def _color_mode():
+    if not current_user.is_authenticated:
+        return "dark"
+    return current_user.color_mode
+
+
 # http://flask.pocoo.org/docs/latest/errorhandling/
-@app.errorhandler(404)
-def page_not_found(error):
-    return render_template("errors/404.html"), 404
+
+@app.errorhandler(Exception)
+def error_page(error):
+    code = 500
+    if isinstance(error, HTTPException):
+        code = error.code
+    return render_template("errors/error.html", mode=_color_mode(), error=str(code), message=error.name), code
 
 # ------------------------------ END OF FILE ------------------------------

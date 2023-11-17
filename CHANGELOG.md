@@ -2,6 +2,11 @@
 
 All notable changes to the program will be documented here.
 
+### [0.1.2] Error Handler
+
+#### Added
+
+- Added web app error handling and error page display. 
 
 ### [0.1.1] GUI Update
 
