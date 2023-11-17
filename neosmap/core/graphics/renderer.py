@@ -11,6 +11,7 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 from cartopy.feature.nightshade import Nightshade
 import warnings
+from flask_login import current_user
 
 import matplotlib
 
@@ -30,6 +31,15 @@ warnings.filterwarnings("ignore", category=UserWarning, module="matplotlib")
 PLOT_DPI = 100
 
 
+def _text_color():
+    try:
+        if current_user.color_mode == "light":
+            return "black"
+    except AttributeError:
+        pass
+    return "white"
+
+
 ###########################################################################
 # INTERNAL FUNCTIONS
 
@@ -43,10 +53,10 @@ def _get_fig_ax(ylim, tick_spacing):
     fig = plt.figure(figsize=(6, 3), facecolor='#333')
     ax = fig.add_axes(111)
 
-    ax.xaxis.label.set_color('white')
-    ax.yaxis.label.set_color('white')
-    ax.tick_params(axis='x', colors="white")
-    ax.tick_params(axis='y', colors="white")
+    ax.xaxis.label.set_color(_text_color())
+    ax.yaxis.label.set_color(_text_color())
+    ax.tick_params(axis='x', colors=_text_color())
+    ax.tick_params(axis='y', colors=_text_color())
 
     fig.patch.set_alpha(0.0)
     fig.tight_layout(pad=4)
@@ -82,7 +92,7 @@ def _generate_chrono_plot(**kwargs):
     fig = kwargs.get("fig")
     tdes = kwargs.get("tdes")
 
-    ax.set_title(f"{tdes} {kwargs.get('title')}", pad=10, color="white")
+    ax.set_title(f"{tdes} {kwargs.get('title')}", pad=10, color=_text_color())
 
     ax.plot(kwargs.get("x_time").datetime, kwargs.get("y"), marker='', alpha=0.5, label="Median Orbit", color="blue")
 
@@ -139,7 +149,7 @@ def generate_radec_plot(neo_data, observatory, tdes) -> bool:
 
     ax_radec.set_global()
 
-    ax_radec.set_title(f"{obj_desig} Zenith Location Plot", pad=10, color="white")
+    ax_radec.set_title(f"{obj_desig} Zenith Location Plot", pad=10, color=_text_color())
 
     ax_radec.set_xlabel('RA [deg]')
     ax_radec.set_ylabel('DEC [deg]')
@@ -193,8 +203,8 @@ def generate_radec_plot(neo_data, observatory, tdes) -> bool:
         zorder=0
     )
 
-    gl.ylabel_style = {'size': 8, "color": "white"}
-    gl.xlabel_style = {'size': 8, "color": "white"}
+    gl.ylabel_style = {'size': 8, "color": _text_color()}
+    gl.xlabel_style = {'size': 8, "color": _text_color()}
 
     gl.top_labels = False
     gl.right_labels = False
@@ -203,9 +213,9 @@ def generate_radec_plot(neo_data, observatory, tdes) -> bool:
     ax_radec.add_feature(cfeature.OCEAN)
     ax_radec.add_feature(Nightshade(alpha=0.4))
 
-    ax_radec.xaxis.label.set_color('white')
-    ax_radec.yaxis.label.set_color('white')
-    ax_radec.tick_params(axis='y', colors="white")
+    ax_radec.xaxis.label.set_color(_text_color())
+    ax_radec.yaxis.label.set_color(_text_color())
+    ax_radec.tick_params(axis='y', colors=_text_color())
 
     fig_radec.tight_layout(pad=4)
 

@@ -20,17 +20,17 @@ function addFilter() {
     }
 
     const content = `
-    <div id=${filter + "_filterBox"} style="margin-bottom: 15px; border: 1px solid black; border-bottom: 2px solid black; border-top: 2px solid black;">
-        <div class="container-row" style="border-bottom: 1px solid black; flex-grow: 1; margin-bottom: 10px;">
-            <h5 style="align-self: stretch; margin: 10px 15px; flex-grow: 1;" class="filter-label">${filter}</h5>
-            <a onclick="removeFilter(${filter})" class="filter-remove">&#8212;</a>
+    <div id=${filter + "_filterBox"} style="margin-bottom: 15px;">
+        <div class="container-row" style="flex-grow: 1;">
+            <h5 style="align-self: stretch; margin: 10px 0; flex-grow: 1;" class="filter-label">${filter}</h5>
+            <a onclick="removeFilter(${filter})" class="filter-remove">X</a>
         </div>
-        <div class="container-row filter-item" id=${filter + "_filterItem"} style="margin: auto; flex-grow: 1; padding: 5px 10px 10px;">
+        <div class="container-row filter-item" id=${filter + "_filterItem"} style="flex-grow: 1; padding: 5px 0 10px;">
             <div class="container-row" style="align-self: center;">
                 <label for=${"min_" + filter}>Min&nbsp</label>
                 <input class="filter-input" type="text" id=${"min_" + filter}>
             </div>
-            <div class="container-row" style="align-self: center; margin-left: 20px;">
+            <div class="container-row" style="align-self: center; margin-left: 10px;">
                 <label for=${"max_" + filter}>Max&nbsp</label>
                 <input class="filter-input" type="text" id=${"max_" + filter}>
             </div>
@@ -87,6 +87,12 @@ function getFormData(response) {
 function loadDoc() {
 
     const loader = document.getElementById("table-loader");
+    const button = document.getElementById("table-generator");
+    const tableBox = document.getElementById("data-display");
+
+    button.disabled = true;
+    tableBox.innerHTML = "";
+    loader.style.display = "flex";
 
     const xhrCols = new XMLHttpRequest();
     const xhrTable = new XMLHttpRequest();
@@ -94,6 +100,7 @@ function loadDoc() {
     xhrTable.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             loader.style.display = "none";
+            button.disabled = false;
             document.getElementById("data-display").innerHTML = this.responseText;
         }
     };

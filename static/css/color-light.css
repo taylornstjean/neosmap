@@ -1,0 +1,28 @@
+/* COLOR STYLE SHEET - LIGHT MODE */
+
+:root {
+    --main-bg-color: #888;
+    --header-bg-color: #E1E1E1;
+    --footer-bg-color: #C1C1C1;
+    --secondary-bg-color: #bbb;
+    --light-accent-color: lightskyblue;
+    --accent-color: dodgerblue;
+    --obj-desig-color: darkblue;
+    --secondary-accent-color: #ff9248;
+    --tertiary-bg-color: #C1C1C1;
+    --font-color: black;
+    --table-bg-color: #E1E1E1;
+    --button-bg-color: #C1C1C1;
+    --button-bg-color-hover: #E1E1E1;
+    --button-bg-color-active: grey;
+    --button-border-color: grey;
+    --item-color: #E1E1E1;
+    --main-border-color: grey;
+    --secondary-border-color: black;
+    --table-border-color: #777;
+    --table-bg-color-header: #C1C1C1;
+    --side-panel-bg-color: #f1f1f1;
+    --header-button-bg-color-hover: #C1C1C1;
+    --section-button-bg-color: #f1f1f1;
+    --sidemenu-button-bg-color-hover: #fff;
+}

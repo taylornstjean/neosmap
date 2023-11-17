@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Monitor</title>
+        <script src="/static/js/monitor.js"></script>
+        <script src="/static/js/serverDate.js"></script>
+        <link rel="stylesheet" href={{ "/static/css/color-"~mode~".css" }}>
+        <link rel="stylesheet" href="/static/css/main.css">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <meta charset="UTF-8">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="header">
+            <a href="/data" class="logo"><img alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
+            <div class="header-right">
+                <a class="logout" href="/auth/logout">Logout</a>
+                <a href="/data">Data Panel</a>
+                <a class="active">Monitor</a>
+                <a href="/info">Info</a>
+                <a class="settings-icon" onclick="window.location.href='/settings';"><img {% if mode == "dark" %}class="filter-white"{% endif %} alt="Settings" src="/static/img/settings.svg"></a>
+            </div>
+        </div>
+        <noscript>
+            <style type="text/css">
+                .main-container {display:none;}
+            </style>
+            <div class="no-js-container">
+                <p>
+                    You don't have javascript enabled.  Please enable javascript and reload the page.
+                </p>
+            </div>
+        </noscript>
+         <div class="main-container">
+            <div id="side-menu" class="side-menu">
+                <h3 class="nav-title">
+                    Clock [UTC]
+                </h3>
+                <p id="clock"></p>
+            </div>
+             <div class="container-col workspace-container">
+                 <p>
+                    Live monitoring system is a work in progress, check back later.
+                </p>
+             </div>
+        </div>
+    </body>
+    {% include "includes/footer.html" %}
+</html>

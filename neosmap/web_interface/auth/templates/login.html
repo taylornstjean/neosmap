@@ -2,34 +2,35 @@
 <html>
     <head>  
         <title>Login</title>
+        <link rel="stylesheet" href={{ "/static/css/color-"~mode~".css" }}>
         <link rel="stylesheet" href="/static/css/main.css">
         <link rel="shortcut icon" href="/favicon.ico">
     </head>
     <body>
         <div class="header">
-            <a href="/data" class="logo">NEOSMAP Web Interface</a>
+            <a href="/data" class="logo"><img alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
         </div>
         <div class="main-container-no-left">
             <div class="login-box container-col">
-                <h3 style="color: white !important; margin-top: 5px; text-align: center; font-size: 2em;">
+                <h3 class="title">
                     Login
                 </h3>
                 <form method="POST" action="/auth/login">
                     <div class="container-col">
                         {{ form.csrf_token }}
                         <div class="input-section container-col">
-                            {{ form.email.label(class_="login-label", style_="padding-bottom: 5px;") }}
+                            {{ form.email.label(class_="login-label") }}
                             {{ form.email(class_="login-input") }}
                         </div>
                         <div class="input-section container-col">
-                            {{ form.password.label(class_="login-label", style_="padding-bottom: 5px;") }}
+                            {{ form.password.label(class_="login-label") }}
                             {{ form.password(class_="login-input") }}
                         </div>
                         <div class="input-section container-row">
                             {{ form.remember(class_="login-check-box") }}
                             {{ form.remember.label(class_="login-label check-box-label") }}
                         </div>
-                        <div style="width: 100%; margin: 10px 0;">
+                        <div class="error-box">
                             {% for field, errors in form.errors.items() %}
                             <div class="alert alert-error">
                                 {{ ', '.join(errors) }}
@@ -37,8 +38,8 @@
                             {% endfor %}
                         </div>
                         {{ form.submit(class_="form-submit-button") }}
-                        <div style="width: 100%;">
-                            <p style="margin: 10px 0 10px 0; color: white !important; text-align: center;">
+                        <div class="login-link-box">
+                            <p>
                                 New? <a class="register-link" href="/auth/register">Register here.</a>
                             </p>
                         </div>

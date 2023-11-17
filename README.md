@@ -1,10 +1,12 @@
+![logo-dark.png](static%2Fimg%2Flogo-dark.png)
+
 # Near Earth Object Statistical Management Program (NEOSMAP)
 
 Author: Taylor St Jean (University of Washington)
 
-Version: 0.1.1
+Version: 0.1.1 ([CHANGELOG](./CHANGELOG.md))
 
-Last updated November 13th, 2023.
+Last updated November 16th, 2023.
 
 ---
 

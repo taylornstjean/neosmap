@@ -2,6 +2,21 @@
 
 let xmlHttp;
 
+let hidden, visibilityChange;
+if (typeof document.hidden !== "undefined") {
+    hidden = "hidden";
+    visibilityChange = "visibilitychange";
+} else if (typeof document.mozHidden !== "undefined") {
+    hidden = "mozHidden";
+    visibilityChange = "mozvisibilitychange";
+} else if (typeof document.msHidden !== "undefined") {
+    hidden = "msHidden";
+    visibilityChange = "msvisibilitychange";
+} else if (typeof document.webkitHidden !== "undefined") {
+    hidden = "webkitHidden";
+    visibilityChange = "webkitvisibilitychange";
+}
+
 function srvTime(){
     try {
         //FF, Opera, Safari, Chrome
@@ -40,7 +55,10 @@ function updateClock(date) {
 
     const incrementer = function() {
         incrementClock()
-        setInterval(incrementClock, 1000);
+        const timer = setInterval(incrementClock, 1000);
+        document.addEventListener(visibilityChange, function() {
+            handleVisibilityHidden(timer);
+        }, false);
     }
 
     const delay = 500;
@@ -64,3 +82,17 @@ function updateClock(date) {
             "<br><span style='font-size: 14pt;'>" + dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2] + "</span>";
     }
 }
+
+function handleVisibilityVisible() {
+    if (!document[hidden]) {
+        initClock();
+    }
+}
+
+function handleVisibilityHidden(timer) {
+    if (document[hidden]) {
+        clearInterval(timer);
+    }
+}
+
+document.addEventListener(visibilityChange, handleVisibilityVisible, false);

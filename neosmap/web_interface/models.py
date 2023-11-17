@@ -15,6 +15,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(256), nullable=False, unique=True)
     created_on = db.Column(db.DateTime, nullable=False, default=get_current_time())
 
+    color_mode = "dark"
+
     def save(self, password, email, **kwargs):
 
         self.password = password

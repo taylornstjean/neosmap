@@ -131,12 +131,24 @@ class NEOData:
     def _update(self, use_cache=False) -> None:
         """Updates NEOCP data."""
 
-        if not use_cache:
+        def _retrieve_data():
             urlretrieve(JPL_API_URL, neocp_json_path)
             neocp_log_save()
 
+        if not use_cache:
+            _retrieve_data()
+
         with open(neocp_json_path, 'r') as f:
-            data = json.load(f)
+            try:
+                data = json.load(f)
+                retrieve_required = False
+            except json.decoder.JSONDecodeError:
+                retrieve_required = True
+
+        if retrieve_required:
+            _retrieve_data()
+            with open(neocp_json_path, 'r') as f:
+                data = json.load(f)
 
         # Parsing and formatting data
         data_table = []
@@ -402,7 +414,10 @@ class NEOData:
             elif column in ["fullScore"]:
                 pass
             else:
-                parsed.append(float(entry[column]) if entry[column] else None)
+                try:
+                    parsed.append(float(entry[column]) if entry[column] else None)
+                except KeyError:
+                    parsed.append(np.nan)
         parsed.append(self._full_score(tuple(parsed)))
         return parsed
 

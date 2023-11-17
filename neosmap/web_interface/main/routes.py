@@ -30,6 +30,12 @@ mod_main = Blueprint("main", __name__, url_prefix="/", template_folder="./templa
 # DEFINE ROUTES
 
 
+def _color_mode():
+    if not current_user.is_authenticated:
+        return "dark"
+    return current_user.color_mode
+
+
 @mod_main.route('/', methods=["GET"])
 @login_required
 def landing():
@@ -41,13 +47,13 @@ def landing():
 def data():
     cols = [col for col in MAIN_DISPLAYED_COLS if col != "objectName"]
     return render_template(
-        "data.html", columns=cols, filt_cols=FILTERABLE_COLS
+        "data.html", columns=cols, filt_cols=FILTERABLE_COLS, mode=_color_mode()
     ), 200
 
 
-@mod_main.route('/data/config', methods=["GET", "POST"])
+@mod_main.route('/settings', methods=["GET", "POST"])
 @login_required
-def config_data():
+def settings():
     form = ConfigForm()
     if form.validate_on_submit():
         latitude = float(request.form["latitude"])
@@ -63,14 +69,20 @@ def config_data():
             focal_ratio=ts_focal_ratio
         )
     return render_template(
-        "config.html", form=form, conf=current_user.config
+        "settings.html", form=form, conf=current_user.config, mode=_color_mode()
     ), 200
 
 
 @mod_main.route('/info', methods=["GET"])
 @login_required
 def info():
-    return render_template("info.html"), 200
+    return render_template("info.html", mode=_color_mode()), 200
+
+
+@mod_main.route('/monitor', methods=["GET"])
+@login_required
+def monitor():
+    return render_template("monitor.html", mode=_color_mode()), 200
 
 
 @mod_main.route('/table', methods=["POST"])
@@ -93,7 +105,9 @@ def columns():
 def neoview():
     desig = request.args.to_dict().get("tdes")
     table_data = current_user.neodata.df(tdes=desig)
-    return render_template("neo.html", desig=desig, score_cols=SCORE_COLUMNS, data=table_data.to_dict()), 200
+    return render_template(
+        "neo.html", desig=desig, score_cols=SCORE_COLUMNS, data=table_data.to_dict(), mode=_color_mode()
+    ), 200
 
 
 @mod_main.route('/download-table', methods=["POST"])

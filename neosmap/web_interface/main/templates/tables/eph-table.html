@@ -1,62 +1,62 @@
 <table class="full-table" id="eph-main-data-table" style="margin: 0 20px 20px 0; padding: 0; width: 100%;">
-    <tr class="full-table">
-        <th class="full-table" rowspan="2">
+    <tr>
+        <th class="table-head" rowspan="2">
             Time (UTC)
         </th>
-        <th class="full-table" colspan="3">
+        <th class="table-head" colspan="3">
             Declination (deg)
         </th>
-        <th class="full-table" colspan="3">
+        <th class="table-head" colspan="3">
             Right Ascension (deg)
         </th>
-        <th class="full-table" rowspan="2">
+        <th class="table-head" rowspan="2">
             Sigma Position (arcmin)
         </th>
     </tr>
-    <tr class="full-table">
-        <th class="full-table">
+    <tr>
+        <th class="table-head">
             Min
         </th>
-        <th class="full-table">
+        <th class="table-head">
             Median
         </th>
-        <th class="full-table">
+        <th class="table-head">
             Max
         </th>
-        <th class="full-table">
+        <th class="table-head">
             Min
         </th>
-        <th class="full-table">
+        <th class="table-head">
             Median
         </th>
-        <th class="full-table">
+        <th class="table-head">
             Max
         </th>
     </tr>
     {% for i in data %}
         <tr>
-            <td class="full-table">
+            <td class="table-cell">
                 {{ i["time"] }}
             </td>
-            <td class="full-table">
+            <td class="table-cell">
                 {{ '%0.2f' % i["limits"]["dec"]["min"]|float }}
             </td>
-            <td class="full-table">
+            <td class="table-cell">
                 {{ '%0.2f' % i["median"]["dec"]|float }}
             </td>
-            <td class="full-table">
+            <td class="table-cell">
                 {{ '%0.2f' % i["limits"]["dec"]["max"]|float }}
             </td>
-            <td class="full-table">
+            <td class="table-cell">
                 {{ '%0.2f' % i["limits"]["ra"]["min"]|float }}
             </td>
-            <td class="full-table">
+            <td class="table-cell">
                 {{ '%0.2f' % i["median"]["ra"]|float }}
             </td>
-            <td class="full-table">
+            <td class="table-cell">
                 {{ '%0.2f' % i["limits"]["ra"]["max"]|float }}
             </td>
-            <td class="full-table">
+            <td class="table-cell">
                 {{ i["sigma-pos"] }}
             </td>
         </tr>

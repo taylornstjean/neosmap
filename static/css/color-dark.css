@@ -1,0 +1,28 @@
+/* COLOR STYLE SHEET - DARK MODE */
+
+:root {
+    --main-bg-color: #222;
+    --header-bg-color: #333;
+    --footer-bg-color: #333;
+    --secondary-bg-color: #555;
+    --light-accent-color: dodgerblue;
+    --accent-color: dodgerblue;
+    --obj-desig-color: dodgerblue;
+    --secondary-accent-color: #ff9248;
+    --tertiary-bg-color: #444;
+    --font-color: whitesmoke;
+    --table-bg-color: #111;
+    --button-bg-color: #666;
+    --button-bg-color-hover: #888;
+    --button-bg-color-active: #999;
+    --button-border-color: #333;
+    --item-color: #111;
+    --main-border-color: #aaa;
+    --secondary-border-color: black;
+    --table-border-color: #333;
+    --table-bg-color-header: #333;
+    --side-panel-bg-color: #555;
+    --header-button-bg-color-hover: #888;
+    --section-button-bg-color: #555;
+    --sidemenu-button-bg-color-hover: #888;
+}

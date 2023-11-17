@@ -1,15 +1,15 @@
-<table class="full-table animate table-fade" id="main-data-table" style="margin: 0 20px 20px 0; padding: 0; width: 100%;" translate="no">
-    <tr style="font-size: 14px;" class="full-table sticky-header">
+<table class="full-table animate table-fade" id="main-data-table" style="padding: 0; width: 100%;" translate="no">
+    <tr class="sticky-header">
     {% for i in data.keys() %}
-        <th class="full-table table-head">
+        <th class="table-head">
             {{i}}
         </th>
     {% endfor %}
     </tr>
     {% for k in data["objectName"].keys() %}
-        <tr onclick='document.location.href=`/neo?tdes={{ data["objectName"][k] }}`' class="full-table selectable-row table-body" style="font-size: 14px;">
+        <tr onclick='document.location.href=`/neo?tdes={{ data["objectName"][k] }}`' class="selectable-row table-body">
         {% for j in data.keys() %}
-            <td class="full-table">
+            <td class="table-cell">
                 {{ data[j][k] }}
             </td>
         {% endfor %}
