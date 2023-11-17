@@ -4,7 +4,7 @@
 
 Author: Taylor St Jean (University of Washington)
 
-Version: 0.1.1 ([CHANGELOG](./CHANGELOG.md))
+Version: 0.1.3 ([CHANGELOG](./CHANGELOG.md))
 
 Last updated November 16th, 2023.
 

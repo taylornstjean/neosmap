@@ -700,7 +700,7 @@ button:hover {
 .filter-input {
     width: 2.5em;
     font-size: 12px;
-
+    color: black !important;
 }
 
 .filter-label {

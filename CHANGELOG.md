@@ -2,6 +2,12 @@
 
 All notable changes to the program will be documented here.
 
+### [0.1.3] Quick Fix
+
+#### Fixed
+
+- Fixed instances where white text was displayed on a white background.
+
 ### [0.1.2] Error Handler
 
 #### Added
