@@ -575,7 +575,7 @@ title * {
     align-self: stretch;
     position: fixed;
     left: 0;
-    bottom: 26px;
+    bottom: 24px;
     top: calc(var(--header-height) + 2px);
     background: var(--side-panel-bg-color);
     overflow-y: scroll;
@@ -584,7 +584,7 @@ title * {
 .side-menu button {
     background-color: var(--side-panel-bg-color);
     color: black;
-    padding: 12px; 
+    padding: 12px;
     text-decoration: none;
     border: none;
     border-collapse: collapse;
@@ -907,7 +907,7 @@ table#eph-main-data-table tr th.table-head {
 }
 
 #main-data-table {
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease-out;
 }
 
 th, td {
@@ -927,7 +927,6 @@ th, td {
 .table-head {
     font-size: var(--table-font-size);
     border-collapse: collapse;
-    border-bottom: none;
 }
 
 .table-cell {
@@ -988,8 +987,28 @@ tr.selectable-row:hover > * {
     border-right: none;
 }
 
+.table-cell.warning-moid {
+    background: rgba(255, 0, 0, .2);
+    animation: cell-blinker 1.6s infinite;
+}
+
 /* ######################################### */
 /* ANIMATIONS */
+
+@keyframes cell-blinker {
+    0% {
+        background: rgba(255, 0, 0, .2);
+    }
+    40% {
+        background: rgba(255, 0, 0, .2);
+    }
+    50% {
+        background: transparent;
+    }
+    90% {
+        background: transparent;
+    }
+}
 
 .animate {
     animation-duration: 0.5s;

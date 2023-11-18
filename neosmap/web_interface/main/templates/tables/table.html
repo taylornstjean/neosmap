@@ -9,7 +9,14 @@
     {% for k in data["objectName"].keys() %}
         <tr onclick='document.location.href=`/neo?tdes={{ data["objectName"][k] }}`' class="selectable-row table-body">
         {% for j in data.keys() %}
-            <td class="table-cell">
+            {% if j == "moid" %}
+                {% if data[j][k] | float <= 0.01 %}
+                    {% set warn_class = " warning-moid" %}
+                {% endif %}
+            {% else %}
+                    {% set warn_class = "" %}
+            {% endif %}
+            <td class='{{ "table-cell"~warn_class }}' id={{ data["objectName"][k]~"-"~j }}>
                 {{ data[j][k] }}
             </td>
         {% endfor %}
