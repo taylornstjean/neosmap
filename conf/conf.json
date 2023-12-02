@@ -13,8 +13,22 @@
       "time_increments": 200
     }
   },
+  "monitor": {
+    "interval": 40
+  },
   "minor_planets_center": {
-    "neocp_url": "https://www.minorplanetcenter.net/Extended_Files/neocp.json"
+    "neocp_url": "https://www.minorplanetcenter.net/Extended_Files/neocp.json",
+    "neo_list_keys_map": {
+      "Temp_Desig": "objectName",
+      "NObs": "nObs",
+      "Arc": "arc",
+      "H": "H",
+      "Score": "neoScore",
+      "R.A.": "ra",
+      "Decl.": "dec",
+      "V": "Vmag",
+      "vis": "vis"
+    }
   },
   "jpl": {
     "scout_api": {
@@ -65,32 +79,32 @@
       "vis",
       "fullScore"
     ],
-    "neo_list_extended_keys": [
-      "Temporary Designation",
-      "Number of Observations",
-      "Observation Arc (hours)",
-      "rmsN",
-      "Absolute Magnitude (H)",
-      "Rating",
-      "Min Orbit Intersection Dist (au)",
-      "Close Approach Distance (au)",
-      "Hyperbolic Excess Velocity",
-      "PHA Score",
-      "NEO Score",
-      "Geocentric Score",
-      "IEO Score",
-      "Tisserand Score",
-      "Last Run",
-      "Current Right Ascension (ha)",
-      "Current Declination (deg)",
-      "Elongation",
-      "Rate of Precession",
-      "Apparent Magnitude (Vmag)",
-      "Uncertainty Current",
-      "Uncertainty +1 Day",
-      "Currently Visible (median orbit)",
-      "Observation Priority Score"
-    ],
+    "neo_list_extended_keys": {
+      "objectName": "Temporary Designation",
+      "nObs": "Number of Observations",
+      "arc": "Observation Arc (hours)",
+      "rmsN": "rmsN",
+      "H": "Absolute Magnitude (H)",
+      "rating": "Rating",
+      "moid": "Min Orbit Intersection Dist (au)",
+      "caDist": "Close Approach Distance (au)",
+      "vInf": "Hyperbolic Excess Velocity",
+      "phaScore": "PHA Score",
+      "neoScore": "NEO Score",
+      "geocentricScore": "Geocentric Score",
+      "ieoScore": "IEO Score",
+      "tisserandScore": "Tisserand Score",
+      "lastRun": "Last Run",
+      "ra": "Current Right Ascension (ha)",
+      "dec": "Current Declination (deg)",
+      "elong": "Elongation",
+      "rate": "Rate of Precession",
+      "Vmag": "Apparent Magnitude (Vmag)",
+      "unc": "Uncertainty Current",
+      "uncP1": "Uncertainty +1 Day",
+      "vis": "Currently Visible (median orbit)",
+      "fullScore": "Observation Priority Score"
+    },
     "neo_list_scores":  [
       "neoScore",
       "tisserandScore",

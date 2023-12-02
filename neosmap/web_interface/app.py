@@ -1,8 +1,8 @@
 from flask import Flask, render_template
 from flask_login import current_user
-from werkzeug.exceptions import HTTPException
 
 from neosmap.web_interface.config import DefaultConfig
+from werkzeug.exceptions import HTTPException
 
 # For import *
 __all__ = ['app']
@@ -26,8 +26,10 @@ for ext in [db, login_manager]:
 
 # filesystem preparation/verification
 from neosmap.filesystem.verify import verify_cache
+from neosmap.core.caching import APICache
 
 verify_cache()
+APICache.load_instances()
 
 from neosmap.web_interface.main import mod_main
 from neosmap.web_interface.auth import mod_auth
@@ -64,6 +66,13 @@ def error_page(error):
     code = 500
     if isinstance(error, HTTPException):
         code = error.code
-    return render_template("errors/error.html", mode=_color_mode(), error=str(code), message=error.name), code
+
+    try:
+        name = error.name
+
+    except AttributeError:
+        name = error.__class__.__name__
+
+    return render_template("errors/error.html", mode=_color_mode(), error=str(code), message=name), code
 
 # ------------------------------ END OF FILE ------------------------------

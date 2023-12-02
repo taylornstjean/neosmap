@@ -635,6 +635,76 @@ title * {
     overflow-y: scroll;
 }
 
+#table-section {
+    flex-grow: 1;
+    width: 40%;
+}
+
+#update-section{
+    flex-grow: 1;
+    width: 60%;
+}
+
+#monitor-data-section div.object-removal, #old-monitor-data-section div.object-removal {
+    border-left: 2px darkred solid;
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+#monitor-data-section div.object-addition, #old-monitor-data-section div.object-addition {
+    border-left: 2px darkgreen solid;
+    background-color: rgba(0, 255, 0, 0.1);
+    transition: background-color, border-left-width 0.1s ease-out;
+}
+
+#monitor-data-section div.object-alter, #old-monitor-data-section div.object-alter {
+    border-left: 2px darkblue solid;
+    background-color: rgba(0, 0, 255, 0.1);
+    transition: background-color, border-left-width 0.1s ease-out;
+}
+
+#monitor-data-section div.object-addition:hover, #old-monitor-data-section div.object-addition:hover {
+    border-left: 4px darkgreen solid;
+    background-color: rgba(0, 255, 0, 0.3);
+    cursor: pointer;
+}
+
+#monitor-data-section div.object-alter:hover, #old-monitor-data-section div.object-alter:hover {
+    border-left: 4px darkblue solid;
+    background-color: rgba(0, 0, 255, 0.3);
+    cursor: pointer;
+}
+
+div.monitor-widget {
+    margin-bottom: 10px;
+}
+
+div.monitor-widget-header {
+    align-content: stretch;
+}
+
+div.monitor-widget-header table {
+    flex-grow: 1;
+}
+
+div.monitor-widget-header table tr th, div.monitor-widget-header table tr td {
+    flex-grow: 1;
+    width: 50%;
+    text-align: start;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+div.monitor-widget-header table tr td {
+    font-size: 12px;
+}
+
+div.monitor-widget-header table tr th.right-cell {
+    text-align: end;
+
+}
+
 /* ######################################### */
 /* CLOCK */
 
@@ -841,6 +911,23 @@ button:hover {
     margin-bottom: 20px;
 }
 
+.clear-monitor-update {
+    color: red;
+    user-select: none;
+}
+
+.expand-cleared-updates {
+    user-select: none;
+}
+
+.expand-cleared-updates:hover {
+    cursor: pointer;
+}
+
+.clear-monitor-update:hover {
+    cursor: pointer;
+}
+
 /* ######################################### */
 /* LOADER */
 
@@ -896,14 +983,31 @@ button:hover {
 /* ######################################### */
 /* TABLES */
 
-table#main-data-table, table#eph-main-data-table, table#eph-neo-info-table {
+table#main-data-table, table#eph-main-data-table, table#eph-neo-info-table, table#monitor-data-table, table#monitor-update-section-header {
     border: 2px solid var(--table-border-color);
     border-collapse: collapse;
+}
+
+table#monitor-update-section-header {
+    margin-bottom: 10px;
 }
 
 table#eph-main-data-table tr th.table-head {
     border: 2px solid var(--table-border-color);
     border-collapse: collapse;
+}
+
+table#monitor-update-section-header tr th.table-head {
+    border: 2px solid var(--table-border-color);
+    width: 100%;
+}
+
+#old-monitor-data-section.invisible {
+    visibility: hidden;
+}
+
+.monitor-section-header {
+    background-color: var(--table-bg-color-header);
 }
 
 #main-data-table {
@@ -1051,11 +1155,9 @@ tr.selectable-row:hover > * {
 @keyframes animate-table-fade {
     0% {
         opacity: 0.4;
-        transform: scale(1.02, 1) translate(0, 10px);
     }
     100% {
         opacity: 1;
-        transform: scale(1, 1) translate(0, 0);
     }
 }
 

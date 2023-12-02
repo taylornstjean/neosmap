@@ -79,10 +79,32 @@ def info():
     return render_template("info.html", mode=_color_mode()), 200
 
 
-@mod_main.route('/monitor', methods=["GET"])
+@mod_main.route('/monitor', methods=["GET", "POST"])
 @login_required
 def monitor():
+    if request.method == "POST":
+        clear_update_ids = request.args.get("clear").split(",")
+
+        if clear_update_ids != ['']:
+            current_user.neomonitor.ignore_ids.update(clear_update_ids)
+
+        return "Success.", 200
+
     return render_template("monitor.html", mode=_color_mode()), 200
+
+
+@mod_main.route('/monitor-check', methods=["GET"])
+@login_required
+def monitor_check():
+    data_refresh = current_user.neomonitor.data
+    df = data_refresh["df"]
+    updates = data_refresh["updates"]
+
+    table_data = df[["objectName", "nObs", "ra", "dec"]]
+    for i, update in enumerate(updates):
+        updates[i]["old"] = "true" if update["id"] in current_user.neomonitor.ignore_ids else "false"
+
+    return render_template("monitor/table.html", data=table_data, updates=updates), 200
 
 
 @mod_main.route('/table', methods=["POST"])
@@ -222,14 +244,12 @@ def _retrieve_table(request_args):
     conditions = request_args["valueFilters"]
     sort_by_column = request_args["colSort"]
     visible = request_args["visible"]
-    force_update = request_args["forceUpdate"]
 
     return current_user.neodata.df(
         cols=cols,
         conditions=conditions,
         sort_by_column=sort_by_column,
-        visible=visible,
-        force_update=force_update
+        visible=visible
     )
 
 # ------------------------------ END OF FILE ------------------------------

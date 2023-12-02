@@ -2,6 +2,28 @@
 
 All notable changes to the program will be documented here.
 
+### [0.2.1] Monitor Update
+
+#### Added
+
+- Added monitoring panel showing real time updates to the MPC database.
+- Low MOID values now blink red on the main data panel.
+- Flask will now serve custom error pages.
+- Other minor additions.
+
+#### Changed
+
+- Improved the caching system, began implementation of APICache which will be complete in a future update.
+- Reorganized some files for clarity.
+- Other minor changes.
+
+#### Fixed
+
+- Fixed a bug where instantiation of new classes for each user would occur on every call, now only occurs once per session.
+- Fixed an issue with the previous cache validation system which caused the `NEOData` class dataframe update to loop several times on each call.
+- Set client-side rate limits to API calls to prevent spam.
+- Other minor bug fixes.
+
 ### [0.1.3] Quick Fix
 
 #### Fixed

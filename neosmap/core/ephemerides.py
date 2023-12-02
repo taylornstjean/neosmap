@@ -1,7 +1,7 @@
 from datetime import datetime
 from datetime import timedelta
 from config import DATA_SUBDIRS, JPL_API_URL, EPH_TIME_INCR, OBS_TIME
-from neosmap.logging import ephemeris_log_save, ephemeris_last_save
+from neosmap.core.caching import ephemeris_log_cache, ephemeris_last_cache
 from .exceptions import TdesNotFoundError, EphemerisParamsNotSetError, OutdatedParamsError
 from datetime import datetime as dt
 import os
@@ -85,7 +85,7 @@ class Ephemeris:
 
         save_buffer = 1800  # seconds
 
-        last_save = ephemeris_last_save(self._params["tdes"])
+        last_save = ephemeris_last_cache(self._params["tdes"])
         update_required = bool(dt.utcnow().timestamp() - last_save >= save_buffer) if last_save else True
 
         if not os.path.isfile(
@@ -121,7 +121,7 @@ class Ephemeris:
     def _save(self):
         with open(os.path.join(DATA_SUBDIRS["ephemerides"], f"{self._params['tdes']}.json"), "w") as f:
             f.write(json.dumps(self._data, indent=4))
-        ephemeris_log_save(self._params["tdes"])
+        ephemeris_log_cache(self._params["tdes"])
 
     def _load(self):
         try:

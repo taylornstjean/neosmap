@@ -6,6 +6,7 @@ Provides means to modify the configuration file using key value pairs from an in
 
 import os
 import json
+import logging
 
 ###########################################################################
 # PROJECT FILESYSTEM DATA
@@ -14,28 +15,42 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 CACHE_DIR = os.path.join(BASE_DIR, "cache")
 
-LOG_DIR = os.path.join(CACHE_DIR, "log")
-TEMP_DIR = os.path.join(CACHE_DIR, "temp")
-DATA_DIR = os.path.join(CACHE_DIR, "data")
+CACHE_OBJECT_DIR = os.path.join(CACHE_DIR, "objects")
+CACHE_LOG_DIR = os.path.join(CACHE_DIR, "log")
+CACHE_TEMP_DIR = os.path.join(CACHE_DIR, "temp")
+CACHE_DATA_DIR = os.path.join(CACHE_DIR, "data")
 
 CONF_DIR = os.path.join(BASE_DIR, "conf")
+
+# LOG FILE
+
+LOG_FILE = os.path.join(BASE_DIR, "logs/neosmap.log")
+logging.basicConfig(
+    filename=LOG_FILE,
+    format='[%(asctime)s]: %(message)s',
+    datefmt='%m/%d/%Y %I:%M:%S %p',
+    encoding='utf-8',
+    level=logging.DEBUG
+)
 
 # SUB DIRECTORY STRUCTURES
 
 TEMP_SUBDIRS = {
-    "plot": os.path.join(TEMP_DIR, "plot"),
-    "script": os.path.join(TEMP_DIR, "script"),
-    "export": os.path.join(TEMP_DIR, "export")
+    "plot": os.path.join(CACHE_TEMP_DIR, "plot"),
+    "script": os.path.join(CACHE_TEMP_DIR, "script"),
+    "export": os.path.join(CACHE_TEMP_DIR, "export")
 }
 
 DATA_SUBDIRS = {
-    "ephemerides": os.path.join(DATA_DIR, "ephemerides"),
-    "neocp": os.path.join(DATA_DIR, "neocp")
+    "ephemerides": os.path.join(CACHE_DATA_DIR, "ephemerides"),
+    "neocp": os.path.join(CACHE_DATA_DIR, "neocp"),
+    "monitor": os.path.join(CACHE_DATA_DIR, "monitor")
 }
 
 LOG_SUBDIRS = {
-    "ephemerides": os.path.join(LOG_DIR, "ephemerides"),
-    "neocp": os.path.join(LOG_DIR, "neocp")
+    "ephemerides": os.path.join(CACHE_LOG_DIR, "ephemerides"),
+    "neocp": os.path.join(CACHE_LOG_DIR, "neocp"),
+    "monitor": os.path.join(CACHE_LOG_DIR, "monitor")
 }
 
 ###########################################################################
@@ -43,6 +58,11 @@ LOG_SUBDIRS = {
 
 with open(os.path.join(CONF_DIR, "conf.json"), "r") as f:
     CONF = json.load(f)
+
+###########################################################################
+# PLOTTING
+
+MONITOR_TIME_INTERVAL = CONF["monitor"]["interval"]
 
 ###########################################################################
 # PLOTTING
@@ -58,8 +78,8 @@ EXTENDED_COLS = CONF["jpl"]["neo_list_extended_keys"]
 FILTERABLE_COLS = CONF["jpl"]["neo_list_numerically_filterable_keys"]
 SCORE_COLUMNS = CONF["jpl"]["neo_list_scores"]
 OVERVIEW_TABLE_COLS = CONF["jpl"]["neo_list_overview_table"]
-
 MAIN_DISPLAYED_COLS = CONF["jpl"]["neo_list_keys_display"]
+MPC_NEO_KEY_MAP = CONF["minor_planets_center"]["neo_list_keys_map"]
 
 ###########################################################################
 # JPL SCOUT API
@@ -69,11 +89,17 @@ EPH_TIME_INCR = CONF["jpl"]["scout_api"]["eph_time_increment"]
 
 
 ###########################################################################
+# MPC DATA
+
+MPC_NEOCP_URL = CONF["minor_planets_center"]["neocp_url"]
+
+
+###########################################################################
 # CONFIGURATION FILE EDITOR
 
 def edit_conf(key, value):
 
-    with open(os.path.join(DATA_DIR, "conf.json"), "r") as file:
+    with open(os.path.join(CACHE_DATA_DIR, "conf.json"), "r") as file:
         data = json.load(file)
 
     def _constraint(target):
@@ -95,7 +121,7 @@ def edit_conf(key, value):
     else:
         return False
 
-    with open(os.path.join(DATA_DIR, "conf.json"), "w+") as file:
+    with open(os.path.join(CACHE_DATA_DIR, "conf.json"), "w+") as file:
         json.dump(data, file, indent=2)
 
     return True

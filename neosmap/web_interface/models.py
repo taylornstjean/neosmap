@@ -2,6 +2,8 @@ from neosmap.web_interface.extensions import db, login_manager
 from flask_login import UserMixin, current_user
 from astropy import units as u
 from neosmap.core.data import NEOData, Observatory
+from neosmap.core.monitor import NEOMonitor
+import logging
 
 from neosmap.web_interface.utils import get_current_time
 
@@ -9,6 +11,7 @@ from neosmap.web_interface.utils import get_current_time
 class User(db.Model, UserMixin):
 
     __tablename__ = "user"
+    instances = {}
 
     id = db.Column(db.Integer, unique=True, primary_key=True)
     password = db.Column(db.String(256), nullable=False)
@@ -53,40 +56,87 @@ class User(db.Model, UserMixin):
             self._load_config()
         return self._config
 
-    def _initialize_observatory_instance(self):
-        self._observatory = Observatory(
-            longitude=self.config.observatory_longitude * u.degree,
-            latitude=self.config.observatory_latitude * u.degree,
-            ts_mirror_diameter=self.config.primary_mirror_diameter * u.m,
-            ts_focal_ratio=self.config.focal_ratio,
-            min_altitude=self.config.minimum_altitude * u.degree
+    @classmethod
+    def _initialize_observatory_instance(
+            cls,
+            uid,
+            observatory_longitude,
+            observatory_latitude,
+            primary_mirror_diameter,
+            focal_ratio,
+            minimum_altitude
+    ):
+        if uid not in cls.instances:
+            cls.instances[uid] = {}
+
+        cls.instances[uid]["observatory"] = Observatory(
+            longitude=observatory_longitude * u.degree,
+            latitude=observatory_latitude * u.degree,
+            ts_mirror_diameter=primary_mirror_diameter * u.m,
+            ts_focal_ratio=focal_ratio,
+            min_altitude=minimum_altitude * u.degree
         )
+
+        logging.info(f"Instantiated Observatory object for user {uid}.")
 
     @property
     def observatory(self):
-        if not hasattr(self, "_observatory"):
-            self._initialize_observatory_instance()
-        return self._observatory
+        try:
+            return User.instances[self.id]["observatory"]
 
-    def _initialize_neodata_instance(self):
-        self._neodata = NEOData(self.observatory)
-        self._neodata.check_update(force_update=True)
+        except KeyError:
+            self._initialize_observatory_instance(
+                self.id,
+                self.config.observatory_longitude,
+                self.config.observatory_latitude,
+                self.config.primary_mirror_diameter,
+                self.config.focal_ratio,
+                self.config.minimum_altitude
+            )
+
+        return User.instances[self.id]["observatory"]
+
+    @classmethod
+    def _initialize_neomonitor_instance(cls, uid, observatory):
+        cls.instances[uid]["neomonitor"] = NEOMonitor(observatory)
+
+        logging.info(f"Instantiated NEOMonitor object for user {uid}.")
+
+    @property
+    def neomonitor(self):
+        try:
+            return User.instances[self.id]["neomonitor"]
+
+        except KeyError:
+            self._initialize_neomonitor_instance(self.id, self.observatory)
+
+        return User.instances[self.id]["neomonitor"]
+
+    @classmethod
+    def _initialize_neodata_instance(cls, uid, observatory):
+        cls.instances[uid]["neodata"] = NEOData(observatory)
+
+        logging.info(f"Instantiated NEOData object for user {uid}.")
 
     @property
     def neodata(self):
-        if not hasattr(self, "_neodata"):
-            self._initialize_neodata_instance()
-        return self._neodata
+        try:
+            return User.instances[self.id]["neodata"]
+
+        except KeyError:
+            self._initialize_neodata_instance(self.id, self.observatory)
+
+        return User.instances[self.id]["neodata"]
 
     def wipe_instances(self):
-        if hasattr(self, "_neodata"):
-            del self._neodata
-        if hasattr(self, "_observatory"):
-            del self._observatory
+        try:
+            del self.instances[self.id]
+
+        except KeyError:
+            pass
 
 
 class Config(db.Model):
-
     __tablename__ = "config"
 
     __default_observatory_latitude = 32.7795337

@@ -1,6 +1,6 @@
 import os
 import shutil
-from config import CACHE_DIR, TEMP_DIR, DATA_DIR, LOG_DIR, TEMP_SUBDIRS, DATA_SUBDIRS, LOG_SUBDIRS
+from config import CACHE_DIR, CACHE_TEMP_DIR, CACHE_DATA_DIR, CACHE_LOG_DIR, TEMP_SUBDIRS, DATA_SUBDIRS, LOG_SUBDIRS, CACHE_OBJECT_DIR
 
 
 ###########################################################################
@@ -12,12 +12,12 @@ def verify_cache():
         os.mkdir(CACHE_DIR)
 
     # Reset temp dir if existing
-    if os.path.isdir(TEMP_DIR):
-        shutil.rmtree(TEMP_DIR)
+    if os.path.isdir(CACHE_TEMP_DIR):
+        shutil.rmtree(CACHE_TEMP_DIR)
 
     # Create dirs and sub dirs
-    os.mkdir(TEMP_DIR)
-    for directory in [LOG_DIR, DATA_DIR]:
+    os.mkdir(CACHE_TEMP_DIR)
+    for directory in [CACHE_LOG_DIR, CACHE_DATA_DIR, CACHE_OBJECT_DIR]:
         if not os.path.isdir(directory):
             os.mkdir(directory)
 

@@ -1,0 +1,108 @@
+<div id="update-section" style="margin-right: 10px;">
+    <table id="monitor-update-section-header" style="padding: 0; width: 100%;" translate="no">
+        <tr class="monitor-section-header">
+            <th class="table-head">
+                Updates
+            </th>
+            <td class="clear-monitor-update table-cell" onclick="clearUpdates()">
+                Clear
+            </td>
+        </tr>
+    </table>
+    <div id="monitor-data-section" style="padding: 0; margin-top: 0; width: 100%;" translate="no">
+        {% for update in updates if update["old"] == "false" %}
+            <div class="current-update monitor-widget container-col {{ update['action'] }}" id="{{ update['id'] }}" onclick="window.open('https://cgi.minorplanetcenter.net/cgi-bin/showobsorbs.cgi?Obj={{ update["objectName"] }}&obs=y','_blank')">
+                <div class="monitor-widget-header container-row">
+                    <table>
+                        <tr>
+                            <td>
+                                {{ update["banner"] }}
+                            </td>
+                            <th class="right-cell">
+                                {{ update["time"] }}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ update["objectName"] }}
+                            </th>
+                        </tr>
+                        {% if update["attribute"] == "nobs" %}
+                            <tr>
+                                <td>
+                                    Observations: {{ update["nObs_i"] }} &#8594; {{ update["nObs_f"] }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <table id="monitor-update-section-header" style="padding: 0; width: 100%; margin-top: 30px;" translate="no">
+        <tr class="monitor-section-header">
+            <th class="table-head">
+                Cleared Updates
+            </th>
+            <td class="expand-cleared-updates table-cell" onclick="toggleOldUpdateSection()">
+                Expand
+            </td>
+        </tr>
+    </table>
+    <div id="old-monitor-data-section" class="invisible" style="padding: 0; margin-top: 0; width: 100%;" translate="no">
+        {% for update in updates if update["old"] == "true" %}
+            <div class="monitor-widget container-col {{ update['action'] }}" id="{{ update['id'] }}" onclick="window.open('https://cgi.minorplanetcenter.net/cgi-bin/showobsorbs.cgi?Obj={{ update["objectName"] }}&obs=y','_blank')">
+                <div class="monitor-widget-header container-row">
+                    <table>
+                        <tr>
+                            <td>
+                                {{ update["banner"] }}
+                            </td>
+                            <th class="right-cell">
+                                {{ update["time"] }}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ update["objectName"] }}
+                            </th>
+                        </tr>
+                        {% if update["attribute"] == "nobs" %}
+                            <tr>
+                                <td>
+                                    Observations: {{ update["nObs_i"] }} &#8594; {{ update["nObs_f"] }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<div id="table-section">
+    <table class="full-table" id="monitor-data-table" style="padding: 0; width: 100%;" translate="no">
+        <tr class="sticky-header">
+        {% for i in data.keys() %}
+            <th class="table-head">
+                {% if i == "ra" %}
+                    {{ i~" [ha]" }}
+                {% elif i == "dec" %}
+                    {{ i~" [deg]" }}
+                {% else %}
+                    {{ i }}
+                {% endif %}
+            </th>
+        {% endfor %}
+        </tr>
+        {% for k in data["objectName"].keys() %}
+            <tr class="selectable-row table-body">
+            {% for j in data.keys() %}
+                <td class="table-cell">
+                    {{ data[j][k] }}
+                </td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</div>

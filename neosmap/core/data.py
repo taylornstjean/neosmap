@@ -2,16 +2,18 @@ import numpy as np
 from numpy import ndarray
 from pandas import DataFrame
 import operator
+import logging
+import inspect
 from functools import partial, lru_cache
 from config import (
     DATA_SUBDIRS,
     COLUMNS,
-    FILTERABLE_COLS,
-    JPL_API_URL
+    FILTERABLE_COLS
 )
-from neosmap.logging import neocp_last_save, neocp_log_save, clean_logs
+from neosmap.core.caching import clean_ephemeris_cache, APICache
+from neosmap.core.caching.exceptions import CacheTimeExceededError
+from neosmap.core.api import retrieve_data_jpl
 from datetime import datetime as dt
-from urllib.request import urlretrieve
 import os
 import json
 from astropy import units as u
@@ -92,7 +94,7 @@ class Observatory:
 ###########################################################################
 # DEFINE NEODATA CLASS
 
-class NEOData:
+class NEOData():
 
     def __init__(self, observatory) -> None:
         """Initializes an instance that contains up-to-date NEOCP data. Also maintains
@@ -103,10 +105,9 @@ class NEOData:
          """
 
         self._observatory = observatory
-
         self.check_update()
         self._clean_ephemeris_saves()
-        clean_logs(self)
+        clean_ephemeris_cache(self)
 
     # ================================================================
     # TDES CHECK
@@ -122,33 +123,37 @@ class NEOData:
         """
 
         tdes = [tdes] if isinstance(tdes, str) else tdes
-        exist = list(map(lambda x: x in self._DF["objectName"].values, tdes))
+        exist = list(map(lambda x: x in self._dataframe["objectName"].values, tdes))
         return all(exist)
 
     # ================================================================
     # UPDATE
 
-    def _update(self, use_cache=False) -> None:
+    def _update(self) -> None:
         """Updates NEOCP data."""
 
         def _retrieve_data():
-            urlretrieve(JPL_API_URL, neocp_json_path)
-            neocp_log_save()
+            loaded_data = retrieve_data_jpl()
+            _cache_ = APICache(name="neocp", cache_type="neocp", cache_time=1800)
+            _cache_.save(loaded_data)
 
-        if not use_cache:
-            _retrieve_data()
-
-        with open(neocp_json_path, 'r') as f:
+        def _load_cache():
+            logging.debug("Loading cached neocp data.")
             try:
-                data = json.load(f)
-                retrieve_required = False
-            except json.decoder.JSONDecodeError:
-                retrieve_required = True
+                _cache_ = APICache.get_instance("neocp")
+                data_ = _cache_.load()
 
-        if retrieve_required:
+            except (ValueError, CacheTimeExceededError):
+                raise ValueError
+
+            return data_
+
+        try:
+            data = _load_cache()
+        except ValueError or json.decoder.JSONDecodeError:
+            logging.debug("Loading cache failed.")
             _retrieve_data()
-            with open(neocp_json_path, 'r') as f:
-                data = json.load(f)
+            data = _load_cache()
 
         # Parsing and formatting data
         data_table = []
@@ -157,31 +162,34 @@ class NEOData:
             data_table.append(parsed_entry)
 
         self._array = np.array(data_table)
-        self._DF = pd.DataFrame(self._array, columns=COLUMNS)
+        self._dataframe = pd.DataFrame(self._array, columns=COLUMNS)
+
+        logging.debug(f"Successfully initialized NEOCP dataframe.")
+
         self._create_ephemeris_instance()
 
-    def check_update(self, force_update=False) -> None:
-        """Update stored NEO data if necessary.
+    def check_update(self) -> None:
+        """Update stored NEO data if necessary."""
 
-        :param force_update: If ``True``, overrides data currency checks and forces an update. Defaults to ``False``.
-        :type force_update: bool
-        """
+        try:
+            _cache = APICache.get_instance(name="neocp")
+            update_required = not _cache.verify or not _cache.valid
 
-        save_buffer = 1800  # seconds
+        except ValueError:
+            update_required = True
 
-        last_save = neocp_last_save()
-        update_required = bool(dt.utcnow().timestamp() - last_save >= save_buffer) if last_save else True
+        logging.info(f"Checking if update required for NEOCP data. Caller: {inspect.stack()[1].function}")
 
-        if (
-            not os.path.isfile(neocp_json_path)
-            or bool(update_required)
-            or force_update
-        ):
+        if update_required:
+            logging.debug("Running update as cache is not current.")
             self._update()
-        elif not hasattr(self, "_DF"):
-            self._update(use_cache=True)
+
+        elif not hasattr(self, "_dataframe"):
+            logging.debug("Running update as dataframe has not been initialized.")
+            self._update()
+
         else:
-            self._create_ephemeris_instance()
+            logging.debug(f"Update not required.")
 
     # ================================================================
     # EPHEMERIDES
@@ -189,23 +197,26 @@ class NEOData:
     def _create_ephemeris_instance(self) -> None:
         """Initializes ephemeris instances from class Ephemeris for each NEO."""
 
-        if not hasattr(self, "_DF"):
+        logging.debug(f"Generating Ephemeris class instances. Caller: {inspect.stack()[1].function}")
+
+        if not hasattr(self, "_dataframe"):
+            logging.error("_dataframe attribute does not exist in instance of NEOData.")
             self.check_update()
 
         if not hasattr(self, "_ephemerides"):
             self._ephemerides = {}
-            for tdes in self._DF["objectName"]:
+            for tdes in self._dataframe["objectName"]:
                 self._ephemerides[tdes] = Ephemeris(tdes=tdes)
         else:
             # Add undefined tdes Ephemeris objects
-            for tdes in self._DF["objectName"]:
+            for tdes in self._dataframe["objectName"]:
                 if tdes not in self._ephemerides.keys():
                     self._ephemerides[tdes] = Ephemeris(tdes=tdes)
 
             # Remove Ephemeris objects for non-existent tdes
             to_delete = []
             for tdes in self._ephemerides.keys():
-                if not (self._DF['objectName'].eq(tdes)).any():
+                if not (self._dataframe['objectName'].eq(tdes)).any():
                     to_delete.append(tdes)
             for tdes in to_delete:
                 del self._ephemerides[tdes]
@@ -228,11 +239,15 @@ class NEOData:
     def _clean_ephemeris_saves(self):
         """Remove saved ephemeris data for non-existent temporary designations."""
 
+        logging.debug(f"Cleaning Ephemeris class instances. Caller: {inspect.stack()[1].function}")
+
         ephem_data_dir = DATA_SUBDIRS["ephemerides"]
+
+        _df = self._dataframe
 
         for file in os.listdir(ephem_data_dir):
             tdes = file.split(".")[0]
-            if not (self._DF['objectName'].eq(tdes)).any():
+            if not (_df['objectName'].eq(tdes)).any():
                 os.remove(os.path.join(ephem_data_dir, file))
 
     # ================================================================
@@ -281,12 +296,18 @@ class NEOData:
         :type force_update: bool
         """
 
-        self.check_update(force_update=force_update)
+        logging.debug(f"Begin dataframe retrieval process. Caller: {inspect.stack()[1].function}")
 
-        data = self._DF
+        self.check_update()
+
+        data = self._dataframe
 
         tdes = [tdes] if tdes and isinstance(tdes, str) else tdes
-        cols = ["objectName", cols] if cols and isinstance(cols, str) else ["objectName"] + cols if cols else cols
+
+        if cols and isinstance(cols, str):
+            cols = ["objectName", cols]
+        elif cols:
+            cols = ["objectName"] + cols
 
         # Row sort
 
@@ -359,7 +380,8 @@ class NEOData:
             "phaScore": [partial(self._linear, max_x=100, min_x=0), 1],
             "dec": [partial(self._cut_normal, max_x=latitude, stddev=70, max_diff=90 - minimum_altitude), 10],
             "Vmag": [partial(self._hyperbolic, max_x=19, min_x=23), 10],
-            "unc": [partial(self._skewed_normal, max_x=round(afov.value), min_x_n=0, min_x_p=800), 5]
+            "unc": [partial(self._skewed_normal, max_x=round(afov.value), min_x_n=0, min_x_p=800), 5],
+            "moid": [partial(self._normal, max_x=0, min_x=1), 30]
         }
 
         total_score = 0
@@ -379,9 +401,9 @@ class NEOData:
     # MISC
 
     def _conditions(self, conditions, data) -> DataFrame:
-        for col, filt in conditions.items():
-            unpack_filt = {o: v for o, v in filt.items() if v != ""}
-            for op_str, val in unpack_filt.items():
+        for col, filter_ in conditions.items():
+            unpack_filter = {o: v for o, v in filter_.items() if v != ""}
+            for op_str, val in unpack_filter.items():
                 operation = self._get_operator(op_str)
                 data = data.loc[operation(data[col].astype(float), float(val))]
         return data
