@@ -10,7 +10,7 @@ Contributors:
 
 Version: 0.2.1 ([CHANGELOG](./CHANGELOG.md))
 
-Last updated November 16th, 2023.
+Last updated December 1st, 2023.
 
 ---
 

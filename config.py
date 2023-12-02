@@ -21,10 +21,14 @@ CACHE_TEMP_DIR = os.path.join(CACHE_DIR, "temp")
 CACHE_DATA_DIR = os.path.join(CACHE_DIR, "data")
 
 CONF_DIR = os.path.join(BASE_DIR, "conf")
+LOG_DIR = os.path.join(BASE_DIR, "logs")
 
 # LOG FILE
 
-LOG_FILE = os.path.join(BASE_DIR, "logs/neosmap.log")
+if not os.path.isdir(LOG_DIR):
+    os.mkdir(LOG_DIR)
+
+LOG_FILE = os.path.join(LOG_DIR, "neosmap.log")
 logging.basicConfig(
     filename=LOG_FILE,
     format='[%(asctime)s]: %(message)s',

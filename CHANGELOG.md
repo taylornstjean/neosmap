@@ -2,6 +2,13 @@
 
 All notable changes to the program will be documented here.
 
+### [0.2.2] Bug Fix
+
+#### Fixed
+
+- Quick-fixed error on startup when logs dir does not exist, long term solution required.
+- Updated README.md to reflect last update date.
+
 ### [0.2.1] Monitor Update
 
 #### Added
