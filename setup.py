@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='Near Earth Object Statistical Management Program',
+    name='NEOSMAP',
     version="0.2.1",
     packages=['neosmap'],
     url='https://github.com/taylornstjean/neosmap',

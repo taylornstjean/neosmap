@@ -2,12 +2,17 @@
 
 All notable changes to the program will be documented here.
 
-### [0.2.2] Bug Fix
+### [Unreleased]
 
 #### Fixed
 
 - Quick-fixed error on startup when logs dir does not exist, long term solution required.
 - Updated README.md to reflect last update date.
+- Fixed changelog entry to show "unreleased" instead of 0.2.2.
+
+#### Changed
+
+- Updated name of program in `setup.py`.
 
 ### [0.2.1] Monitor Update
 
