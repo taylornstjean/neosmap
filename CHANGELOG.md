@@ -14,6 +14,8 @@ All notable changes to the program will be documented here.
 
 - Updated name of program in `setup.py`.
 - Slightly improved logging for monitor system.
+- Moved update storage from memory to disk.
+- Removed logging system due to unresolved errors, will be added back in the future.
 
 ### [0.2.1] Monitor Update
 

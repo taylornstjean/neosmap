@@ -6,7 +6,6 @@ Provides means to modify the configuration file using key value pairs from an in
 
 import os
 import json
-import logging
 
 ###########################################################################
 # PROJECT FILESYSTEM DATA
@@ -22,20 +21,6 @@ CACHE_DATA_DIR = os.path.join(CACHE_DIR, "data")
 
 CONF_DIR = os.path.join(BASE_DIR, "conf")
 LOG_DIR = os.path.join(BASE_DIR, "logs")
-
-# LOG FILE
-
-if not os.path.isdir(LOG_DIR):
-    os.mkdir(LOG_DIR)
-
-LOG_FILE = os.path.join(LOG_DIR, "neosmap.log")
-logging.basicConfig(
-    filename=LOG_FILE,
-    format='[%(asctime)s]: %(message)s',
-    datefmt='%m/%d/%Y %I:%M:%S %p',
-    encoding='utf-8',
-    level=logging.DEBUG
-)
 
 # SUB DIRECTORY STRUCTURES
 

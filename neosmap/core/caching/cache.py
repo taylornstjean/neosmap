@@ -9,7 +9,6 @@ from config import LOG_SUBDIRS, CACHE_DIR
 from .exceptions import CacheTimeExceededError
 
 from datetime import datetime as dt
-import logging
 
 eph_log_dir = LOG_SUBDIRS["ephemerides"]
 
@@ -190,7 +189,6 @@ def clean_ephemeris_cache(neo_data):
     :type neo_data: NEOData
     """
     df = neo_data.df()
-    logging.debug(f"Cleaning ephemeris cache.")
     for file in os.listdir(eph_log_dir):
         tdes = file.split(".")[0]
         if not (df['objectName'].eq(tdes)).any():

@@ -3,7 +3,6 @@ from flask_login import UserMixin, current_user
 from astropy import units as u
 from neosmap.core.data import NEOData, Observatory
 from neosmap.core.monitor import NEOMonitor
-import logging
 
 from neosmap.web_interface.utils import get_current_time
 
@@ -77,8 +76,6 @@ class User(db.Model, UserMixin):
             min_altitude=minimum_altitude * u.degree
         )
 
-        logging.info(f"Instantiated Observatory object for user {uid}.")
-
     @property
     def observatory(self):
         try:
@@ -100,8 +97,6 @@ class User(db.Model, UserMixin):
     def _initialize_neomonitor_instance(cls, uid, observatory):
         cls.instances[uid]["neomonitor"] = NEOMonitor(observatory)
 
-        logging.info(f"Instantiated NEOMonitor object for user {uid}.")
-
     @property
     def neomonitor(self):
         try:
@@ -115,8 +110,6 @@ class User(db.Model, UserMixin):
     @classmethod
     def _initialize_neodata_instance(cls, uid, observatory):
         cls.instances[uid]["neodata"] = NEOData(observatory)
-
-        logging.info(f"Instantiated NEOData object for user {uid}.")
 
     @property
     def neodata(self):

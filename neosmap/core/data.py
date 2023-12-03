@@ -2,7 +2,6 @@ import numpy as np
 from numpy import ndarray
 from pandas import DataFrame
 import operator
-import logging
 import inspect
 from functools import partial, lru_cache
 from config import (
@@ -138,7 +137,6 @@ class NEOData():
             _cache_.save(loaded_data)
 
         def _load_cache():
-            logging.debug("Loading cached neocp data.")
             try:
                 _cache_ = APICache.get_instance("neocp")
                 data_ = _cache_.load()
@@ -151,7 +149,6 @@ class NEOData():
         try:
             data = _load_cache()
         except ValueError or json.decoder.JSONDecodeError:
-            logging.debug("Loading cache failed.")
             _retrieve_data()
             data = _load_cache()
 
@@ -163,8 +160,6 @@ class NEOData():
 
         self._array = np.array(data_table)
         self._dataframe = pd.DataFrame(self._array, columns=COLUMNS)
-
-        logging.debug(f"Successfully initialized NEOCP dataframe.")
 
         self._create_ephemeris_instance()
 
@@ -178,18 +173,14 @@ class NEOData():
         except ValueError:
             update_required = True
 
-        logging.info(f"Checking if update required for NEOCP data. Caller: {inspect.stack()[1].function}")
-
         if update_required:
-            logging.debug("Running update as cache is not current.")
             self._update()
 
         elif not hasattr(self, "_dataframe"):
-            logging.debug("Running update as dataframe has not been initialized.")
             self._update()
 
         else:
-            logging.debug(f"Update not required.")
+            pass
 
     # ================================================================
     # EPHEMERIDES
@@ -197,10 +188,7 @@ class NEOData():
     def _create_ephemeris_instance(self) -> None:
         """Initializes ephemeris instances from class Ephemeris for each NEO."""
 
-        logging.debug(f"Generating Ephemeris class instances. Caller: {inspect.stack()[1].function}")
-
         if not hasattr(self, "_dataframe"):
-            logging.error("_dataframe attribute does not exist in instance of NEOData.")
             self.check_update()
 
         if not hasattr(self, "_ephemerides"):
@@ -238,8 +226,6 @@ class NEOData():
 
     def _clean_ephemeris_saves(self):
         """Remove saved ephemeris data for non-existent temporary designations."""
-
-        logging.debug(f"Cleaning Ephemeris class instances. Caller: {inspect.stack()[1].function}")
 
         ephem_data_dir = DATA_SUBDIRS["ephemerides"]
 
@@ -295,8 +281,6 @@ class NEOData():
         :param force_update: If ``True``, overrides data currency checks and forces an update. Defaults to ``False``.
         :type force_update: bool
         """
-
-        logging.debug(f"Begin dataframe retrieval process. Caller: {inspect.stack()[1].function}")
 
         self.check_update()
 
