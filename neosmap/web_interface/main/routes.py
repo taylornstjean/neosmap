@@ -20,6 +20,7 @@ from config import (
     OVERVIEW_TABLE_COLS
 )
 import os
+import logging
 
 ###########################################################################
 # INITIALIZE BLUEPRINT
@@ -88,6 +89,8 @@ def monitor():
         if clear_update_ids != ['']:
             current_user.neomonitor.ignore_ids.update(clear_update_ids)
 
+        logging.debug("Clearing ids {} for user {}".format(str(clear_update_ids), current_user.id))
+
         return "Success.", 200
 
     return render_template("monitor.html", mode=_color_mode()), 200
@@ -103,6 +106,8 @@ def monitor_check():
     table_data = df[["objectName", "nObs", "ra", "dec"]]
     for i, update in enumerate(updates):
         updates[i]["old"] = "true" if update["id"] in current_user.neomonitor.ignore_ids else "false"
+
+    logging.debug("Monitor page update for user {} with updates {}.".format(current_user.id, str(updates)))
 
     return render_template("monitor/table.html", data=table_data, updates=updates), 200
 

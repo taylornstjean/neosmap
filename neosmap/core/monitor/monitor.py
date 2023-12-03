@@ -9,7 +9,7 @@ from astropy import units as u
 import logging
 
 
-class NEOMonitor():
+class NEOMonitor:
     updates = []
 
     def __init__(self, observatory):

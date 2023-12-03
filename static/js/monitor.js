@@ -6,8 +6,8 @@ window.onload = function() {
 }
 
 function initMonitor() {
-    _fetchUpdate()
-    setInterval(_fetchUpdate, 60000)
+    setTimeout(_fetchUpdate, 200);
+    setInterval(_fetchUpdate, 60000);
     function _fetchUpdate() {
         const xhrMonitor = new XMLHttpRequest();
 

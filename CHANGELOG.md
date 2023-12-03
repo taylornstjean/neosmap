@@ -13,6 +13,7 @@ All notable changes to the program will be documented here.
 #### Changed
 
 - Updated name of program in `setup.py`.
+- Slightly improved logging for monitor system.
 
 ### [0.2.1] Monitor Update
 
