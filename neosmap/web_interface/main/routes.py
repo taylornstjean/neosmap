@@ -18,7 +18,8 @@ from config import (
     TEMP_SUBDIRS,
     BASE_DIR,
     MAIN_DISPLAYED_COLS,
-    OVERVIEW_TABLE_COLS
+    OVERVIEW_TABLE_COLS,
+    LOG_DIR
 )
 import os
 import numpy as np
@@ -89,6 +90,9 @@ def monitor():
 
         for _id in clear_update_ids:
             current_user.neomonitor.ignore_ids.append(_id)
+
+        with open(os.path.join(LOG_DIR, "monitor_clear_ids.log"), "a") as f:
+            f.writelines([str(clear_update_ids)])
 
         return "Success.", 200
 
