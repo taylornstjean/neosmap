@@ -2,7 +2,7 @@
 
 All notable changes to the program will be documented here.
 
-### [Unreleased]
+### [Unreleased] 
 
 #### Fixed
 
@@ -14,10 +14,13 @@ All notable changes to the program will be documented here.
 #### Changed
 
 - Updated name of program in `setup.py`.
-- Slightly improved logging for monitor system.
 - Moved update storage from memory to disk.
 - Removed logging system due to unresolved errors, will be added back in the future.
 - Moved ignore id list out of memory to disk.
+
+#### Added
+
+- Added sound system for monitoring page. A notification sound will play when there is a database update.
 
 ### [0.2.1] Monitor Update
 

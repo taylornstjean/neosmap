@@ -20,6 +20,7 @@ class NEOMonitor:
         self._ignore_id_path = os.path.join(CACHE_USER_DIR, "{}_ignore_ids.txt".format(current_user.id))
         self._updates_path = os.path.join(DATA_SUBDIRS["monitor"], "updates.json")
         self._updates = []
+        self._update_occurred = False
 
     def _update(self, first_pull=False) -> None:
 
@@ -64,7 +65,6 @@ class NEOMonitor:
         return obj_vis
 
     def check_update(self) -> None:
-
         try:
             _cache = APICache.get_instance(name="monitor")
             update_required = not _cache.valid or not _cache.verify
@@ -77,6 +77,7 @@ class NEOMonitor:
         if update_required:
             self._update(first_pull=first_pull)
         else:
+            self._update_occurred = False
             self._load_record()
 
     def _load_last_df(self):
@@ -121,6 +122,11 @@ class NEOMonitor:
 
         alter_nobs_objects = diff_df_nobs
 
+        if any(df.shape[0] >= 1 for df in [new_objects, removed_objects, alter_nobs_objects]):
+            self._update_occurred = True
+        else:
+            self._update_occurred = False
+
         current_time = dt.utcnow()
         current_time_frmt = current_time.strftime("%b %d  %H:%M")
 
@@ -134,7 +140,7 @@ class NEOMonitor:
             entry = {
                 "banner": "Object Removed",
                 "action": "object-removal",
-                "attribute": "nobs",
+                "attribute": "none",
                 "objectName": object_,
                 "time": current_time_frmt,
                 "nObs_i": "none",
@@ -237,6 +243,6 @@ class NEOMonitor:
             "df": self._load_last_df(),
             "updates": pd.DataFrame(self._updates)
         }
-        return _data
+        return _data, self._update_occurred
 
 # ------------------------------ END OF FILE ------------------------------

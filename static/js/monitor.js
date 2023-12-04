@@ -14,6 +14,10 @@ function initMonitor() {
         xhrMonitor.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 document.getElementById("monitor-data").innerHTML = this.responseText;
+                const updated = document.querySelector('meta[name="updated"]').content;
+                if (updated === "True") {
+                    audioWarning();
+                }
             }
         }
 
@@ -44,25 +48,8 @@ function clearUpdates() {
     xhrClearUpdates.send(JSON.stringify(ids));
 }
 
-function audioWarning(type) {
+function audioWarning() {
     const src = "/static/sound/";
     const notification = new Audio(src + 'alert.mp3');
     notification.play();
-
-    let audioSpeech;
-    if (type === "added") {
-        audioSpeech = new Audio(src + "object_added.wav");
-    } else if (type === "removed") {
-        audioSpeech = new Audio(src + "object_removed.wav");
-    } else if (type === "added_low_moid") {
-        audioSpeech = new Audio(src + "object_added_low_moid.wav");
-    } else if (type === "multiple") {
-        audioSpeech = new Audio(src + "multiple_updates.wav");
-    } else {
-        audioSpeech = null;
-    }
-
-    if (audioSpeech) {
-        audioSpeech.play();
-    }
 }

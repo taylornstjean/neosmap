@@ -98,7 +98,7 @@ def monitor():
 @mod_main.route('/monitor-check', methods=["GET"])
 @login_required
 def monitor_check():
-    data_refresh = current_user.neomonitor.data
+    data_refresh, update_occurred = current_user.neomonitor.data
 
     df = data_refresh["df"]
     table_data = df[["objectName", "nObs", "ra", "dec"]]
@@ -106,7 +106,7 @@ def monitor_check():
     updates = data_refresh["updates"]
     filtered_updates = current_user.neomonitor.sort_by_ignored(updates)
 
-    return render_template("monitor/table.html", data=table_data, updates=filtered_updates), 200
+    return render_template("monitor/table.html", data=table_data, updates=filtered_updates, updated=update_occurred), 200
 
 
 @mod_main.route('/table', methods=["POST"])
