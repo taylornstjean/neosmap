@@ -119,18 +119,6 @@ def _generate_chrono_plot(**kwargs):
 # GENERATE PLOTS WITH MATPLOTLIB
 
 def generate_radec_plot(neo_data, observatory, tdes) -> bool:
-    """
-    Generate right ascension/declination plot.
-
-    :param neo_data: NEOData object.
-    :type neo_data: neosmap.core.data.NEOData
-
-    :param observatory: Observatory object.
-    :type observatory: neosmap.core.Observatory
-
-    :param tdes: Specify NEO temporary designation to plot.
-    :type tdes: str
-    """
 
     obj_desig = tdes
     df = neo_data.df(tdes=tdes)
@@ -227,18 +215,6 @@ def generate_radec_plot(neo_data, observatory, tdes) -> bool:
 
 
 def generate_altaz_plot(neo_data, observatory, tdes) -> bool:
-    """
-    Generate altitude/azimuth plot.
-
-    :param neo_data: NEOData object.
-    :type neo_data: neosmap.core.data.NEOData
-
-    :param observatory: Observatory object.
-    :type observatory: neosmap.core.Observatory
-
-    :param tdes: Specify NEO temporary designation to plot.
-    :type tdes: str
-    """
 
     ephemeris_data = _get_ephemerides(neo_data, tdes)
     t0, time_grid = _get_timings(ephemeris_data)
@@ -266,18 +242,6 @@ def generate_altaz_plot(neo_data, observatory, tdes) -> bool:
 
 
 def generate_airmass_plot(neo_data, observatory, tdes) -> bool:
-    """
-    Generate airmass plot.
-
-    :param neo_data: NEOData object.
-    :type neo_data: neosmap.core.data.NEOData
-
-    :param observatory: Observatory object.
-    :type observatory: neosmap.core.Observatory
-
-    :param tdes: Specify NEO temporary designation to plot.
-    :type tdes: str
-    """
 
     ephemeris_data = _get_ephemerides(neo_data, tdes)
     t0, time_grid = _get_timings(ephemeris_data)
@@ -307,15 +271,6 @@ def generate_airmass_plot(neo_data, observatory, tdes) -> bool:
 
 
 def generate_sigmapos_plot(neo_data, tdes) -> bool:
-    """
-    Generate apparent magnitude plot.
-
-    :param neo_data: NEOData object.
-    :type neo_data: neosmap.core.data.NEOData
-
-    :param tdes: Specify NEO temporary designation to plot.
-    :type tdes: str
-    """
 
     ephemeris_data = _get_ephemerides(neo_data, tdes)
     t0, time_grid = _get_timings(ephemeris_data)

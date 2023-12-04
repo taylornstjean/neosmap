@@ -29,3 +29,5 @@ def retrieve_data_mpc():
         loaded_data = json.load(url)
 
     return loaded_data
+
+# ------------------------------ END OF FILE ------------------------------

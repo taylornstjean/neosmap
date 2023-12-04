@@ -84,36 +84,4 @@ EPH_TIME_INCR = CONF["jpl"]["scout_api"]["eph_time_increment"]
 MPC_NEOCP_URL = CONF["minor_planets_center"]["neocp_url"]
 
 
-###########################################################################
-# CONFIGURATION FILE EDITOR
-
-def edit_conf(key, value):
-
-    with open(os.path.join(CACHE_DATA_DIR, "conf.json"), "r") as file:
-        data = json.load(file)
-
-    def _constraint(target):
-        minimum, maximum = [CONF["constraints"][f"{qualifier}_{target}"] for qualifier in ["min", "max"]]
-        return [minimum, maximum]
-
-    if key in ["observation_time", "time_increments"]:
-        if _constraint(key)[0] <= int(value) <= _constraint(key)[1]:
-            data["visualization"]["plot"][key] = int(value)
-        else:
-            return False
-
-    elif key in ["minimum_altitude"]:
-        if _constraint(key)[0] <= int(value) <= _constraint(key)[1]:
-            data["properties"]["observatory"][key] = int(value)
-        else:
-            return False
-
-    else:
-        return False
-
-    with open(os.path.join(CACHE_DATA_DIR, "conf.json"), "w+") as file:
-        json.dump(data, file, indent=2)
-
-    return True
-
 # ------------------------------ END OF FILE ------------------------------

@@ -1,6 +1,16 @@
 import os
 import shutil
-from config import CACHE_DIR, CACHE_TEMP_DIR,CACHE_USER_DIR, CACHE_DATA_DIR, CACHE_LOG_DIR, TEMP_SUBDIRS, DATA_SUBDIRS, LOG_SUBDIRS, CACHE_OBJECT_DIR
+from config import (
+    CACHE_DIR,
+    CACHE_TEMP_DIR,
+    CACHE_USER_DIR,
+    CACHE_DATA_DIR,
+    CACHE_LOG_DIR,
+    TEMP_SUBDIRS,
+    DATA_SUBDIRS,
+    LOG_SUBDIRS,
+    CACHE_OBJECT_DIR
+)
 
 
 ###########################################################################

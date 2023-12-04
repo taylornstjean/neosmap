@@ -8,3 +8,5 @@ class CacheTimeExceededError(Exception):
     def __init__(self, field):
         self.message = f"{field} data has exceeded its maximum cache time."
         super().__init__(self.message)
+
+# ------------------------------ END OF FILE ------------------------------

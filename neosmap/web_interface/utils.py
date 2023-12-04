@@ -14,3 +14,5 @@ def id_generator(size=10, chars=string.ascii_letters + string.digits):
 
 def _hash(password):
     return hashlib.sha256(password.encode("utf-8")).hexdigest()
+
+# ------------------------------ END OF FILE ------------------------------

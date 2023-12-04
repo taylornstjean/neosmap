@@ -1,7 +1,3 @@
-"""
-Provides means to log data modifications and updates.
-"""
-
 import os
 import pickle
 import json
@@ -149,12 +145,6 @@ def _get_last_line(file_stream):
 # EPHEMERIS DATA LOGGER
 
 def ephemeris_last_cache(tdes: str):
-    """
-    Check when last ephemeris api pull occurred. If no data saved, returns None.
-
-    :param tdes: Specify NEO temporary designation to check its last ephemeris data save.
-    :type tdes: str
-    """
 
     try:
         with open(os.path.join(eph_log_dir, f"{tdes}.log"), "rb") as f:
@@ -166,12 +156,6 @@ def ephemeris_last_cache(tdes: str):
 
 
 def ephemeris_log_cache(tdes: str) -> None:
-    """
-    Log ephemeris api pull.
-
-    :param tdes: Specify NEO temporary designation for which a data pull has occurred.
-    :type tdes: str
-    """
 
     with open(os.path.join(eph_log_dir, f"{tdes}.log"), "a") as f:
         entry = f"{dt.utcnow().timestamp()}\n"
@@ -182,12 +166,6 @@ def ephemeris_log_cache(tdes: str) -> None:
 # LOG DIRECTORY CLEANUP
 
 def clean_ephemeris_cache(neo_data):
-    """
-    Clean ephemeris pull logs. Removes associated log file if its object was removed from the MPC/JPL database.
-
-    :param neo_data: NEOData object.
-    :type neo_data: NEOData
-    """
     df = neo_data.df()
     for file in os.listdir(eph_log_dir):
         tdes = file.split(".")[0]

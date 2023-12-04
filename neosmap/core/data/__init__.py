@@ -1,3 +1,3 @@
-from .verify import verify_cache
+from .data import Observatory, NEOData
 
 # ------------------------------ END OF FILE ------------------------------

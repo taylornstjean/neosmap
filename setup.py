@@ -10,3 +10,5 @@ setup(
     author_email='taylorst@uw.edu',
     description='Near Earth Object Statistical Management Program'
 )
+
+# ------------------------------ END OF FILE ------------------------------

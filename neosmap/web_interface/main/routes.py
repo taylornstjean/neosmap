@@ -90,7 +90,7 @@ def monitor():
 
         current_user.neomonitor.save_ignore_ids(clear_update_ids)
 
-        return "Success.", 200
+        return {"message": "Success."}, 200
 
     return render_template("monitor.html", mode=_color_mode()), 200
 

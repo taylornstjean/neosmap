@@ -2,7 +2,7 @@ from datetime import datetime
 from datetime import timedelta
 from config import DATA_SUBDIRS, JPL_API_URL, EPH_TIME_INCR, OBS_TIME
 from neosmap.core.caching import ephemeris_log_cache, ephemeris_last_cache
-from .exceptions import TdesNotFoundError, EphemerisParamsNotSetError, OutdatedParamsError
+from neosmap.core.exceptions import TdesNotFoundError, EphemerisParamsNotSetError, OutdatedParamsError
 from datetime import datetime as dt
 import os
 import json
@@ -19,7 +19,6 @@ class Ephemeris:
         self._session = requests.Session()
 
     def set_params(self, defaults=False, **kwargs) -> None:
-        """Sets parameters for API fetch."""
 
         if defaults:
             self._params["eph-start"] = dt.utcnow().strftime("%Y-%m-%d_%X")
@@ -77,11 +76,6 @@ class Ephemeris:
                 raise OutdatedParamsError
 
     def check_update(self, force_update=False):
-        """Update stored ephemeris data if necessary.
-
-        :param force_update: If True, overrides data currency checks and forces an update. Defaults to False.
-        :type force_update: bool
-        """
 
         save_buffer = 1800  # seconds
 

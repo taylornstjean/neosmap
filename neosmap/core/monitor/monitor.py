@@ -22,7 +22,6 @@ class NEOMonitor:
         self._updates = []
 
     def _update(self, first_pull=False) -> None:
-        """Updates MPC NEOCP data and checks for changes."""
 
         def _retrieve_data():
             loaded_data = retrieve_data_mpc()
@@ -41,11 +40,6 @@ class NEOMonitor:
 
         if not first_pull:
             self._check_changes()
-            _changes = {
-                "updates": pd.DataFrame(self._updates),
-                "df": self._DF
-            }
-            self._data = _changes
 
         cache_ = APICache(name="monitor", cache_type="monitor", cache_time=50)
         cache_.save(data_table)
@@ -70,7 +64,6 @@ class NEOMonitor:
         return obj_vis
 
     def check_update(self) -> None:
-        """Update stored MPC NEO data if necessary."""
 
         try:
             _cache = APICache.get_instance(name="monitor")
@@ -141,8 +134,11 @@ class NEOMonitor:
             entry = {
                 "banner": "Object Removed",
                 "action": "object-removal",
+                "attribute": "nobs",
                 "objectName": object_,
                 "time": current_time_frmt,
+                "nObs_i": "none",
+                "nObs_f": "none",
                 "id": entry_id
             }
             self._updates.insert(0, entry)
@@ -152,8 +148,11 @@ class NEOMonitor:
             entry = {
                 "banner": "Object Added",
                 "action": "object-addition",
+                "attribute": "none",
                 "objectName": object_,
                 "time": current_time_frmt,
+                "nObs_i": "none",
+                "nObs_f": "none",
                 "id": entry_id
             }
             self._updates.insert(0, entry)
@@ -185,7 +184,7 @@ class NEOMonitor:
             _id = entry["id"]
             entry_time = float(_id.split("-")[-1])
             current_time = dt.utcnow().timestamp()
-            save_time = 6 * 3600  # 6 hours
+            save_time = 3 * 3600  # 6 hours
 
             if (current_time - entry_time) > save_time:
                 to_delete.append(i)
@@ -234,11 +233,10 @@ class NEOMonitor:
     @property
     def data(self):
         self.check_update()
-        if not hasattr(self, "_data"):
-            _data = {
-                "df": self._load_last_df(),
-                "updates": pd.DataFrame(self._updates)
-            }
-            return _data
+        _data = {
+            "df": self._load_last_df(),
+            "updates": pd.DataFrame(self._updates)
+        }
+        return _data
 
-        return self._data
+# ------------------------------ END OF FILE ------------------------------

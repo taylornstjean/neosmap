@@ -61,18 +61,17 @@ def _color_mode():
 
 # http://flask.pocoo.org/docs/latest/errorhandling/
 
-#@app.errorhandler(Exception)
-#def error_page(error):
-#    code = 500
-#    if isinstance(error, HTTPException):
-#        code = error.code
+@app.errorhandler(Exception)
+def error_page(error):
+    code = 500
+    if isinstance(error, HTTPException):
+        code = error.code
 
-#   try:
-#       name = error.name
+    try:
+        name = error.name
+    except AttributeError:
+        name = error.__class__.__name__
 
-#   except AttributeError:
-#       name = error.__class__.__name__
-
-#   return render_template("errors/error.html", mode=_color_mode(), error=str(code), message=name), code
+    return render_template("errors/error.html", mode=_color_mode(), error=str(code), message=name), code
 
 # ------------------------------ END OF FILE ------------------------------

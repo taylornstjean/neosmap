@@ -172,3 +172,5 @@ class Config(db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.filter(User.id == int(user_id)).first()
+
+# ------------------------------ END OF FILE ------------------------------

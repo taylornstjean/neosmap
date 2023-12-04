@@ -41,3 +41,5 @@ class ConfigForm(FlaskForm):
         ]
     )
     submit = SubmitField("Save")
+
+# ------------------------------ END OF FILE ------------------------------
