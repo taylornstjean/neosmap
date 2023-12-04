@@ -105,7 +105,11 @@ def monitor_check():
 
     updates = data_refresh["updates"]
     ignore_ids = current_user.neomonitor.ignore_ids
-    updates["old"] = np.where(updates["id"].isin(ignore_ids), "true", "false")
+
+    try:
+        updates["old"] = np.where(updates["id"].isin(ignore_ids), "true", "false")
+    except KeyError:
+        pass
 
     return render_template("monitor/table.html", data=table_data, updates=updates), 200
 
