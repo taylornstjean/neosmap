@@ -1,6 +1,7 @@
 import numpy as np
-from config import MONITOR_TIME_INTERVAL, MPC_NEO_KEY_MAP, DATA_SUBDIRS
+from config import MONITOR_TIME_INTERVAL, MPC_NEO_KEY_MAP, DATA_SUBDIRS, CACHE_USER_DIR
 from neosmap.core.caching import APICache
+from flask_login import current_user
 from neosmap.core.api import retrieve_data_mpc
 from datetime import datetime as dt
 import pandas as pd
@@ -16,7 +17,8 @@ class NEOMonitor:
 
         self.time_interval = MONITOR_TIME_INTERVAL
         self._observatory = observatory
-        self.ignore_ids = []
+        self._ignore_id_path = os.path.join(CACHE_USER_DIR, "{}_ignore_ids.txt".format(current_user.id))
+        self._updates_path = os.path.join(DATA_SUBDIRS["monitor"], "updates.json")
         self._updates = []
 
     def _update(self, first_pull=False) -> None:
@@ -135,26 +137,29 @@ class NEOMonitor:
         self._load_record()
 
         for object_ in removed_objects.to_list():
+            entry_id = _id(object_, "remove", int(current_time.timestamp()))
             entry = {
                 "banner": "Object Removed",
                 "action": "object-removal",
                 "objectName": object_,
                 "time": current_time_frmt,
-                "id": _id(object_, "remove", int(current_time.timestamp()))
+                "id": entry_id
             }
             self._updates.insert(0, entry)
 
         for object_ in new_objects.to_list():
+            entry_id = _id(object_, "add", int(current_time.timestamp()))
             entry = {
                 "banner": "Object Added",
                 "action": "object-addition",
                 "objectName": object_,
                 "time": current_time_frmt,
-                "id": _id(object_, "add", int(current_time.timestamp()))
+                "id": entry_id
             }
             self._updates.insert(0, entry)
 
         for update in alter_nobs_objects.to_dict(orient="index").values():
+            entry_id = _id(update["objectName"], "nobs", int(current_time.timestamp()))
             entry = {
                 "banner": "Object Updated",
                 "action": "object-alter",
@@ -163,7 +168,7 @@ class NEOMonitor:
                 "time": current_time_frmt,
                 "nObs_i": update["nObs_i"],
                 "nObs_f": update["nObs_f"],
-                "id": _id(update["objectName"], "nobs", int(current_time.timestamp()))
+                "id": entry_id
             }
             self._updates.insert(0, entry)
 
@@ -171,29 +176,60 @@ class NEOMonitor:
 
     def _update_record(self):
         self._clean_record()
-        with open(os.path.join(DATA_SUBDIRS["monitor"], "updates.json"), "w") as f:
+        with open(self._updates_path, "w") as f:
             json.dump(self._updates, f)
 
     def _clean_record(self):
         to_delete = []
         for i, entry in enumerate(self._updates):
-            entry_time = float(entry["id"].split("-")[-1])
+            _id = entry["id"]
+            entry_time = float(_id.split("-")[-1])
             current_time = dt.utcnow().timestamp()
             save_time = 6 * 3600  # 6 hours
 
             if (current_time - entry_time) > save_time:
                 to_delete.append(i)
+                self._remove_ignore_id(_id)
 
         for i in sorted(to_delete, reverse=True):
             del self._updates[i]
 
     def _load_record(self):
         try:
-            with open(os.path.join(DATA_SUBDIRS["monitor"], "updates.json"), "r") as f:
+            with open(self._updates_path, "r") as f:
                 self._updates = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
-            with open(os.path.join(DATA_SUBDIRS["monitor"], "updates.json"), "w") as f:
+            with open(self._updates_path, "w") as f:
                 json.dump([], f)
+
+    def get_ignore_ids(self):
+        try:
+            with open(self._ignore_id_path, "r") as f:
+                ids = [entry.rstrip() for entry in f]
+                return ids
+        except FileNotFoundError:
+            return []
+
+    def _remove_ignore_id(self, _id):
+        file_load = self.get_ignore_ids()
+        try:
+            file_load.remove(_id)
+        except ValueError:
+            pass
+        self.save_ignore_ids(file_load, overwrite=True)
+
+    def save_ignore_ids(self, ids, overwrite=False):
+        with open(self._ignore_id_path, "w" if overwrite else "a") as f:
+            for _id in ids:
+                f.write("{}\n".format(_id))
+
+    def sort_by_ignored(self, df):
+        ignore_ids = self.get_ignore_ids()
+        try:
+            df["old"] = np.where(df["id"].isin(ignore_ids), "true", "false")
+        except KeyError:
+            pass
+        return df
 
     @property
     def data(self):

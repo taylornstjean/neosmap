@@ -18,6 +18,7 @@ CACHE_OBJECT_DIR = os.path.join(CACHE_DIR, "objects")
 CACHE_LOG_DIR = os.path.join(CACHE_DIR, "log")
 CACHE_TEMP_DIR = os.path.join(CACHE_DIR, "temp")
 CACHE_DATA_DIR = os.path.join(CACHE_DIR, "data")
+CACHE_USER_DIR = os.path.join(CACHE_DIR, "user")
 
 CONF_DIR = os.path.join(BASE_DIR, "conf")
 LOG_DIR = os.path.join(BASE_DIR, "logs")

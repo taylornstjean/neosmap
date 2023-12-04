@@ -88,11 +88,7 @@ def monitor():
     if request.method == "POST":
         clear_update_ids = request.get_json()
 
-        for _id in clear_update_ids:
-            current_user.neomonitor.ignore_ids.append(_id)
-
-        with open(os.path.join(LOG_DIR, "monitor_clear_ids.log"), "a") as f:
-            f.writelines([str(clear_update_ids)])
+        current_user.neomonitor.save_ignore_ids(clear_update_ids)
 
         return "Success.", 200
 
@@ -108,14 +104,9 @@ def monitor_check():
     table_data = df[["objectName", "nObs", "ra", "dec"]]
 
     updates = data_refresh["updates"]
-    ignore_ids = current_user.neomonitor.ignore_ids
+    filtered_updates = current_user.neomonitor.sort_by_ignored(updates)
 
-    try:
-        updates["old"] = np.where(updates["id"].isin(ignore_ids), "true", "false")
-    except KeyError:
-        pass
-
-    return render_template("monitor/table.html", data=table_data, updates=updates), 200
+    return render_template("monitor/table.html", data=table_data, updates=filtered_updates), 200
 
 
 @mod_main.route('/table', methods=["POST"])

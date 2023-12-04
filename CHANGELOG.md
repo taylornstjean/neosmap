@@ -17,6 +17,7 @@ All notable changes to the program will be documented here.
 - Slightly improved logging for monitor system.
 - Moved update storage from memory to disk.
 - Removed logging system due to unresolved errors, will be added back in the future.
+- Moved ignore id list out of memory to disk.
 
 ### [0.2.1] Monitor Update
 
