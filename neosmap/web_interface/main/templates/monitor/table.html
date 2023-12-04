@@ -10,7 +10,8 @@
         </tr>
     </table>
     <div id="monitor-data-section" style="padding: 0; margin-top: 0; width: 100%;" translate="no">
-        {% for update in updates if update["old"] == "false" %}
+        {% for index, update in updates.iterrows() %}
+        {% if update["old"] == "false" %}
             <div class="current-update monitor-widget container-col {{ update['action'] }}" id="{{ update['id'] }}" onclick="window.open('https://cgi.minorplanetcenter.net/cgi-bin/showobsorbs.cgi?Obj={{ update["objectName"] }}&obs=y','_blank')">
                 <div class="monitor-widget-header container-row">
                     <table>
@@ -37,6 +38,7 @@
                     </table>
                 </div>
             </div>
+        {% endif %}
         {% endfor %}
     </div>
     <table id="monitor-update-section-header" style="padding: 0; width: 100%; margin-top: 30px;" translate="no">
@@ -50,7 +52,8 @@
         </tr>
     </table>
     <div id="old-monitor-data-section" class="invisible" style="padding: 0; margin-top: 0; width: 100%;" translate="no">
-        {% for update in updates if update["old"] == "true" %}
+        {% for index, update in updates.iterrows() %}
+        {% if update["old"] == "true" %}
             <div class="monitor-widget container-col {{ update['action'] }}" id="{{ update['id'] }}" onclick="window.open('https://cgi.minorplanetcenter.net/cgi-bin/showobsorbs.cgi?Obj={{ update["objectName"] }}&obs=y','_blank')">
                 <div class="monitor-widget-header container-row">
                     <table>
@@ -77,6 +80,7 @@
                     </table>
                 </div>
             </div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>

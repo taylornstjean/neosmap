@@ -1,3 +1,4 @@
+import pandas as pd
 from flask import Blueprint, render_template, request, redirect, send_from_directory
 from flask_login import login_required, current_user
 from .exceptions import InvalidFilterError, InvalidDatetimeError, NotAPositiveIntegerError
@@ -20,6 +21,7 @@ from config import (
     OVERVIEW_TABLE_COLS
 )
 import os
+import numpy as np
 
 ###########################################################################
 # INITIALIZE BLUEPRINT
@@ -83,10 +85,10 @@ def info():
 @login_required
 def monitor():
     if request.method == "POST":
-        clear_update_ids = request.args.get("clear").split(",")
+        clear_update_ids = request.get_json()
 
-        if clear_update_ids != ['']:
-            current_user.neomonitor.ignore_ids.update(clear_update_ids)
+        for _id in clear_update_ids:
+            current_user.neomonitor.ignore_ids.append(_id)
 
         return "Success.", 200
 
@@ -97,12 +99,13 @@ def monitor():
 @login_required
 def monitor_check():
     data_refresh = current_user.neomonitor.data
-    df = data_refresh["df"]
-    updates = data_refresh["updates"]
 
+    df = data_refresh["df"]
     table_data = df[["objectName", "nObs", "ra", "dec"]]
-    for i, update in enumerate(updates):
-        updates[i]["old"] = "true" if update["id"] in current_user.neomonitor.ignore_ids else "false"
+
+    updates = data_refresh["updates"]
+    ignore_ids = current_user.neomonitor.ignore_ids
+    updates["old"] = np.where(updates["id"].isin(ignore_ids), "true", "false")
 
     return render_template("monitor/table.html", data=table_data, updates=updates), 200
 

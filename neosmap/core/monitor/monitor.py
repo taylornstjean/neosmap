@@ -16,7 +16,7 @@ class NEOMonitor:
 
         self.time_interval = MONITOR_TIME_INTERVAL
         self._observatory = observatory
-        self.ignore_ids = set()
+        self.ignore_ids = []
         self._updates = []
 
     def _update(self, first_pull=False) -> None:
@@ -40,7 +40,7 @@ class NEOMonitor:
         if not first_pull:
             self._check_changes()
             _changes = {
-                "updates": self._updates,
+                "updates": pd.DataFrame(self._updates),
                 "df": self._DF
             }
             self._data = _changes
@@ -140,7 +140,7 @@ class NEOMonitor:
                 "action": "object-removal",
                 "objectName": object_,
                 "time": current_time_frmt,
-                "id": _id(object_, "remove", current_time.timestamp())
+                "id": _id(object_, "remove", int(current_time.timestamp()))
             }
             self._updates.insert(0, entry)
 
@@ -150,7 +150,7 @@ class NEOMonitor:
                 "action": "object-addition",
                 "objectName": object_,
                 "time": current_time_frmt,
-                "id": _id(object_, "add", current_time.timestamp())
+                "id": _id(object_, "add", int(current_time.timestamp()))
             }
             self._updates.insert(0, entry)
 
@@ -163,7 +163,7 @@ class NEOMonitor:
                 "time": current_time_frmt,
                 "nObs_i": update["nObs_i"],
                 "nObs_f": update["nObs_f"],
-                "id": _id(update["objectName"], "nobs", current_time.timestamp())
+                "id": _id(update["objectName"], "nobs", int(current_time.timestamp()))
             }
             self._updates.insert(0, entry)
 
@@ -201,7 +201,7 @@ class NEOMonitor:
         if not hasattr(self, "_data"):
             _data = {
                 "df": self._load_last_df(),
-                "updates": self._updates
+                "updates": pd.DataFrame(self._updates)
             }
             return _data
 

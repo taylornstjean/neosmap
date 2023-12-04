@@ -39,8 +39,9 @@ function clearUpdates() {
         }
     }
 
-    xhrClearUpdates.open("POST", "/monitor?clear=" + ids.join(), true);
-    xhrClearUpdates.send();
+    xhrClearUpdates.open("POST", "/monitor", true);
+    xhrClearUpdates.setRequestHeader("Content-Type", "application/json");
+    xhrClearUpdates.send(JSON.stringify(ids));
 }
 
 function audioWarning(type) {
