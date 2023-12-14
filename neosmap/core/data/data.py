@@ -98,7 +98,7 @@ class NEOData():
 
         def _retrieve_data():
             loaded_data = retrieve_data_jpl()
-            _cache_ = APICache(name="neocp", cache_type="neocp", cache_time=1800)
+            _cache_ = APICache(name="neocp", cache_type="neocp", cache_time=600)
             _cache_.save(loaded_data)
 
         def _load_cache():

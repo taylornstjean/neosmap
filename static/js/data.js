@@ -72,14 +72,12 @@ function getFormData(response) {
     }
     const colSort = document.getElementById("sort-selector").value;
     const visible = document.getElementById("visible-selector").checked;
-    const forceUpdate = document.getElementById("force-update-selector").checked;
 
     return {
         "colFilters": colsToDisplay,
         "valueFilters": filterValues,
         "colSort": colSort,
-        "visible": visible,
-        "forceUpdate": forceUpdate
+        "visible": visible
     };
 }
 
