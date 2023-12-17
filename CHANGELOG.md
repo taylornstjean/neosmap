@@ -18,10 +18,12 @@ All notable changes to the program will be documented here.
 - Removed logging system due to unresolved errors, will be added back in the future.
 - Moved ignore id list out of memory to disk.
 - Removed force update selector to prevent API spam, changes update interval to 10m.
+- Changed audio backend system to be more reliable.
 
 #### Added
 
 - Added sound system for monitoring page. A notification sound will play when there is a database update.
+- Added monitor system daemon entrypoint (will potentially be changed later).
 
 ### [0.2.1] Monitor Update
 

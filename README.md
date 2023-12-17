@@ -10,7 +10,7 @@ Contributors:
 
 Version: 0.2.1 ([CHANGELOG](./CHANGELOG.md))
 
-Last updated December 1st, 2023.
+Last updated December 17th, 2023.
 
 ---
 
@@ -18,7 +18,7 @@ Last updated December 1st, 2023.
 
 Designed for use by the NEO undergraduate observation team at the University of Washington.
 
-This program provides convenience to view and analyze data provided via the JPL SSD/CNEOS API Service. Provides means to sort data and visualize properties such as airmass, altitude and orbit uncertainty. This propram is designed to be visually simple and easy to use (in contrast to many other data management systems).
+This program provides convenience to view and analyze data provided via the JPL SSD/CNEOS API Service. Provides means to sort data and visualize properties such as airmass, altitude and orbit uncertainty. This program is designed to be visually simple and easy to use (in contrast to many other data management systems).
 
 Capable of generating automated observation scripts for telescopes running ACP Observatory Control Software. The script generating algorithm is currently under construction, although a very basic version is available for use.
 
@@ -41,8 +41,6 @@ After making modifications, record them in CHANGELOG.md under \[Unreleased\] usi
 | Fixed    | List of any changes that fix an issue or bug.                                                                                                                                     |
 | Changed  | List of any changes that don't fix any issues or bugs but may improve the program in some way (i.e. QOL, optimization updates, etc). Can also include any functionality removals. |
 | Added    | List of any new additions to the program.                                                                                                                                         |
-
-Create a pull request when code is ready to be merged with the master branch.
 
 ---
 
