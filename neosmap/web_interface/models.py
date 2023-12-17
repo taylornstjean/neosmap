@@ -90,6 +90,8 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def _initialize_neomonitor(cls, uid):
+        if uid not in cls.instances:
+            cls.instances[uid] = {}
         cls.instances[uid]["neomonitor"] = NEOMonitor(cls)
 
     @property
