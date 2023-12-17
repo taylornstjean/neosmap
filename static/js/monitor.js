@@ -17,6 +17,8 @@ function initMonitor() {
                 const updated = document.querySelector('meta[name="updated"]').content;
                 if (updated === "True") {
                     audioWarning();
+                } else if (this.readyState === 4 && this.status === 302) {
+                    window.location.href = "/auth/login"
                 }
             }
         }

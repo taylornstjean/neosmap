@@ -1,3 +1,3 @@
-from .monitor import NEOMonitor
+from .monitor import NEOMonitor, NEOMonitorDaemon
 
 # ------------------------------ END OF FILE ------------------------------

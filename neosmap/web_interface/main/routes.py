@@ -1,9 +1,9 @@
-import pandas as pd
 from flask import Blueprint, render_template, request, redirect, send_from_directory
 from flask_login import login_required, current_user
 from .exceptions import InvalidFilterError, InvalidDatetimeError, NotAPositiveIntegerError
 from .utils import verify_script_args
 from neosmap.core.observation.scripting import Script
+from neosmap.web_interface.models import Daemon
 from neosmap.web_interface.main.forms import ConfigForm
 from neosmap.core.exceptions import OutdatedParamsError, EphemerisParamsNotSetError
 from neosmap.core.graphics import (
@@ -18,11 +18,9 @@ from config import (
     TEMP_SUBDIRS,
     BASE_DIR,
     MAIN_DISPLAYED_COLS,
-    OVERVIEW_TABLE_COLS,
-    LOG_DIR
+    OVERVIEW_TABLE_COLS
 )
 import os
-import numpy as np
 
 ###########################################################################
 # INITIALIZE BLUEPRINT
@@ -98,7 +96,11 @@ def monitor():
 @mod_main.route('/monitor-check', methods=["GET"])
 @login_required
 def monitor_check():
-    data_refresh, update_occurred = current_user.neomonitor.data
+    data_refresh = current_user.neomonitor.data
+
+    updated = current_user.monitor_ping
+    if updated:
+        current_user.deactivate_ping()
 
     df = data_refresh["df"]
     table_data = df[["objectName", "nObs", "ra", "dec"]]
@@ -106,7 +108,14 @@ def monitor_check():
     updates = data_refresh["updates"]
     filtered_updates = current_user.neomonitor.sort_by_ignored(updates)
 
-    return render_template("monitor/table.html", data=table_data, updates=filtered_updates, updated=update_occurred), 200
+    return render_template("monitor/table.html", data=table_data, updates=filtered_updates, updated=updated), 200
+
+
+@mod_main.route('/monitor/update', methods=["GET"])
+def monitor_update():
+    neomonitor = Daemon.get_neomonitor()
+    neomonitor.check_update()
+    return {"message": "Success."}, 200
 
 
 @mod_main.route('/table', methods=["POST"])

@@ -1,5 +1,6 @@
 import os
 from config import BASE_DIR
+from sys import platform
 
 
 ###########################################################################
@@ -25,6 +26,7 @@ class DefaultConfig(BaseConfig):
     if not PRODUCTION:
         SECRET_KEY = os.urandom(100)
         SQLALCHEMY_DATABASE_URI = "sqlite:///neosmap.db"
+        FLASK_RUN_PORT = 5200 if platform == "darwin" else 5000
     else:
         from decouple import Config, RepositoryIni
 

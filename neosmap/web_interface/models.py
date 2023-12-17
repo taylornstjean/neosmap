@@ -2,8 +2,7 @@ from neosmap.web_interface.extensions import db, login_manager
 from flask_login import UserMixin, current_user
 from astropy import units as u
 from neosmap.core.data import NEOData, Observatory
-from neosmap.core.monitor import NEOMonitor
-
+from neosmap.core.monitor import NEOMonitor, NEOMonitorDaemon
 from neosmap.web_interface.utils import get_current_time
 
 
@@ -16,6 +15,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(256), nullable=False)
     email = db.Column(db.String(256), nullable=False, unique=True)
     created_on = db.Column(db.DateTime, nullable=False, default=get_current_time())
+    monitor_ping = db.Column(db.Boolean, nullable=False, default=False)
 
     color_mode = "dark"
 
@@ -56,7 +56,7 @@ class User(db.Model, UserMixin):
         return self._config
 
     @classmethod
-    def _initialize_observatory_instance(
+    def _initialize_observatory(
             cls,
             uid,
             observatory_longitude,
@@ -82,20 +82,15 @@ class User(db.Model, UserMixin):
             return User.instances[self.id]["observatory"]
 
         except KeyError:
-            self._initialize_observatory_instance(
-                self.id,
-                self.config.observatory_longitude,
-                self.config.observatory_latitude,
-                self.config.primary_mirror_diameter,
-                self.config.focal_ratio,
-                self.config.minimum_altitude
-            )
+            self._initialize_observatory(self.id, self.config.observatory_longitude, self.config.observatory_latitude,
+                                         self.config.primary_mirror_diameter, self.config.focal_ratio,
+                                         self.config.minimum_altitude)
 
         return User.instances[self.id]["observatory"]
 
     @classmethod
-    def _initialize_neomonitor_instance(cls, uid, observatory):
-        cls.instances[uid]["neomonitor"] = NEOMonitor(observatory)
+    def _initialize_neomonitor(cls, uid):
+        cls.instances[uid]["neomonitor"] = NEOMonitor(cls)
 
     @property
     def neomonitor(self):
@@ -103,12 +98,12 @@ class User(db.Model, UserMixin):
             return User.instances[self.id]["neomonitor"]
 
         except KeyError:
-            self._initialize_neomonitor_instance(self.id, self.observatory)
+            self._initialize_neomonitor(self.id)
 
         return User.instances[self.id]["neomonitor"]
 
     @classmethod
-    def _initialize_neodata_instance(cls, uid, observatory):
+    def _initialize_neodata(cls, uid, observatory):
         cls.instances[uid]["neodata"] = NEOData(observatory)
 
     @property
@@ -117,7 +112,7 @@ class User(db.Model, UserMixin):
             return User.instances[self.id]["neodata"]
 
         except KeyError:
-            self._initialize_neodata_instance(self.id, self.observatory)
+            self._initialize_neodata(self.id, self.observatory)
 
         return User.instances[self.id]["neodata"]
 
@@ -127,6 +122,30 @@ class User(db.Model, UserMixin):
 
         except KeyError:
             pass
+
+    @classmethod
+    def activate_ping(cls):
+        User.query.update({User.monitor_ping: True})
+        db.session.commit()
+
+    def deactivate_ping(self):
+        self.monitor_ping = False
+        db.session.commit()
+
+
+class Daemon:
+
+    monitor_instance = None
+
+    @classmethod
+    def get_neomonitor(cls):
+        if not cls.monitor_instance:
+            cls._init_neomonitor()
+        return cls.monitor_instance
+
+    @classmethod
+    def _init_neomonitor(cls):
+        cls.monitor_instance = NEOMonitorDaemon(user=User)
 
 
 class Config(db.Model):
