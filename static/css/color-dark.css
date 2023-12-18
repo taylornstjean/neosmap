@@ -11,12 +11,15 @@
     --secondary-accent-color: #ff9248;
     --tertiary-bg-color: #444;
     --font-color: whitesmoke;
+    --autofill-color: aliceblue;
     --table-bg-color: #111;
     --button-bg-color: #666;
     --button-bg-color-hover: #888;
     --button-bg-color-active: #999;
     --button-border-color: #333;
     --item-color: #111;
+    --login-box-bg-color: rgba(17, 17, 17, 0.8);
+    --info-item-color: rgba(17, 17, 17, 0.8);
     --main-border-color: #aaa;
     --secondary-border-color: black;
     --table-border-color: #333;

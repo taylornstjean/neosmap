@@ -8,9 +8,9 @@ Contributors:
 
 - Taylor St Jean (University of Washington)
 
-Version: 0.2.1 ([CHANGELOG](./CHANGELOG.md))
+Version: 0.2.2 ([CHANGELOG](./CHANGELOG.md))
 
-Last updated December 17th, 2023.
+Last updated December 18th, 2023.
 
 ---
 

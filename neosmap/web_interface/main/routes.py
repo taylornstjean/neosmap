@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from .exceptions import InvalidFilterError, InvalidDatetimeError, NotAPositiveIntegerError
 from .utils import verify_script_args
 from neosmap.core.observation.scripting import Script
-from neosmap.web_interface.models import Daemon
+from neosmap.web_interface.models import DaemonUser
 from neosmap.web_interface.main.forms import ConfigForm
 from neosmap.core.exceptions import OutdatedParamsError, EphemerisParamsNotSetError
 from neosmap.core.graphics import (
@@ -113,9 +113,9 @@ def monitor_check():
 
 @mod_main.route('/monitor/update', methods=["GET"])
 def monitor_update():
-    neomonitor = Daemon.get_neomonitor()
+    neomonitor = DaemonUser.get_neomonitor()
     neomonitor.check_update()
-    return {"message": "Success."}, 200
+    return "Success", 200
 
 
 @mod_main.route('/table', methods=["POST"])

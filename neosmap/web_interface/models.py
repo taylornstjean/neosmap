@@ -135,7 +135,7 @@ class User(db.Model, UserMixin):
         db.session.commit()
 
 
-class Daemon:
+class DaemonUser:
 
     monitor_instance = None
 

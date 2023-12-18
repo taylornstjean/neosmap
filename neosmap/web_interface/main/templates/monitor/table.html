@@ -101,7 +101,7 @@
         {% endfor %}
         </tr>
         {% for k in data["objectName"].keys() %}
-            <tr class="selectable-row table-body">
+            <tr onclick="window.open(`/neo?tdes={{ data["objectName"][k] }}`, '_blank').focus()" class="selectable-row table-body">
             {% for j in data.keys() %}
                 <td class="table-cell">
                     {{ data[j][k] }}

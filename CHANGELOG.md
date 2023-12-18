@@ -2,7 +2,11 @@
 
 All notable changes to the program will be documented here.
 
-### [Unreleased] 
+### [Unreleased]
+
+Nothing to see yet.
+
+### [0.2.2] QOL FIxes and Additions
 
 #### Fixed
 

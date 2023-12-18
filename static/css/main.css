@@ -15,6 +15,14 @@ html * {
     color: var(--font-color);
 }
 
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px var(--autofill-color) inset !important;
+}
+
 /* ######################################### */
 /* BACKGROUND */
 
@@ -430,7 +438,7 @@ footer {
     margin-top: 12vh;
     align-self: center;
     min-width: 20%;
-    background-color: var(--item-color);
+    background-color: var(--login-box-bg-color);
     padding: 30px;
     border-radius: 3px;
 }
@@ -466,8 +474,9 @@ footer {
 }
 
 .info-section {
+    border: 1px solid var(--main-border-color);
     margin: 20px;
-    background-color: var(--item-color);
+    background-color: var(--info-item-color);
     padding: 15px;
     border-radius: 5px;
 }

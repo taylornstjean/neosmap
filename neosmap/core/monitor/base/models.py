@@ -3,6 +3,7 @@ from config import MONITOR_TIME_INTERVAL, MPC_NEO_KEY_MAP, DATA_SUBDIRS
 from neosmap.core.caching import APICache
 from neosmap.core.api import retrieve_data_mpc
 from datetime import datetime as dt
+from dataclasses import dataclass, asdict
 import pandas as pd
 import os
 import json
@@ -128,47 +129,35 @@ class NEOMonitorBase:
 
         self._load_record()
 
+        @dataclass
+        class Entry:
+            id: str
+            banner: str
+            action: str
+            objectName: str
+            time: float = current_time_frmt
+            attribute: str = "none"
+            nObs_i: str = "none"
+            nObs_f: str = "none"
+
+            def dict(self):
+                return {k: str(v) for k, v in asdict(self).items()}
+
         for object_ in removed_objects.to_list():
             entry_id = _id(object_, "remove", int(current_time.timestamp()))
-            entry = {
-                "banner": "Object Removed",
-                "action": "object-removal",
-                "attribute": "none",
-                "objectName": object_,
-                "time": current_time_frmt,
-                "nObs_i": "none",
-                "nObs_f": "none",
-                "id": entry_id
-            }
-            self._updates.insert(0, entry)
+            entry = Entry(banner="Object Removed", action="object-removal", objectName=object_, id=entry_id)
+            self._updates.insert(0, entry.dict())
 
         for object_ in new_objects.to_list():
             entry_id = _id(object_, "add", int(current_time.timestamp()))
-            entry = {
-                "banner": "Object Added",
-                "action": "object-addition",
-                "attribute": "none",
-                "objectName": object_,
-                "time": current_time_frmt,
-                "nObs_i": "none",
-                "nObs_f": "none",
-                "id": entry_id
-            }
-            self._updates.insert(0, entry)
+            entry = Entry(banner="Object Added", action="object-addition", objectName=object_, id=entry_id)
+            self._updates.insert(0, entry.dict())
 
         for update in alter_nobs_objects.to_dict(orient="index").values():
             entry_id = _id(update["objectName"], "nobs", int(current_time.timestamp()))
-            entry = {
-                "banner": "Object Updated",
-                "action": "object-alter",
-                "attribute": "nobs",
-                "objectName": update["objectName"],
-                "time": current_time_frmt,
-                "nObs_i": update["nObs_i"],
-                "nObs_f": update["nObs_f"],
-                "id": entry_id
-            }
-            self._updates.insert(0, entry)
+            entry = Entry(banner="Object Updated", action="object-alter", objectName=update["objectName"], id=entry_id,
+                          attribute="nobs", nObs_i=update["nObs_i"], nObs_f=update["nObs_f"])
+            self._updates.insert(0, entry.dict())
 
         self._update_record()
 

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='NEOSMAP',
-    version="0.2.1",
+    version="0.2.2",
     packages=['neosmap'],
     url='https://github.com/taylornstjean/neosmap',
     license='MIT',
