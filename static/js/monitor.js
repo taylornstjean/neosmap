@@ -23,13 +23,21 @@ function initMonitor() {
             }
         }
 
-        xhrMonitor.open("GET", "/monitor-check", true);
+        xhrMonitor.open("GET", "/monitor/fetch", true);
         xhrMonitor.send();
     }
 }
 
 function toggleOldUpdateSection() {
+    const expand = document.getElementById("monitor-expand");
+    if (expand.innerHTML === "Close") {
+        expand.innerHTML = "Expand";
+    } else {
+        expand.innerHTML = "Close";
+    }
+
     $("#old-monitor-data-section").toggleClass("invisible");
+    $("#monitor-expand").toggleClass("selected");
 }
 
 function clearUpdates() {

@@ -4,9 +4,14 @@ All notable changes to the program will be documented here.
 
 ### [Unreleased]
 
-Nothing to see yet.
+#### Changed
+- Made a few GUI updates, specifically to the monitoring page and settings page.
+- Refactored the project slightly for better organization.
 
-### [0.2.2] QOL FIxes and Additions
+#### Fixed
+- Minor typo fixes.
+
+### [0.2.2] QOL Fixes and Additions
 
 #### Fixed
 

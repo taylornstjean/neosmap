@@ -93,7 +93,7 @@ def monitor():
     return render_template("monitor.html", mode=_color_mode()), 200
 
 
-@mod_main.route('/monitor-check', methods=["GET"])
+@mod_main.route('/monitor/fetch', methods=["GET"])
 @login_required
 def monitor_check():
     data_refresh = current_user.neomonitor.data

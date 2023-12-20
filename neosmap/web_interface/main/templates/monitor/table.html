@@ -2,7 +2,7 @@
 <div id="update-section" style="margin-right: 10px;">
     <table id="monitor-update-section-header" style="padding: 0; width: 100%;" translate="no">
         <tr class="monitor-section-header">
-            <th class="table-head">
+            <th class="table-head monitor-section-title">
                 Updates
             </th>
             <td class="clear-monitor-update table-cell" onclick="clearUpdates()">
@@ -11,6 +11,19 @@
         </tr>
     </table>
     <div id="monitor-data-section" style="padding: 0; margin-top: 0; width: 100%;" translate="no">
+        {% set counter = namespace(p=0) %}
+        {% set counter.p = 0 %}
+        {% for index, update in updates.iterrows() %}
+            {% if update["old"] == "false" %}
+                {% set counter.p = counter.p + 1 %}
+            {% endif %}
+        {% endfor %}
+        {% set old_false_len = counter.p %}
+        {% if old_false_len == 0 %}
+            <p class="dim-info-text">
+                Nothing to see yet.
+            </p>
+        {% endif %}
         {% for index, update in updates.iterrows() %}
         {% if update["old"] == "false" %}
             <div class="current-update monitor-widget container-col {{ update['action'] }}" id="{{ update['id'] }}" onclick="window.open('https://cgi.minorplanetcenter.net/cgi-bin/showobsorbs.cgi?Obj={{ update["objectName"] }}&obs=y','_blank')">
@@ -44,15 +57,28 @@
     </div>
     <table id="monitor-update-section-header" style="padding: 0; width: 100%; margin-top: 30px;" translate="no">
         <tr class="monitor-section-header">
-            <th class="table-head">
+            <th class="table-head monitor-section-title">
                 Cleared Updates
             </th>
-            <td class="expand-cleared-updates table-cell" onclick="toggleOldUpdateSection()">
+            <td class="expand-cleared-update table-cell" id="monitor-expand" onclick="toggleOldUpdateSection()">
                 Expand
             </td>
         </tr>
     </table>
     <div id="old-monitor-data-section" class="invisible" style="padding: 0; margin-top: 0; width: 100%;" translate="no">
+        {% set counter = namespace(p=0) %}
+        {% set counter.p = 0 %}
+        {% for index, update in updates.iterrows() %}
+            {% if update["old"] == "true" %}
+                {% set counter.p = counter.p + 1 %}
+            {% endif %}
+        {% endfor %}
+        {% set old_true_len = counter.p %}
+        {% if old_true_len == 0 %}
+            <p class="dim-info-text">
+                Nothing to see yet.
+            </p>
+        {% endif %}
         {% for index, update in updates.iterrows() %}
         {% if update["old"] == "true" %}
             <div class="monitor-widget container-col {{ update['action'] }}" id="{{ update['id'] }}" onclick="window.open('https://cgi.minorplanetcenter.net/cgi-bin/showobsorbs.cgi?Obj={{ update["objectName"] }}&obs=y','_blank')">

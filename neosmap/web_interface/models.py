@@ -1,8 +1,7 @@
 from neosmap.web_interface.extensions import db, login_manager
 from flask_login import UserMixin, current_user
 from astropy import units as u
-from neosmap.core.data import NEOData, Observatory
-from neosmap.core.monitor import NEOMonitor, NEOMonitorDaemon
+from neosmap.core.data import NEOData, Observatory, NEOMonitor, NEOMonitorDaemon
 from neosmap.web_interface.utils import get_current_time
 
 
