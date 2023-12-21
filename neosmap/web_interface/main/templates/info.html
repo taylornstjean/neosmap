@@ -4,6 +4,8 @@
         <title>Info</title>
         <link rel="stylesheet" href={{ "/static/css/color-"~mode~".css" }}>
         <link rel="stylesheet" href="static/css/main.css">
+        <script src="/static/js/info.js"></script>
+        <script src="/static/js/serverDate.js"></script>
         <link rel="shortcut icon" href="/favicon.ico">
     </head>
     <body>
@@ -17,41 +19,89 @@
                 <a class="settings-icon" onclick="window.location.href='/settings';"><img {% if mode == "dark" %}class="filter-white"{% endif %} alt="Settings" src="/static/img/settings.svg"></a>
             </div>
         </div>
-        <div class="main-container-no-left">
-            <div class="container-col info-section">
-                <p class="title-header" style="margin-left: 20px; margin-right: 20px; margin-bottom: 20px;">
-                    ABOUT
-                </p>
-                <p style="margin: 0 20px; padding: 10px 10px 10px 0;">
-                    The Near-Earth Object Statistical Management Program (NEOSMAP) was built for the University of Washington NEO observation follow-up team to aid in object tracking and selection.
-                </p>
-            </div>
-            <div class="container-col info-section">
-                <p class="title-header" style="margin-left: 20px; margin-right: 20px; margin-bottom: 20px;">
-                    ACKNOWLEDGEMENTS
-                </p>
-                <h3 style="margin: 0 20px; padding: 10px 10px 10px 0; flex-grow: 1;">
-                    <a href="https://www.jpl.nasa.gov/" style="text-decoration: none;" target="_blank">
-                        Jet Propulsion Laboratory (JPL)
-                    </a>
+        <div class="main-container">
+            <div id="side-menu" class="side-menu">
+                <h3 class="nav-title">
+                    Navigation
                 </h3>
-                <p style="margin: 0 20px; padding: 10px 10px 10px 0;">
-                    This software uses data retrieved from the CNEOS Scout API. The API is hosted by Jet Propulsion Laboratory (JPL), a research and development lab federally funded by NASA and managed by Caltech. This project is not affiliated with nor was it endorsed by NASA, JPL, or Caltech.
-                    <br><br>
-                    The API documentation can be accessed <a href="https://ssd-api.jpl.nasa.gov/doc/scout.html" target="_blank">here</a>.
-                </p>
+                <div class="container-col">
+                    <button class="tablinks active" onclick="openContent(event,about)" id="default-open">About</button>
+                    <button class="tablinks" onclick="openContent(event,acknowledgements)">Acknowledgements</button>
+                    <button class="tablinks" onclick="openContent(event,attributions)">Attributions</button>
+                </div>
+                <h3 class="side-title">
+                    Clock [UTC]
+                </h3>
+                <p id="clock"></p>
             </div>
-            <div class="container-col info-section">
-                <p class="title-header" style="margin-left: 20px; margin-right: 20px; margin-bottom: 20px;">
-                    ATTRIBUTIONS
-                </p>
-                <p style="margin: 0 20px; padding: 10px 10px 10px 0;">
-                    The favicon for this website was obtained from <a href="https://www.flaticon.com/free-icons/comet" target="_blank">flaticon.com</a>.
-                </p>
-                <p style="margin: 0 20px; padding: 10px 10px 10px 0;">
-                    The background image is of the Wolf-Rayet star "Nasty 1" and was obtained from <a href="https://images.nasa.gov/details/hubble-observes-one-of-a-kind-star-nicknamed-nasty_17754652960_o" target="_blank">nasa.gov</a>.
-                </p>
+            <div id="about" class="container-col tabcontent workspace-container">
+                <div class="container-row title-underline">
+                    <div class="container-col" style="align-self: flex-start;">
+                        <p class="title-header">
+                            About
+                        </p>
+                    </div>
+                </div>
+                <div class="container-col info-section">
+                    <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
+                        The Near-Earth Object Statistical Management Program (NEOSMAP) was built for the University of Washington NEO observation follow-up team to aid in object tracking and selection.
+                    </p>
+                    <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
+                        If you find any bugs, or have any suggestions or criticism you would like to share, please feel free to raise an issue on the project <a href="https://github.com/taylornstjean/neosmap" target="_blank">GitHub</a> repository.
+                    </p>
+                </div>
+            </div>
 
+            <div id="acknowledgements" class="container-col tabcontent workspace-container">
+                <div class="container-row title-underline">
+                    <div class="container-col" style="align-self: flex-start;">
+                        <p class="title-header">
+                            Acknowledgements
+                        </p>
+                    </div>
+                </div>
+                <div class="container-col info-section">
+                    <h3 style="margin: 0 10px; padding: 10px 10px 10px 0; flex-grow: 1;">
+                        <a href="https://www.jpl.nasa.gov/" style="text-decoration: none;" target="_blank">
+                            Jet Propulsion Laboratory (JPL)
+                        </a>
+                    </h3>
+                    <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
+                        This software uses data retrieved from the CNEOS Scout API. The API is hosted by Jet Propulsion Laboratory (JPL), a research and development lab federally funded by NASA and managed by Caltech. This project is not affiliated with nor was it endorsed by NASA, JPL, or Caltech.
+                        <br><br>
+                        The API documentation can be accessed <a href="https://ssd-api.jpl.nasa.gov/doc/scout.html" target="_blank">here</a>.
+                    </p>
+                </div>
+                <div class="container-col info-section">
+                    <h3 style="margin: 0 10px; padding: 10px 10px 10px 0; flex-grow: 1;">
+                        <a href="https://www.minorplanetcenter.net/" style="text-decoration: none;" target="_blank">
+                            Minor Planet Center (MPC)
+                        </a>
+                    </h3>
+                    <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
+                        This software uses data and/or services provided by the International Astronomical Union's (IAU) Minor Planet Center (MPC). This project is not affiliated with nor was it endorsed by the IAU.
+                        <br><br>
+                        The MPC NEO confirmation page can be found <a href="https://minorplanetcenter.net/iau/NEO/toconfirm_tabular.html" target="_blank">here</a>.
+                    </p>
+                </div>
+            </div>
+
+            <div id="attributions" class="container-col tabcontent workspace-container">
+                <div class="container-row title-underline">
+                    <div class="container-col" style="align-self: flex-start;">
+                        <p class="title-header">
+                            Attributions
+                        </p>
+                    </div>
+                </div>
+                <div class="container-col info-section">
+                    <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
+                        The favicon for this website was obtained from <a href="https://www.flaticon.com/free-icons/comet" target="_blank">flaticon.com</a>.
+                    </p>
+                    <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
+                        The background image is of the Wolf-Rayet star "Nasty 1" and was obtained from <a href="https://images.nasa.gov/details/hubble-observes-one-of-a-kind-star-nicknamed-nasty_17754652960_o" target="_blank">nasa.gov</a>.
+                    </p>
+                </div>
             </div>
         </div>
     </body>

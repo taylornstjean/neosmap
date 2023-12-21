@@ -41,7 +41,7 @@
             </div>
             <div class="container-row workspace-container" style="align-items: stretch;">
                 <div class="container-col" style="align-items: stretch; align-self: stretch; flex-grow: 1;">
-                    <div id="configuration" class="tabcontent container-col">
+                    <div id="configuration" class="container-col">
                         <div class="container-row title-underline" style="flex-grow: 1; align-content: stretch;">
                             <div class="container-col" style="align-self: flex-start;">
                                 <p class="title-header">
@@ -55,7 +55,7 @@
                                 <p class="subtitle-header">
                                     Observatory
                                 </p>
-                                <div class="container-row" style="align-items: self-start;">
+                                <div class="container-row settings-row" style="align-items: self-start;">
                                     <div class="input-section container-col">
                                         {{ form.latitude.label(class_="config-label", style_="padding-bottom: 5px;") }}
                                         {{ form.latitude(class_="text-input set-width-200", value_=conf.observatory_latitude) }}
@@ -73,7 +73,7 @@
                                 <p class="subtitle-header" style="margin-top: 20px;">
                                     Telescope
                                 </p>
-                                <div class="container-row">
+                                <div class="container-row settings-row">
                                     <div class="input-section container-col">
                                         {{ form.ts_primary_mirror_diameter.label(class_="config-label", style_="padding-bottom: 5px;") }}
                                         {{ form.ts_primary_mirror_diameter(class_="text-input set-width-200", value_=conf.primary_mirror_diameter) }}
@@ -86,7 +86,7 @@
                                 <hr class="sep-line">
                                 <div style="width: 100%; margin: 10px 0;">
                                     {% for field, errors in form.errors.items() %}
-                                    <div class="alert alert-error">
+                                    <div class="alert alert-error" style="text-align: left;">
                                         {{ '\n'.join(errors) }}
                                     </div>
                                     {% endfor %}
