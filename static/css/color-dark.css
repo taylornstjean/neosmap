@@ -1,6 +1,7 @@
 /* COLOR STYLE SHEET - DARK MODE */
 
 :root {
+    color-scheme: dark;
     --main-bg-color: #222;
     --header-bg-color: #333;
     --footer-bg-color: #333;
@@ -12,7 +13,7 @@
     --tertiary-bg-color: #444;
     --font-color: whitesmoke;
     --dim-font-color: grey;
-    --autofill-color: aliceblue;
+    --autofill-color: darkgrey;
     --table-bg-color: #111;
     --button-bg-color: #666;
     --button-bg-color-hover: #888;

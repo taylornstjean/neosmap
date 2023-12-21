@@ -18,7 +18,7 @@ html * {
 
 input:-webkit-autofill {
     background-color: transparent !important;
-    -webkit-box-shadow: 0 0 0 50px var(--autofill-color) inset;
+    -webkit-box-shadow: 0 0 0 50px #222 inset;
 }
 
 /* ######################################### */
@@ -792,7 +792,7 @@ button:hover {
 .filter-input {
     width: 2.5em;
     font-size: 12px;
-    color: black !important;
+    color: var(--font-color);
 }
 
 .filter-label {
@@ -804,13 +804,13 @@ button:hover {
     margin-left: 1em;
     align-self: center;
     font-size: 14px;
-    color: black !important;
+    color: var(--font-color);
 }
 
 #filter-selector {
     align-self: center;
     font-size: 14px;
-    color: black !important;
+    color: var(--font-color);
 }
 
 .sort-label {
@@ -900,8 +900,8 @@ button:hover {
 }
 
 .text-input {
-    color: black !important;
-    height: 1.7em;
+    height: 1.9em;
+    padding-left: 7px;
 }
 
 .text-input.set-width-200 {
@@ -1239,7 +1239,7 @@ tr.selectable-row:hover > * {
     height: 25px;
     width: 25px;
     padding-bottom: 0;
-    margin: 0 3px 5px;
+    margin: 0 3px 7px;
     align-self: flex-end;
     background-color: rgba(0, 255, 0, 1);
     border-radius: 50%;
@@ -1252,7 +1252,7 @@ tr.selectable-row:hover > * {
     height: 13px;
     width: 13px;
     padding-bottom: 0;
-    margin: 0 9px 11px;
+    margin: 0 9px 13px;
     align-self: flex-end;
     background-color: rgba(0, 200, 0, 1);
     border-radius: 50%;
