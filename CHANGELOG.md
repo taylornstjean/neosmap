@@ -7,6 +7,7 @@ All notable changes to the program will be documented here.
 #### Changed
 - Made a few GUI updates, specifically to the monitoring page and settings page.
 - Refactored the project slightly for better organization.
+- Reorganized the configuration file.
 
 #### Fixed
 - Minor typo fixes.

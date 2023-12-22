@@ -1,12 +1,4 @@
 {
-  "constraints": {
-    "min_observation_time": 1,
-    "max_observation_time": 48,
-    "min_minimum_altitude": 1,
-    "max_minimum_altitude": 89,
-    "min_time_increments": 16,
-    "max_time_increments": 512
-  },
   "visualization": {
     "plot": {
       "observation_time": 24,
@@ -34,83 +26,128 @@
       "url": "https://ssd-api.jpl.nasa.gov/scout.api",
       "eph_time_increment": 30
     },
-    "neo_list_keys": [
-      "objectName",
-      "nObs",
-      "arc",
-      "rmsN",
-      "H",
-      "rating",
-      "moid",
-      "caDist",
-      "vInf",
-      "phaScore",
-      "neoScore",
-      "geocentricScore",
-      "ieoScore",
-      "tisserandScore",
-      "lastRun",
-      "ra",
-      "dec",
-      "elong",
-      "rate",
-      "Vmag",
-      "unc",
-      "uncP1",
-      "vis",
-      "fullScore"
-    ],
-    "neo_list_keys_display": [
-      "objectName",
-      "nObs",
-      "arc",
-      "moid",
-      "H",
-      "neoScore",
-      "lastRun",
-      "ra",
-      "dec",
-      "elong",
-      "rate",
-      "Vmag",
-      "unc",
-      "uncP1",
-      "vis",
-      "fullScore"
-    ],
-    "neo_list_extended_keys": {
-      "objectName": "Temporary Designation",
-      "nObs": "Number of Observations",
-      "arc": "Observation Arc (hours)",
-      "rmsN": "rmsN",
-      "H": "Absolute Magnitude (H)",
-      "rating": "Rating",
-      "moid": "Min Orbit Intersection Dist (au)",
-      "caDist": "Close Approach Distance (au)",
-      "vInf": "Hyperbolic Excess Velocity",
-      "phaScore": "PHA Score",
-      "neoScore": "NEO Score",
-      "geocentricScore": "Geocentric Score",
-      "ieoScore": "IEO Score",
-      "tisserandScore": "Tisserand Score",
-      "lastRun": "Last Run",
-      "ra": "Current Right Ascension (ha)",
-      "dec": "Current Declination (deg)",
-      "elong": "Elongation",
-      "rate": "Rate of Precession",
-      "Vmag": "Apparent Magnitude (Vmag)",
-      "unc": "Uncertainty Current",
-      "uncP1": "Uncertainty +1 Day",
-      "vis": "Currently Visible (median orbit)",
-      "fullScore": "Observation Priority Score"
+    "neo_list_keys": {
+      "objectName": {
+        "display": true,
+        "ext": "Temporary Designation",
+        "is_score": false
+      },
+      "nObs": {
+        "display": true,
+        "ext": "Number of Observations",
+        "is_score": false
+      },
+      "arc": {
+        "display": true,
+        "ext": "Observation Arc (hours)",
+        "is_score": false
+      },
+      "rmsN": {
+        "display": false,
+        "ext": "rmsN",
+        "is_score": false
+      },
+      "H": {
+        "display": true,
+        "ext": "Absolute Magnitude (H)",
+        "is_score": false
+      },
+      "rating": {
+        "display": false,
+        "ext": "Rating",
+        "is_score": false
+      },
+      "moid": {
+        "display": true,
+        "ext": "Min Orbit Intersect Dist (au)",
+        "is_score": false
+      },
+      "caDist": {
+        "display": false,
+        "ext": "Close Approach Distance (au)",
+        "is_score": false
+      },
+      "vInf": {
+        "display": false,
+        "ext": "Hyperbolic Excess Velocity",
+        "is_score": false
+      },
+      "phaScore": {
+        "display": false,
+        "ext": "PHA Score",
+        "is_score": true
+      },
+      "neoScore": {
+        "display": true,
+        "ext": "NEO Score",
+        "is_score": true
+      },
+      "geocentricScore": {
+        "display": false,
+        "ext": "Geocentric Score",
+        "is_score": true
+      },
+      "ieoScore": {
+        "display": false,
+        "ext": "IEO Score",
+        "is_score": true
+      },
+      "tisserandScore": {
+        "display": false,
+        "ext": "Tisserand Score",
+        "is_score": true
+      },
+      "lastRun": {
+        "display": true,
+        "ext": "Last Run",
+        "is_score": false
+      },
+      "ra": {
+        "display": true,
+        "ext": "Current Right Ascension (ha)",
+        "is_score": false
+      },
+      "dec": {
+        "display": true,
+        "ext": "Current Declination (deg)",
+        "is_score": false
+      },
+      "elong": {
+        "display": true,
+        "ext": "Elongation",
+        "is_score": false
+      },
+      "rate": {
+        "display": true,
+        "ext": "Rate of Precession",
+        "is_score": false
+      },
+      "Vmag": {
+        "display": true,
+        "ext": "Apparent Magnitude (Vmag)",
+        "is_score": false
+      },
+      "unc": {
+        "display": true,
+        "ext": "Uncertainty Current",
+        "is_score": false
+      },
+      "uncP1": {
+        "display": true,
+        "ext": "Uncertainty +1 Day",
+        "is_score": false
+      },
+      "vis": {
+        "display": true,
+        "ext": "Currently Visible (median orbit)",
+        "is_score": false
+      },
+      "fullScore": {
+        "display": true,
+        "ext": "Observation Priority Score",
+        "is_score": false
+      }
     },
-    "neo_list_scores":  [
-      "neoScore",
-      "tisserandScore",
-      "ieoScore",
-      "geocentricScore",
-      "phaScore"
-    ],
     "neo_list_overview_table": {
       "dra": "&Delta; Right Ascension [arcmin/h]",
       "ddec": "&Delta; Declination [arcmin/h]",

@@ -63,12 +63,12 @@ OBS_TIME = CONF["visualization"]["plot"]["observation_time"]
 ###########################################################################
 # DATA COLUMNS
 
-COLUMNS = CONF["jpl"]["neo_list_keys"]
-EXTENDED_COLS = CONF["jpl"]["neo_list_extended_keys"]
+COLUMNS = list(CONF["jpl"]["neo_list_keys"].keys())
+EXTENDED_COLS = {col: vals["ext"] for col, vals in CONF["jpl"]["neo_list_keys"].items()}
 FILTERABLE_COLS = CONF["jpl"]["neo_list_numerically_filterable_keys"]
-SCORE_COLUMNS = CONF["jpl"]["neo_list_scores"]
+SCORE_COLUMNS = [col for col, vals in CONF["jpl"]["neo_list_keys"].items() if vals["is_score"]]
 OVERVIEW_TABLE_COLS = CONF["jpl"]["neo_list_overview_table"]
-MAIN_DISPLAYED_COLS = CONF["jpl"]["neo_list_keys_display"]
+MAIN_DISPLAYED_COLS = [col for col, vals in CONF["jpl"]["neo_list_keys"].items() if vals["display"]]
 MPC_NEO_KEY_MAP = CONF["minor_planets_center"]["neo_list_keys_map"]
 
 ###########################################################################
