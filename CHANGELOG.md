@@ -11,6 +11,7 @@ All notable changes to the program will be documented here.
 
 #### Fixed
 - Minor typo fixes.
+- Monitor page no longer does a full reload on clear.
 
 ### [0.2.2] QOL Fixes and Additions
 

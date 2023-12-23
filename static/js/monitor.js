@@ -5,10 +5,7 @@ window.onload = function() {
     initClock();
 }
 
-function initMonitor() {
-    _fetchUpdate()
-    setInterval(_fetchUpdate, 60000);
-    function _fetchUpdate() {
+function fetchUpdate() {
         const xhrMonitor = new XMLHttpRequest();
 
         xhrMonitor.onreadystatechange = function() {
@@ -26,6 +23,10 @@ function initMonitor() {
         xhrMonitor.open("GET", "/monitor/fetch", true);
         xhrMonitor.send();
     }
+
+function initMonitor() {
+    fetchUpdate()
+    setInterval(fetchUpdate, 60000);
 }
 
 function toggleOldUpdateSection() {
@@ -49,7 +50,7 @@ function clearUpdates() {
 
     xhrClearUpdates.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            location.reload();
+            fetchUpdate();
         }
     }
 
