@@ -66,7 +66,7 @@ class Ephemeris:
             timestamp_eph = datetime_eph.timestamp()
             timestamp_now = datetime.utcnow().timestamp()
 
-            save_buffer = 1800  # seconds
+            save_buffer = 360  # seconds
 
             if (timestamp_now - timestamp_eph) >= save_buffer:
                 try:
