@@ -6,22 +6,50 @@ window.onload = function() {
 }
 
 function fetchUpdate() {
-        const xhrMonitor = new XMLHttpRequest();
+        const xhrMonitorTable = new XMLHttpRequest();
 
-        xhrMonitor.onreadystatechange = function() {
+        xhrMonitorTable.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
-                document.getElementById("monitor-data").innerHTML = this.responseText;
-                const updated = document.querySelector('meta[name="updated"]').content;
-                if (updated === "True") {
-                    audioWarning();
-                } else if (this.readyState === 4 && this.status === 302) {
-                    window.location.href = "/auth/login"
-                }
+                document.getElementById("m-table-section").innerHTML = this.responseText;
+            } else if (this.readyState === 4 && this.status === 302) {
+                    window.location.href = "/auth/login";
             }
         }
 
-        xhrMonitor.open("GET", "/monitor/fetch", true);
-        xhrMonitor.send();
+        xhrMonitorTable.open("GET", "/monitor/fetch?content=table", true);
+        xhrMonitorTable.send();
+
+        const clearData = document.getElementById("m-clear-data");
+        let expanded = false;
+
+        if (clearData !== null) {
+            if (clearData.classList.contains("invisible") === false) {
+                expanded = true;
+            }
+        }
+
+        const xhrMonitorUpdate = new XMLHttpRequest();
+
+        xhrMonitorUpdate.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("m-update-section").innerHTML = this.responseText;
+
+                if (expanded === true) {
+                    toggleClearedUpdates();
+                }
+
+                const updated = document.querySelector('meta[name="updated"]').content;
+                if (updated === "True") {
+                    audioWarning();
+                }
+
+            } else if (this.readyState === 4 && this.status === 302) {
+                    window.location.href = "/auth/login";
+            }
+        }
+
+        xhrMonitorUpdate.open("GET", `/monitor/fetch?content=updates`, true);
+        xhrMonitorUpdate.send();
     }
 
 function initMonitor() {
@@ -29,7 +57,7 @@ function initMonitor() {
     setInterval(fetchUpdate, 60000);
 }
 
-function toggleOldUpdateSection() {
+function toggleClearedUpdates() {
     const expand = document.getElementById("monitor-expand");
     if (expand.innerHTML === "Close") {
         expand.innerHTML = "Expand";
@@ -37,7 +65,7 @@ function toggleOldUpdateSection() {
         expand.innerHTML = "Close";
     }
 
-    $("#old-monitor-data-section").toggleClass("invisible");
+    $("#m-clear-data").toggleClass("invisible");
     $("#monitor-expand").toggleClass("selected");
 }
 

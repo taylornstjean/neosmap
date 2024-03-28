@@ -14,7 +14,7 @@ class NEOMonitorBase:
     def __init__(self, user):
 
         self.time_interval = MONITOR_TIME_INTERVAL
-        self.save_time = 3 * 3600  # 3 hours
+        self.save_time = 12 * 3600  # 12 hours
         self._updates_path = os.path.join(DATA_SUBDIRS["monitor"], "updates.json")
         self._updates = []
         self._update_occurred = False

@@ -11,23 +11,23 @@
         <div class="header">
             <a href="/data" class="logo"><img alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
         </div>
-        <div class="main-container-no-left">
-            <div class="login-box container-col">
+        <div class="c-main-no-left">
+            <div class="login-box c-col">
                 <h3 class="title">
                     Login
                 </h3>
                 <form method="POST" action="/auth/login">
-                    <div class="container-col">
+                    <div class="c-col">
                         {{ form.csrf_token }}
-                        <div class="input-section container-col">
+                        <div class="input-section c-col">
                             {{ form.email.label(class_="login-label") }}
                             {{ form.email(class_="text-input") }}
                         </div>
-                        <div class="input-section container-col">
+                        <div class="input-section c-col">
                             {{ form.password.label(class_="login-label") }}
                             {{ form.password(class_="text-input") }}
                         </div>
-                        <div class="input-section container-row">
+                        <div class="input-section c-row">
                             {{ form.remember(class_="login-check-box") }}
                             {{ form.remember.label(class_="login-label check-box-label") }}
                         </div>

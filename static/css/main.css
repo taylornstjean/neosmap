@@ -169,7 +169,7 @@ footer {
 /* ######################################### */
 /* MAIN CONTAINERS */
 
-.main-container {
+.c-main {
     margin-top: calc(var(--header-height) + 2px);
     margin-left: var(--side-panel-width);
     margin-bottom: 28px;
@@ -179,7 +179,7 @@ footer {
     align-items: stretch;
 }
 
-.main-container-no-left {
+.c-main-no-left {
     margin-top: calc(var(--header-height) + 2px);
     margin-bottom: 28px;
     display: flex;
@@ -187,7 +187,7 @@ footer {
     min-height: 90vh;
 }
 
-.no-js-container {
+.c-no-js {
     margin-top: calc(var(--header-height) + 2px);
     margin-bottom: 28px;
     display: flex;
@@ -200,13 +200,13 @@ footer {
     margin: 10px 20px;
 }
 
-.container-row {
+.c-row {
     display: flex;
     flex-direction: row;
     align-self: stretch;
 }
 
-.container-col {
+.c-col {
     display: flex;
     flex-direction: column;
     align-self: stretch;
@@ -658,58 +658,58 @@ title * {
     overflow-y: scroll;
 }
 
-#table-section {
+#m-table-section {
     flex-grow: 1;
     width: 40%;
 }
 
-#update-section{
+#m-update-section{
     flex-grow: 1;
     width: 60%;
 }
 
-#monitor-data-section div.object-removal, #old-monitor-data-section div.object-removal {
+#m-data div.object-removal, #m-clear-data div.object-removal {
     border-left: 2px darkred solid;
     background-color: rgba(255, 0, 0, 0.1);
 }
 
-#monitor-data-section div.object-addition, #old-monitor-data-section div.object-addition {
+#m-data div.object-addition, #m-clear-data div.object-addition {
     border-left: 2px darkgreen solid;
     background-color: rgba(0, 255, 0, 0.1);
     transition: background-color, border-left-width 0.1s ease-out;
 }
 
-#monitor-data-section div.object-alter, #old-monitor-data-section div.object-alter {
+#m-data div.object-alter, #m-clear-data div.object-alter {
     border-left: 2px darkblue solid;
     background-color: rgba(0, 0, 255, 0.1);
     transition: background-color, border-left-width 0.1s ease-out;
 }
 
-#monitor-data-section div.object-addition:hover, #old-monitor-data-section div.object-addition:hover {
+#m-data div.object-addition:hover, #m-clear-data div.object-addition:hover {
     border-left: 4px darkgreen solid;
     background-color: rgba(0, 255, 0, 0.3);
     cursor: pointer;
 }
 
-#monitor-data-section div.object-alter:hover, #old-monitor-data-section div.object-alter:hover {
+#m-data div.object-alter:hover, #m-clear-data div.object-alter:hover {
     border-left: 4px darkblue solid;
     background-color: rgba(0, 0, 255, 0.3);
     cursor: pointer;
 }
 
-div.monitor-widget {
+div.m-widget {
     margin-bottom: 10px;
 }
 
-div.monitor-widget-header {
+div.m-widget-header {
     align-content: stretch;
 }
 
-div.monitor-widget-header table {
+div.m-widget-header table {
     flex-grow: 1;
 }
 
-div.monitor-widget-header table tr th, div.monitor-widget-header table tr td {
+div.m-widget-header table tr th, div.m-widget-header table tr td {
     flex-grow: 1;
     width: 50%;
     text-align: start;
@@ -719,11 +719,11 @@ div.monitor-widget-header table tr th, div.monitor-widget-header table tr td {
     padding-bottom: 0;
 }
 
-div.monitor-widget-header table tr td {
+div.m-widget-header table tr td {
     font-size: 12px;
 }
 
-div.monitor-widget-header table tr th.right-cell {
+div.m-widget-header table tr th.right-cell {
     text-align: end;
 }
 
@@ -938,12 +938,12 @@ button:hover {
     margin: 0 0 20px;
 }
 
-.clear-monitor-update {
+.m-clear-update nobr {
     color: red;
     user-select: none;
 }
 
-.clear-monitor-update:hover {
+.m-clear-update nobr:hover {
     color: darkred;
 }
 
@@ -973,11 +973,11 @@ button:hover {
     cursor: pointer;
 }
 
-.clear-monitor-update:hover {
+.m-clear-update:hover {
     cursor: pointer;
 }
 
-.clear-monitor-update {
+.m-clear-update {
     text-align: right;
 }
 
@@ -987,7 +987,7 @@ button:hover {
     text-align: center;
 }
 
-.monitor-section-title {
+.m-section-title {
     text-align: left;
 }
 
@@ -1046,12 +1046,12 @@ button:hover {
 /* ######################################### */
 /* TABLES */
 
-table#main-data-table, table#eph-main-data-table, table#eph-neo-info-table, table#monitor-data-table, table#monitor-update-section-header {
+table#main-data-table, table#eph-main-data-table, table#eph-neo-info-table, table#monitor-data-table, table#m-update-section-header {
     border: 2px solid var(--table-border-color);
     border-collapse: collapse;
 }
 
-table#monitor-update-section-header {
+table#m-update-section-header {
     margin-bottom: 10px;
 }
 
@@ -1060,16 +1060,16 @@ table#eph-main-data-table tr th.table-head {
     border-collapse: collapse;
 }
 
-table#monitor-update-section-header tr th.table-head {
+table#m-update-section-header tr th.table-head {
     border: 2px solid var(--table-border-color);
     width: 100%;
 }
 
-#old-monitor-data-section.invisible {
+#m-clear-data.invisible {
     visibility: hidden;
 }
 
-.monitor-section-header {
+.m-section-header {
     background-color: var(--table-bg-color-header);
 }
 

@@ -27,21 +27,21 @@
         </div>
         <noscript>
             <style type="text/css">
-                .main-container {display:none;}
+                .c-main {display:none;}
             </style>
-            <div class="no-js-container">
+            <div class="c-no-js">
                 <p>
                     You don't have javascript enabled.  Please enable javascript and reload the page.
                 </p>
             </div>
         </noscript>
-        <div class="main-container">
+        <div class="c-main">
             {% include "includes/scripting-popup.html" %}
             <div id="side-menu" class="side-menu">
                 <h3 class="nav-title">
                     Navigation
                 </h3>
-                <div class="wait-for-eph container-col">
+                <div class="wait-for-eph c-col">
                     <button class="tablinks" onclick="openContent(event,overview)" id="default-open">Overview</button>
                     <button class="tablinks" onclick="openContent(event,ephemerides)">Ephemerides</button>
                 </div>
@@ -50,9 +50,9 @@
                 </h3>
                 <p id="clock"></p>
             </div>
-            <div id="overview" class="tabcontent container-col workspace-container">
-                <div class="container-row title-underline">
-                    <div class="container-col" style="align-self: flex-start;">
+            <div id="overview" class="tabcontent c-col workspace-container">
+                <div class="c-row title-underline">
+                    <div class="c-col" style="align-self: flex-start;">
                         <p class="title-header">
                             Overview for NEO <a class="desig-title">{{ desig }}</a>
                         </p>
@@ -61,7 +61,7 @@
                         <button type="button" class="main-data-button animate drop-in" onclick="openPopup()" id="script">Generate Script</button>
                     </div> -->
                 </div>
-                <div id="eph-loader" class="container-col" style="background-color: rgba(85, 85, 85, 0.6); padding: 15px; border-radius: 10px; margin-top: 20vh;">
+                <div id="eph-loader" class="c-col" style="background-color: rgba(85, 85, 85, 0.6); padding: 15px; border-radius: 10px; margin-top: 20vh;">
                     <div class="loader" style="align-self: center;">
                     </div>
                     <p style="align-self: center; color: whitesmoke !important; margin-bottom: 3px;">
@@ -71,11 +71,11 @@
                         This may take a few seconds.
                     </p>
                 </div>
-                <div class="container-row wait-for-eph" id="eph-content">
-                    <div class="container-col neo-left-col">
-                        <div class="container-row dashboard-item" id="gauge-row">
+                <div class="c-row wait-for-eph" id="eph-content">
+                    <div class="c-col neo-left-col">
+                        <div class="c-row dashboard-item" id="gauge-row">
                             {% for col in score_cols %}
-                            <div class="container-col gauge" id={{"gauge-"~col}}>
+                            <div class="c-col gauge" id={{"gauge-"~col}}>
                                 {% set gauge_title = col.split('Score')[0] %}
                                 <p class="panel-section-title gauge-title">
                                     {% if gauge_title in ['neo', 'pha', 'ieo'] %}
@@ -94,9 +94,9 @@
                             </div>
                             {% endfor %}
                         </div>
-                        <div id="overview-box" class="container-row dashboard-item">
-                            <div class="container-row" style="flex-wrap: wrap; align-items: center; justify-content: center; width: 100%;">
-                                <div id="vis-data" class="container-col">
+                        <div id="overview-box" class="c-row dashboard-item">
+                            <div class="c-row" style="flex-wrap: wrap; align-items: center; justify-content: center; width: 100%;">
+                                <div id="vis-data" class="c-col">
                                     {% if data["vis"][0] %}
                                         <div class="vis-status-box">
                                             <p>
@@ -120,16 +120,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="container-col dashboard-item" id="plot-col"></div>
+                    <div class="c-col dashboard-item" id="plot-col"></div>
                 </div>
             </div>
-            <div id="ephemerides" class="tabcontent container-col workspace-container">
+            <div id="ephemerides" class="tabcontent c-col workspace-container">
                 <div class="title-header-box title-underline">
                     <p class="title-header" style="padding-bottom: 0">
                         Raw Ephemerides for NEO <a class="desig-title">{{ desig }}</a>
                     </p>
                 </div>
-                <div class="container-col" style="flex-grow: 1;">
+                <div class="c-col" style="flex-grow: 1;">
                     <div id="eph-table">
                     </div>
                 </div>

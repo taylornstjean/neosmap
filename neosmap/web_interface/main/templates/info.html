@@ -19,12 +19,12 @@
                 <a class="settings-icon" onclick="window.location.href='/settings';"><img {% if mode == "dark" %}class="filter-white"{% endif %} alt="Settings" src="/static/img/settings.svg"></a>
             </div>
         </div>
-        <div class="main-container">
+        <div class="c-main">
             <div id="side-menu" class="side-menu">
                 <h3 class="nav-title">
                     Navigation
                 </h3>
-                <div class="container-col">
+                <div class="c-col">
                     <button class="tablinks active" onclick="openContent(event,about)" id="default-open">About</button>
                     <button class="tablinks" onclick="openContent(event,acknowledgements)">Acknowledgements</button>
                     <button class="tablinks" onclick="openContent(event,attributions)">Attributions</button>
@@ -34,15 +34,15 @@
                 </h3>
                 <p id="clock"></p>
             </div>
-            <div id="about" class="container-col tabcontent workspace-container">
-                <div class="container-row title-underline">
-                    <div class="container-col" style="align-self: flex-start;">
+            <div id="about" class="c-col tabcontent workspace-container">
+                <div class="c-row title-underline">
+                    <div class="c-col" style="align-self: flex-start;">
                         <p class="title-header">
                             About
                         </p>
                     </div>
                 </div>
-                <div class="container-col info-section">
+                <div class="c-col info-section">
                     <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
                         The Near-Earth Object Statistical Management Program (NEOSMAP) was built for the University of Washington NEO observation follow-up team to aid in object tracking and selection.
                     </p>
@@ -52,15 +52,15 @@
                 </div>
             </div>
 
-            <div id="acknowledgements" class="container-col tabcontent workspace-container">
-                <div class="container-row title-underline">
-                    <div class="container-col" style="align-self: flex-start;">
+            <div id="acknowledgements" class="c-col tabcontent workspace-container">
+                <div class="c-row title-underline">
+                    <div class="c-col" style="align-self: flex-start;">
                         <p class="title-header">
                             Acknowledgements
                         </p>
                     </div>
                 </div>
-                <div class="container-col info-section">
+                <div class="c-col info-section">
                     <h3 style="margin: 0 10px; padding: 10px 10px 10px 0; flex-grow: 1;">
                         <a href="https://www.jpl.nasa.gov/" style="text-decoration: none;" target="_blank">
                             Jet Propulsion Laboratory (JPL)
@@ -72,7 +72,7 @@
                         The API documentation can be accessed <a href="https://ssd-api.jpl.nasa.gov/doc/scout.html" target="_blank">here</a>.
                     </p>
                 </div>
-                <div class="container-col info-section">
+                <div class="c-col info-section">
                     <h3 style="margin: 0 10px; padding: 10px 10px 10px 0; flex-grow: 1;">
                         <a href="https://www.minorplanetcenter.net/" style="text-decoration: none;" target="_blank">
                             Minor Planet Center (MPC)
@@ -86,15 +86,15 @@
                 </div>
             </div>
 
-            <div id="attributions" class="container-col tabcontent workspace-container">
-                <div class="container-row title-underline">
-                    <div class="container-col" style="align-self: flex-start;">
+            <div id="attributions" class="c-col tabcontent workspace-container">
+                <div class="c-row title-underline">
+                    <div class="c-col" style="align-self: flex-start;">
                         <p class="title-header">
                             Attributions
                         </p>
                     </div>
                 </div>
-                <div class="container-col info-section">
+                <div class="c-col info-section">
                     <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
                         The favicon for this website was obtained from <a href="https://www.flaticon.com/free-icons/comet" target="_blank">flaticon.com</a>.
                     </p>

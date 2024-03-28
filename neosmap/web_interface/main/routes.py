@@ -93,31 +93,6 @@ def monitor():
     return render_template("monitor.html", mode=_color_mode()), 200
 
 
-@mod_main.route('/monitor/fetch', methods=["GET"])
-@login_required
-def monitor_check():
-    data_refresh = current_user.neomonitor.data
-
-    updated = current_user.monitor_ping
-    if updated:
-        current_user.deactivate_ping()
-
-    df = data_refresh["df"]
-    table_data = df[["objectName", "nObs", "ra", "dec"]]
-
-    updates = data_refresh["updates"]
-    filtered_updates = current_user.neomonitor.sort_by_ignored(updates)
-
-    return render_template("monitor/table.html", data=table_data, updates=filtered_updates, updated=updated), 200
-
-
-@mod_main.route('/monitor/update', methods=["GET"])
-def monitor_update():
-    neomonitor = DaemonUser.get_neomonitor()
-    neomonitor.check_update()
-    return "Success", 200
-
-
 @mod_main.route('/table', methods=["POST"])
 @login_required
 def table():
@@ -219,6 +194,39 @@ def get_ephemerides():
     desig = request.args.to_dict().get("tdes")
     ephemeris_data = current_user.neodata.ephemerides(desig).get_data()
     return render_template("tables/eph-table.html", data=ephemeris_data), 200
+
+
+@mod_main.route('/monitor/fetch', methods=["GET"])
+@login_required
+def monitor_fetch():
+    content = request.args.to_dict().get("content")
+
+    data_refresh = current_user.neomonitor.data
+
+    if content == "updates":
+
+        updated = current_user.monitor_ping
+        if updated:
+            current_user.deactivate_ping()
+
+        updates = data_refresh["updates"]
+        filtered_updates = current_user.neomonitor.sort_by_ignored(updates)
+
+        return render_template("monitor/updates.html", updates=filtered_updates, updated=updated), 200
+
+    elif content == "table":
+
+        df = data_refresh["df"]
+        table_data = df[["objectName", "nObs", "ra", "dec"]]
+
+        return render_template("monitor/table.html", data=table_data), 200
+
+
+@mod_main.route('/monitor/update', methods=["GET"])
+def monitor_update():
+    neomonitor = DaemonUser.get_neomonitor()
+    neomonitor.check_update()
+    return "Success", 200
 
 
 @mod_main.route('/observation-script', methods=["GET"])
