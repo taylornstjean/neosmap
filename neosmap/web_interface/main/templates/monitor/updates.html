@@ -1,0 +1,111 @@
+<meta name="updated" content={{ updated }}>
+<table id="m-update-section-header" style="padding: 0; width: 100%;" translate="no">
+    <tr class="m-section-header">
+        <th class="table-head m-section-title">
+            Updates
+        </th>
+        <td class="m-clear-update table-cell" onclick="clearUpdates()">
+            <nobr>Clear All</nobr>
+        </td>
+    </tr>
+</table>
+<div id="m-data" style="padding: 0; margin-top: 0; width: 100%;" translate="no">
+    {% set counter = namespace(p=0) %}
+    {% set counter.p = 0 %}
+    {% for index, update in updates.iterrows() %}
+        {% if update["old"] == "false" %}
+            {% set counter.p = counter.p + 1 %}
+        {% endif %}
+    {% endfor %}
+    {% set old_false_len = counter.p %}
+    {% if old_false_len == 0 %}
+        <p class="dim-info-text">
+            Nothing to see yet.
+        </p>
+    {% endif %}
+    {% for index, update in updates.iterrows() %}
+    {% if update["old"] == "false" %}
+        <div class="current-update m-widget c-col {{ update['action'] }}" id="{{ update['id'] }}" onclick="window.open('https://cgi.minorplanetcenter.net/cgi-bin/showobsorbs.cgi?Obj={{ update["objectName"] }}&obs=y','_blank')">
+            <div class="m-widget-header c-row">
+                <table>
+                    <tr>
+                        <td>
+                            {{ update["banner"] }}
+                        </td>
+                        <th class="right-cell">
+                            {{ update["time"] }}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ update["objectName"] }}
+                        </th>
+                    </tr>
+                    {% if update["attribute"] == "nobs" %}
+                        <tr>
+                            <td>
+                                Observations: {{ update["nObs_i"] }} &#8594; {{ update["nObs_f"] }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    {% endfor %}
+</div>
+<table id="m-update-section-header" style="padding: 0; width: 100%; margin-top: 30px;" translate="no">
+    <tr class="m-section-header">
+        <th class="table-head m-section-title">
+            Cleared Updates
+        </th>
+        <td class="expand-cleared-update table-cell" id="monitor-expand" onclick="toggleClearedUpdates()">
+            Expand
+        </td>
+    </tr>
+</table>
+<div id="m-clear-data" class="invisible" style="padding: 0; margin-top: 0; width: 100%;" translate="no">
+    {% set counter = namespace(p=0) %}
+    {% set counter.p = 0 %}
+    {% for index, update in updates.iterrows() %}
+        {% if update["old"] == "true" %}
+            {% set counter.p = counter.p + 1 %}
+        {% endif %}
+    {% endfor %}
+    {% set old_true_len = counter.p %}
+    {% if old_true_len == 0 %}
+        <p class="dim-info-text">
+            Nothing to see yet.
+        </p>
+    {% endif %}
+    {% for index, update in updates.iterrows() %}
+    {% if update["old"] == "true" %}
+        <div class="m-widget c-col {{ update['action'] }}" id="{{ update['id'] }}" onclick="window.open('https://cgi.minorplanetcenter.net/cgi-bin/showobsorbs.cgi?Obj={{ update["objectName"] }}&obs=y','_blank')">
+            <div class="m-widget-header c-row">
+                <table>
+                    <tr>
+                        <td>
+                            {{ update["banner"] }}
+                        </td>
+                        <th class="right-cell">
+                            {{ update["time"] }}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ update["objectName"] }}
+                        </th>
+                    </tr>
+                    {% if update["attribute"] == "nobs" %}
+                        <tr>
+                            <td>
+                                Observations: {{ update["nObs_i"] }} &#8594; {{ update["nObs_f"] }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    {% endfor %}
+</div>
