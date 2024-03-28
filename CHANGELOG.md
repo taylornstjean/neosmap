@@ -4,10 +4,16 @@ All notable changes to the program will be documented here.
 
 ### [Unreleased]
 
+(Nothing to see yet.)
+
+### [0.2.3] QOL Fixes and Changes
+
 #### Changed
 - Made a few GUI updates, specifically to the monitoring page and settings page.
 - Refactored the project slightly for better organization.
 - Reorganized the configuration file.
+- Separated calls for table and updates section of monitor page for clarity and easier debugging.
+- Reduced the time interval at which data is retrieved from APIs.
 
 #### Fixed
 - Minor typo fixes.

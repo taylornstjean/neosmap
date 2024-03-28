@@ -17,6 +17,7 @@ class Ephemeris:
     def __init__(self, tdes):
         self._params = {"tdes": tdes}
         self._session = requests.Session()
+        self._save_buffer = 360  # seconds
 
     def set_params(self, defaults=False, **kwargs) -> None:
 
@@ -66,9 +67,7 @@ class Ephemeris:
             timestamp_eph = datetime_eph.timestamp()
             timestamp_now = datetime.utcnow().timestamp()
 
-            save_buffer = 360  # seconds
-
-            if (timestamp_now - timestamp_eph) >= save_buffer:
+            if (timestamp_now - timestamp_eph) >= self._save_buffer:
                 try:
                     os.remove(os.path.join(DATA_SUBDIRS["ephemerides"], f"{self._params['tdes']}.json"))
                 except FileNotFoundError:
@@ -77,10 +76,8 @@ class Ephemeris:
 
     def check_update(self, force_update=False):
 
-        save_buffer = 1800  # seconds
-
         last_save = ephemeris_last_cache(self._params["tdes"])
-        update_required = bool(dt.utcnow().timestamp() - last_save >= save_buffer) if last_save else True
+        update_required = bool(dt.utcnow().timestamp() - last_save >= self._save_buffer) if last_save else True
 
         if not os.path.isfile(
                 os.path.join(DATA_SUBDIRS["ephemerides"], f"{self._params['tdes']}.json")

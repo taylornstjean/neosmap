@@ -72,7 +72,7 @@ class Observatory:
 ###########################################################################
 # DEFINE NEODATA CLASS
 
-class NEOData():
+class NEOData:
 
     def __init__(self, observatory) -> None:
 
