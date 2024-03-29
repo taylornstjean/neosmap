@@ -44,7 +44,7 @@ function loadEphemerides(desig) {
             loadVisData(desig, data);
         }
     };
-    xhr.open("POST", "/load-ephemerides?tdes=" + desig, true);
+    xhr.open("POST", "/ephemerides/load?tdes=" + desig, true);
     xhr.send();
 }
 
@@ -74,7 +74,7 @@ function loadVisData(desig, data) {
         }
     };
 
-    xhr.open("POST", "/overview-table-content?tdes=" + desig, true);
+    xhr.open("POST", "/neo/overview-table?tdes=" + desig, true);
     xhr.send();
 
 }
@@ -85,7 +85,7 @@ function loadRadec(desig) {
 
     const radec_img = new Image();
     radec_img.style.width = '100%';
-    const radec_url = "/radec-plot?tdes=" + desig;
+    const radec_url = "/plot?type=radec&tdes=" + desig;
 
     radec_img.onload = function () {
         container.appendChild(radec_img);
@@ -99,7 +99,7 @@ function loadPlots(desig) {
     const container = document.getElementById("plot-col");
 
     const altaz_img = new Image();
-    const altaz_url = "/altaz-plot?tdes=" + desig;
+    const altaz_url = "/plot?type=altaz&tdes=" + desig;
 
     altaz_img.onload = function () {
         container.appendChild(altaz_img);
@@ -108,7 +108,7 @@ function loadPlots(desig) {
     altaz_img.src = altaz_url;
 
     const airmass_img = new Image();
-    const airmass_url = "/airmass-plot?tdes=" + desig;
+    const airmass_url = "/plot?type=airmass&tdes=" + desig;
 
     airmass_img.onload = function () {
         container.appendChild(airmass_img);
@@ -117,7 +117,7 @@ function loadPlots(desig) {
     airmass_img.src = airmass_url;
 
     const sp_img = new Image();
-    const sp_url = "/sigmapos-plot?tdes=" + desig;
+    const sp_url = "/plot?type=sigmapos&tdes=" + desig;
 
     sp_img.onload = function () {
         container.appendChild(sp_img);
@@ -137,7 +137,7 @@ function loadEphemerisTable(desig) {
         }
     };
 
-    xhrTable.open("POST", "/get-ephemerides?tdes=" + desig, true);
+    xhrTable.open("POST", "/ephemerides/fetch?tdes=" + desig, true);
     xhrTable.send();
 }
 

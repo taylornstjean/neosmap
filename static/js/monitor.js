@@ -17,7 +17,6 @@ function fetchUpdate() {
         }
 
         xhrMonitorTable.open("GET", "/monitor/fetch?content=table", true);
-        xhrMonitorTable.send();
 
         const clearData = document.getElementById("m-clear-data");
         let expanded = false;
@@ -49,7 +48,9 @@ function fetchUpdate() {
         }
 
         xhrMonitorUpdate.open("GET", `/monitor/fetch?content=updates`, true);
+
         xhrMonitorUpdate.send();
+        setTimeout(function(){xhrMonitorTable.send();}, 500)
     }
 
 function initMonitor() {

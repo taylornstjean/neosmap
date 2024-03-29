@@ -32,6 +32,8 @@ class NEOMonitorBase:
 
         data = _retrieve_data()
 
+        logger.debug("Successfully retrieved data from MPC API")
+
         # Parsing and formatting data
         data_table = []
         for entry in data:

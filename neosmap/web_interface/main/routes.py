@@ -72,18 +72,15 @@ def settings():
 
         logger.debug(f"Form validated, saving config data for user {current_user.id}")
 
-        latitude = float(request.form["latitude"])
-        longitude = float(request.form["longitude"])
-        min_altitude = float(request.form["min_altitude"])
-        ts_primary_mirror_diameter = float(request.form["ts_primary_mirror_diameter"])
-        ts_focal_ratio = float(request.form["ts_focal_ratio"])
+        def _request(field):
+            return float(request.form[field])
 
         current_user.config.save(
-            observatory_latitude=latitude,
-            observatory_longitude=longitude,
-            minimum_altitude=min_altitude,
-            primary_mirror_diameter=ts_primary_mirror_diameter,
-            focal_ratio=ts_focal_ratio
+            observatory_latitude=_request("latitude"),
+            observatory_longitude=_request("longitude"),
+            minimum_altitude=_request("min_altitude"),
+            primary_mirror_diameter=_request("ts_primary_mirror_diameter"),
+            focal_ratio=_request("ts_focal_ratio")
         )
     else:
         logger.debug(f"Invalid form, not saving data for user {current_user.id}")
@@ -128,10 +125,10 @@ def table():
     return render_template("tables/table.html", data=table_data), 200
 
 
-@mod_main.route('/get-column-data', methods=["GET"])
+@mod_main.route('/data/columns', methods=["GET"])
 @login_required
 def columns():
-    _log_request('/get-column-data')
+    _log_request('/data/columns')
 
     payload = {"cols": [col for col in MAIN_DISPLAYED_COLS if col != "objectName"], "filterable": FILTERABLE_COLS}
     return payload, 200
@@ -149,10 +146,10 @@ def neoview():
     ), 200
 
 
-@mod_main.route('/download-table', methods=["POST"])
+@mod_main.route('/data/download', methods=["POST"])
 @login_required
 def download_table():
-    _log_request('/download-table')
+    _log_request('/data/download')
 
     request_json = request.get_json()
     file_type = request.args.to_dict().get("file")
@@ -176,50 +173,38 @@ def download_table():
         return "Bad_request", 400
 
 
-@mod_main.route('/altaz-plot', methods=["GET"])
+@mod_main.route('/plot', methods=["GET"])
 @login_required
-def get_altaz_plot():
-    _log_request('/altaz-plot')
+def get_plot():
+    _log_request('/plot')
 
+    plot_type = request.args.to_dict().get("type")
     desig = request.args.to_dict().get("tdes")
-    if generate_altaz_plot(current_user.neodata, current_user.observatory, desig):
-        return send_from_directory(TEMP_SUBDIRS["plot"], f"altaz-{desig}.png"), 200
+
+    if plot_type == "altaz":
+        if generate_altaz_plot(current_user.neodata, current_user.observatory, desig):
+            return send_from_directory(TEMP_SUBDIRS["plot"], f"altaz-{desig}.png"), 200
+
+    elif plot_type == "radec":
+        if generate_radec_plot(current_user.neodata, current_user.observatory, desig):
+            return send_from_directory(TEMP_SUBDIRS["plot"], f"radec-{desig}.png"), 200
+
+    elif plot_type == "airmass":
+        if generate_airmass_plot(current_user.neodata, current_user.observatory, desig):
+            return send_from_directory(TEMP_SUBDIRS["plot"], f"airmass-{desig}.png"), 200
+
+    elif plot_type == "sigmapos":
+        if generate_sigmapos_plot(current_user.neodata, desig):
+            return send_from_directory(TEMP_SUBDIRS["plot"], f"sigmapos-{desig}.png"), 200
+
+    else:
+        return "Invalid plot type", 400
 
 
-@mod_main.route('/radec-plot', methods=["GET"])
-@login_required
-def get_radec_plot():
-    _log_request('/radec-plot')
-
-    desig = request.args.to_dict().get("tdes")
-    if generate_radec_plot(current_user.neodata, current_user.observatory, desig):
-        return send_from_directory(TEMP_SUBDIRS["plot"], f"radec-{desig}.png"), 200
-
-
-@mod_main.route('/airmass-plot', methods=["GET"])
-@login_required
-def get_airmass_plot():
-    _log_request('/airmass-plot')
-
-    desig = request.args.to_dict().get("tdes")
-    if generate_airmass_plot(current_user.neodata, current_user.observatory, desig):
-        return send_from_directory(TEMP_SUBDIRS["plot"], f"airmass-{desig}.png"), 200
-
-
-@mod_main.route('/sigmapos-plot', methods=["GET"])
-@login_required
-def get_sigmapos_plot():
-    _log_request('/sigmapos-plot')
-
-    desig = request.args.to_dict().get("tdes")
-    if generate_sigmapos_plot(current_user.neodata, desig):
-        return send_from_directory(TEMP_SUBDIRS["plot"], f"sigmapos-{desig}.png"), 200
-
-
-@mod_main.route('/load-ephemerides', methods=["POST"])
+@mod_main.route('/ephemerides/load', methods=["POST"])
 @login_required
 def load_ephemerides():
-    _log_request('/load-ephemerides')
+    _log_request('/ephemerides/load')
 
     desig = request.args.to_dict().get("tdes")
 
@@ -229,23 +214,23 @@ def load_ephemerides():
         current_user.neodata.ephemerides(desig).set_params(defaults=True)
         eph_init_data = current_user.neodata.ephemerides(desig).get_data()[0]
 
-    f"Loaded ephemerides successfully"
+    logger.debug(f"Loaded ephemerides successfully")
 
     return eph_init_data, 200
 
 
-@mod_main.route('/overview-table-content', methods=["POST"])
+@mod_main.route('/neo/overview-table', methods=["POST"])
 @login_required
 def overview_table():
-    _log_request('/overview-table-content')
+    _log_request('/neo/overview-table')
 
     return OVERVIEW_TABLE_COLS, 200
 
 
-@mod_main.route('/get-ephemerides', methods=["POST"])
+@mod_main.route('/ephemerides/fetch', methods=["POST"])
 @login_required
 def get_ephemerides():
-    _log_request('/get-ephemerides')
+    _log_request('/ephemerides/fetch')
 
     desig = request.args.to_dict().get("tdes")
 

@@ -112,7 +112,7 @@ function loadDoc() {
         }
     };
 
-    xhrCols.open("GET", "/get-column-data", true);
+    xhrCols.open("GET", "/data/columns", true);
     xhrCols.send();
 }
 
@@ -147,12 +147,12 @@ function exportFile(fileType) {
     xhrCols.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             const data = getFormData(this);
-            xhrFile.open("POST", "/download-table?file=" + fileType, true);
+            xhrFile.open("POST", "/data/download?file=" + fileType, true);
             xhrFile.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xhrFile.send(JSON.stringify(data));
         }
     };
 
-    xhrCols.open("GET", "/get-column-data", true);
+    xhrCols.open("GET", "/data/columns", true);
     xhrCols.send();
 }
