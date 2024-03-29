@@ -6,6 +6,7 @@ from datetime import datetime as dt
 import pandas as pd
 import os
 import json
+from neosmap.logger import logger
 
 
 class NEOMonitor(NEOMonitorBase):
@@ -79,6 +80,7 @@ class NEOMonitor(NEOMonitorBase):
     @property
     def data(self):
         self.check_update()
+        logger.debug("NEO Monitor data update complete")
         _data = {
             "df": self._load_last_df(),
             "updates": pd.DataFrame(self._updates)

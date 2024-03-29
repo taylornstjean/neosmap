@@ -4,7 +4,8 @@ All notable changes to the program will be documented here.
 
 ### [Unreleased]
 
-(Nothing to see yet.)
+#### Added
+- Began reintroduction of a logging system to help fix issue with a currently non-functional monitor page.
 
 ### [0.2.3] QOL Fixes and Changes
 

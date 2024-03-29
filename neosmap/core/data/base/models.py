@@ -2,6 +2,7 @@ import numpy as np
 from config import MONITOR_TIME_INTERVAL, MPC_NEO_KEY_MAP, DATA_SUBDIRS
 from neosmap.core.caching import APICache
 from neosmap.core.api import retrieve_data_mpc
+from neosmap.logger import logger
 from datetime import datetime as dt
 from dataclasses import dataclass, asdict
 import pandas as pd
@@ -22,7 +23,10 @@ class NEOMonitorBase:
 
     def _update(self, first_pull=False) -> None:
 
+        logger.debug(f"Running update for NEO Monitor data (first_pull={first_pull})")
+
         def _retrieve_data():
+            logger.debug("Retrieving data from MPC API")
             loaded_data = retrieve_data_mpc()
             return loaded_data
 
@@ -56,10 +60,13 @@ class NEOMonitorBase:
         return parsed
 
     def check_update(self) -> None:
+        logger.debug("Checking for updates to NEO Monitor data")
+
         try:
             _cache = APICache.get_instance(name="monitor")
             update_required = not _cache.valid or not _cache.verify
             first_pull = not _cache.verify
+            logger.debug("Found cached NEO Monitor data")
 
         except ValueError:
             update_required = True
@@ -86,6 +93,8 @@ class NEOMonitorBase:
         return pd.DataFrame(np.array(data), columns=MPC_NEO_KEY_MAP.values())
 
     def _check_changes(self) -> None:
+
+        logger.debug("Checking for changes to stored NEO Monitor data from new data")
 
         _DF_last = self._load_last_df()
 
@@ -118,7 +127,9 @@ class NEOMonitorBase:
 
         if any(df.shape[0] >= 1 for df in [new_objects, removed_objects, alter_nobs_objects]):
             self._update_occurred = True
+            logger.debug("Changes to NEO Monitor data were detected")
         else:
+            logger.debug("No changes to NEO Monitor data were detected")
             self._update_occurred = False
 
         current_time = dt.utcnow()
@@ -162,11 +173,13 @@ class NEOMonitorBase:
         self._update_record()
 
     def _update_record(self):
+        logger.debug("Updating NEO Monitor record")
         self._clean_record()
         with open(self._updates_path, "w") as f:
             json.dump(self._updates, f)
 
     def _clean_record(self):
+        logger.debug("Cleaning NEO Monitor record")
         to_delete = []
         for i, entry in enumerate(self._updates):
             _id = entry["id"]
@@ -180,6 +193,7 @@ class NEOMonitorBase:
             del self._updates[i]
 
     def _load_record(self):
+        logger.debug("Loading NEO Monitor record")
         try:
             with open(self._updates_path, "r") as f:
                 self._updates = json.load(f)

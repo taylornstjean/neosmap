@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from flask_login import current_user
+from neosmap.logger import logger
 
 from neosmap.web_interface.config import DefaultConfig
 from werkzeug.exceptions import HTTPException
@@ -15,6 +16,8 @@ app_name = DefaultConfig.PROJECT
 
 app = Flask(app_name, instance_relative_config=True,
             template_folder="neosmap/web_interface/main_templates")
+
+logger.info("App started.")
 
 # http://flask.pocoo.org/docs/api/#configuration
 app.config.from_object(DefaultConfig)
@@ -71,6 +74,8 @@ def error_page(error):
         name = error.name
     except AttributeError:
         name = error.__class__.__name__
+
+    logger.critical(f"Code {code}; {name}")
 
     return render_template("errors/error.html", mode=_color_mode(), error=str(code), message=name), code
 
