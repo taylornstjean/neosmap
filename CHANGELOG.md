@@ -7,6 +7,9 @@ All notable changes to the program will be documented here.
 #### Added
 - Began reintroduction of a logging system to help fix issue with a currently non-functional monitor page.
 
+#### Fixed
+- Added slightly more info text to the monitor page for clarity.
+
 ### [0.2.3] QOL Fixes and Changes
 
 #### Changed

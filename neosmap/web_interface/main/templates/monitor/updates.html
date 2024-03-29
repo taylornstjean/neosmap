@@ -22,6 +22,10 @@
         <p class="dim-info-text">
             Nothing to see yet.
         </p>
+    {% else %}
+        <p class="dim-info-text">
+            Updates shown here are visible for 12 hours after they are registered.
+        </p>
     {% endif %}
     {% for index, update in updates.iterrows() %}
     {% if update["old"] == "false" %}
@@ -76,6 +80,10 @@
     {% if old_true_len == 0 %}
         <p class="dim-info-text">
             Nothing to see yet.
+        </p>
+    {% else %}
+        <p class="dim-info-text">
+            Updates shown here are visible for 12 hours after they are registered.
         </p>
     {% endif %}
     {% for index, update in updates.iterrows() %}
