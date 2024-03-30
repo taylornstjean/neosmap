@@ -25,9 +25,7 @@ matplotlib.rcParams.update({'font.size': 8})
 # Suppress matplotlib UserWarning
 warnings.filterwarnings("ignore", category=UserWarning, module="matplotlib")
 
-
 # Set image parameters
-
 PLOT_DPI = 100
 
 

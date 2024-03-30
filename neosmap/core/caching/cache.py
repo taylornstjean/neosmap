@@ -9,6 +9,9 @@ from datetime import datetime as dt
 eph_log_dir = LOG_SUBDIRS["ephemerides"]
 
 
+###########################################################################
+# DEFINE API CACHE CLASS
+
 class APICache:
 
     instances = {}
@@ -126,7 +129,6 @@ class APICache:
 
 ###########################################################################
 # INTERNAL FUNCTIONS
-
 
 def _get_last_line(file_stream):
     try:  # catch OSError in case of a one line file

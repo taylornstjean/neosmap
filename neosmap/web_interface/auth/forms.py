@@ -3,6 +3,9 @@ from wtforms import PasswordField, EmailField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, EqualTo, Email, Length
 
 
+###########################################################################
+# FLASK FORMS
+
 class LoginForm(FlaskForm):
     email = EmailField('Email', validators=[DataRequired(), Email("Not a valid email.")])
     password = PasswordField("Password", validators=[DataRequired()])

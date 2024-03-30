@@ -10,6 +10,9 @@ import os
 import json
 
 
+###########################################################################
+# DEFINE BASE CLASS FOR NEO MONITOR
+
 class NEOMonitorBase:
 
     def __init__(self, user):

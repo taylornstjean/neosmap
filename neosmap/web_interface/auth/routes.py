@@ -9,9 +9,9 @@ from .forms import LoginForm, RegisterForm
 
 mod_auth = Blueprint("auth", __name__, url_prefix="/auth/", template_folder="./templates")
 
+
 ###########################################################################
 # DEFINE ROUTES
-
 
 def _color_mode():
     if not current_user.is_authenticated:
@@ -21,6 +21,8 @@ def _color_mode():
 
 @mod_auth.route('/login', methods=["GET", "POST"])
 def login():
+    """Handles requests to /login. Manages user login."""
+
     form = LoginForm()
     if current_user.is_authenticated:
         return redirect('/data')
@@ -45,6 +47,8 @@ def login():
 @mod_auth.route('/logout', methods=["GET", "POST"])
 @login_required
 def logout():
+    """Handles requests to /logout. Logs the current user out."""
+
     current_user.wipe_instances()
     logout_user()
     return redirect("/auth/login")
@@ -52,6 +56,8 @@ def logout():
 
 @mod_auth.route('/register', methods=["GET", "POST"])
 def register():
+    """Handles requests to /register. Manages new user registration."""
+
     form = RegisterForm()
 
     if current_user.is_authenticated:
@@ -80,6 +86,7 @@ def register():
 @mod_auth.route("/check", methods=["GET"])
 @login_required
 def check():
+    """Debug route. Handles requests to /check. Returns the current user (if authenticated)."""
     return f'User logged in as {current_user.email}.', 200
 
 # ------------------------------ END OF FILE ------------------------------

@@ -5,7 +5,7 @@ import os
 
 
 ###########################################################################
-# PROGRAM LOGGER
+# SYSTEM LOGGER
 
 class LogFormatterConsole(logging.Formatter):
 
@@ -42,7 +42,7 @@ class LogFormatterFile(logging.Formatter):
 logger = logging.getLogger("NEOSMAP")
 logger.setLevel(logging.DEBUG)
 
-# create console handler with a higher log level
+# create console handler
 ch = logging.StreamHandler()
 ch.setFormatter(LogFormatterConsole())
 ch.setLevel(logging.DEBUG)
@@ -51,6 +51,7 @@ logger.addHandler(ch)
 
 log_path = os.path.join(LOG_DIR, "neosmap.log")
 
+# create file handler
 fh = RotatingFileHandler(log_path, mode='a', maxBytes=5*1024*1024, backupCount=2, encoding=None, delay=False)
 fh.setFormatter(LogFormatterFile())
 fh.setLevel(logging.DEBUG)

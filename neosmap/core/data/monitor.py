@@ -9,6 +9,9 @@ import json
 from neosmap.logger import logger
 
 
+###########################################################################
+# DEFINE NEO MONITOR AND NEO MONITOR DAEMON CLASS
+
 class NEOMonitor(NEOMonitorBase):
 
     def __init__(self, *args, **kwargs):

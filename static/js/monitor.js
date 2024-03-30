@@ -83,7 +83,7 @@ function clearUpdates() {
         }
     }
 
-    xhrClearUpdates.open("POST", "/monitor", true);
+    xhrClearUpdates.open("POST", "/monitor?op=clear-ids", true);
     xhrClearUpdates.setRequestHeader("Content-Type", "application/json");
     xhrClearUpdates.send(JSON.stringify(ids));
 }

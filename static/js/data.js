@@ -60,7 +60,7 @@ function getFormData(response) {
         if ((maxVal > filterList[filterItem]["max"] && maxVal !== "") || (minVal < filterList[filterItem]["min"] && minVal !== "")) {
             alert("Value for column " + filterItem + " must be between " + filterList[filterItem]["min"] + " and " + filterList[filterItem]["max"] + ".");
             document.getElementById("table-loader").style.display = "none";
-            abort();
+            break
         }
         filterValues[filterItem] = {"ge": minVal, "le": maxVal};
     }

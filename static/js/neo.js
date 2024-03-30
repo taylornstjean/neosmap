@@ -96,31 +96,35 @@ function loadRadec(desig) {
 
 
 function loadPlots(desig) {
-    const container = document.getElementById("plot-col");
+    const altaz_container = document.getElementById("altaz-box");
 
     const altaz_img = new Image();
     const altaz_url = "/plot?type=altaz&tdes=" + desig;
 
     altaz_img.onload = function () {
-        container.appendChild(altaz_img);
+        altaz_container.appendChild(altaz_img);
     };
 
     altaz_img.src = altaz_url;
+
+    const airmass_container = document.getElementById("airmass-box");
 
     const airmass_img = new Image();
     const airmass_url = "/plot?type=airmass&tdes=" + desig;
 
     airmass_img.onload = function () {
-        container.appendChild(airmass_img);
+        airmass_container.appendChild(airmass_img);
     };
 
     airmass_img.src = airmass_url;
+
+    const sp_container = document.getElementById("sigmapos-box");
 
     const sp_img = new Image();
     const sp_url = "/plot?type=sigmapos&tdes=" + desig;
 
     sp_img.onload = function () {
-        container.appendChild(sp_img);
+        sp_container.appendChild(sp_img);
     };
 
     sp_img.src = sp_url;

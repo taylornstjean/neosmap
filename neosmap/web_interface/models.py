@@ -5,6 +5,9 @@ from neosmap.core.data import NEOData, Observatory, NEOMonitor, NEOMonitorDaemon
 from neosmap.web_interface.utils import get_current_time
 
 
+###########################################################################
+# DEFINE USER CLASS
+
 class User(db.Model, UserMixin):
 
     __tablename__ = "user"
@@ -134,20 +137,8 @@ class User(db.Model, UserMixin):
         db.session.commit()
 
 
-class DaemonUser:
-
-    monitor_instance = None
-
-    @classmethod
-    def get_neomonitor(cls):
-        if not cls.monitor_instance:
-            cls._init_neomonitor()
-        return cls.monitor_instance
-
-    @classmethod
-    def _init_neomonitor(cls):
-        cls.monitor_instance = NEOMonitorDaemon(user=User)
-
+###########################################################################
+# DEFINE CONFIG CLASS
 
 class Config(db.Model):
     __tablename__ = "config"
@@ -188,6 +179,10 @@ class Config(db.Model):
         """Return the owner id."""
         return self.owner
 
+
+###########################################################################
+# FLASK USER LOADER
+# see https://flask-login.readthedocs.io/en/latest/#configuring-your-application
 
 @login_manager.user_loader
 def load_user(user_id):

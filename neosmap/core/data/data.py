@@ -70,7 +70,7 @@ class Observatory:
 
 
 ###########################################################################
-# DEFINE NEODATA CLASS
+# DEFINE NEO DATA CLASS
 
 class NEOData:
 

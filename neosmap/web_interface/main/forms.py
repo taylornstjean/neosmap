@@ -3,6 +3,9 @@ from wtforms import FloatField, SubmitField
 from wtforms.validators import InputRequired, NumberRange
 
 
+###########################################################################
+# FLASK FORMS
+
 class ConfigForm(FlaskForm):
     longitude = FloatField(
         "Longitude",

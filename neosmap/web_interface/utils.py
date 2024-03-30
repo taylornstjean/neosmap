@@ -4,6 +4,10 @@ import hashlib
 import random
 
 
+###########################################################################
+# GENERAL UTILITY FUNCTIONS
+# these will be moved out of utils.py in the future
+
 def get_current_time():
     return datetime.utcnow()
 

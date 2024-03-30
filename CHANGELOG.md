@@ -5,10 +5,15 @@ All notable changes to the program will be documented here.
 ### [Unreleased]
 
 #### Added
-- Began reintroduction of a logging system to help fix issue with a currently non-functional monitor page.
+- Began reintroduction of a logging system.
+- Added some comments, more will come.
+
+#### Changed
+- Added a background job to periodically pull data from the MPC. Originally used an awful method involving an open route and a server cron job.
 
 #### Fixed
 - Added slightly more info text to the monitor page for clarity.
+- Fixed the formatting of some files to be more consistent.
 
 ### [0.2.3] QOL Fixes and Changes
 

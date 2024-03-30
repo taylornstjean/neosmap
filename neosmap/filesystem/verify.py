@@ -2,6 +2,7 @@ import os
 import shutil
 from config import (
     CACHE_DIR,
+    LOG_DIR,
     CACHE_TEMP_DIR,
     CACHE_USER_DIR,
     CACHE_DATA_DIR,
@@ -14,12 +15,18 @@ from config import (
 
 
 ###########################################################################
-# VERIFY DIRECTORY
+# VERIFY DIRECTORIES
 
-def verify_cache():
+def verify_dirs():
+    """Verifies the existence of all folders required for caching and logging."""
+
     # Verify cache dir
     if not os.path.isdir(CACHE_DIR):
         os.mkdir(CACHE_DIR)
+
+    # Verify log dir
+    if not os.path.isdir(LOG_DIR):
+        os.mkdir(LOG_DIR)
 
     # Reset temp dir if existing
     if os.path.isdir(CACHE_TEMP_DIR):

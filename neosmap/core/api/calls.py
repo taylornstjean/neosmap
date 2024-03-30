@@ -4,6 +4,9 @@ import json
 from config import JPL_API_URL, MPC_NEOCP_URL
 
 
+###########################################################################
+# RATE LIMITED API CALLERS
+
 @sleep_and_retry
 @limits(calls=1, period=10)
 def retrieve_data_jpl():

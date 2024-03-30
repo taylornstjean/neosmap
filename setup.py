@@ -1,5 +1,11 @@
 from setuptools import setup
 
+
+# this file is somewhat pointless for now since this isn't being packaged
+
+###########################################################################
+# SETUP
+
 setup(
     name='NEOSMAP',
     version="0.2.3",

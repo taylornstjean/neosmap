@@ -10,6 +10,9 @@ import os
 from config import TEMP_SUBDIRS
 
 
+###########################################################################
+# DEFINE SCRIPT CLASS
+
 class Script:
 
     # Define directive sequence struct
