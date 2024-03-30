@@ -39,7 +39,7 @@ def _color_mode():
     return current_user.color_mode
 
 
-def _log_request(path):
+def _log_request(path) -> None:
     """Log a request to a site resource. Alternative to the Werkzeug default logger, and
     includes which user made the request."""
 

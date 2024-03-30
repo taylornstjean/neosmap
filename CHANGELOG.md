@@ -7,12 +7,13 @@ All notable changes to the program will be documented here.
 #### Added
 - Began reintroduction of a logging system.
 - Added some comments, more will come.
+- Added warning message on data panel advising the data could be up to 5 minutes out of date with respect to the MPC, monitor page is fully up to date.
+- Added loading indicators to plots on NEO page.
 
 #### Changed
 - Added a background job to periodically pull data from the MPC. Originally used an awful method involving an open route and a server cron job.
 
 #### Fixed
-- Added slightly more info text to the monitor page for clarity.
 - Fixed the formatting of some files to be more consistent.
 
 ### [0.2.3] QOL Fixes and Changes

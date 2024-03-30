@@ -81,6 +81,8 @@ function loadVisData(desig, data) {
 
 
 function loadRadec(desig) {
+    document.getElementById("radec-loader").style.display = "flex";
+
     const container = document.getElementById("radec-box");
 
     const radec_img = new Image();
@@ -88,6 +90,7 @@ function loadRadec(desig) {
     const radec_url = "/plot?type=radec&tdes=" + desig;
 
     radec_img.onload = function () {
+        document.getElementById("radec-loader").style.display = "none";
         container.appendChild(radec_img);
     };
 
@@ -96,12 +99,17 @@ function loadRadec(desig) {
 
 
 function loadPlots(desig) {
+    document.getElementById("altaz-loader").style.display = "flex";
+    document.getElementById("sigmapos-loader").style.display = "flex";
+    document.getElementById("airmass-loader").style.display = "flex";
+
     const altaz_container = document.getElementById("altaz-box");
 
     const altaz_img = new Image();
     const altaz_url = "/plot?type=altaz&tdes=" + desig;
 
     altaz_img.onload = function () {
+        document.getElementById("altaz-loader").style.display = "none";
         altaz_container.appendChild(altaz_img);
     };
 
@@ -113,6 +121,7 @@ function loadPlots(desig) {
     const airmass_url = "/plot?type=airmass&tdes=" + desig;
 
     airmass_img.onload = function () {
+        document.getElementById("airmass-loader").style.display = "none";
         airmass_container.appendChild(airmass_img);
     };
 
@@ -124,6 +133,7 @@ function loadPlots(desig) {
     const sp_url = "/plot?type=sigmapos&tdes=" + desig;
 
     sp_img.onload = function () {
+        document.getElementById("sigmapos-loader").style.display = "none";
         sp_container.appendChild(sp_img);
     };
 

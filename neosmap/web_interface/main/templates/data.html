@@ -108,12 +108,15 @@
                                     Data Panel
                                 </p>
                             </div>
+                            <div class="tooltip" style="width: 2em; height: 2em; align-self: flex-end; padding: 0.2em; margin-left: 1em;">
+                                <img src="/static/img/warning.png" alt="Warning" style="width: 100%; height: 100%;">
+                                <span class="tooltiptext">May be up to 5 minutes out of date. See monitor page for live data.</span>
+                            </div>
                             <div class="c-row" style="justify-content: flex-end; align-self: center; flex-grow: 1;">
                                 <button type="button" class="main-data-button animate drop-in" onclick="loadDoc()" id="table-generator">Regenerate Table</button>
                                 <button type="button" class="main-data-button animate drop-in time-400" onclick="exportFile(id)" id="csv">Export to CSV</button>
                                 <button type="button" class="main-data-button animate drop-in time-500" onclick="exportFile(id)" id="json">Export to JSON</button>
                             </div>
-
                         </div>
                         <div class="c-col" id="table-loader-box">
                             <div class="loader" id="table-loader">
