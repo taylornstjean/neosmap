@@ -122,6 +122,13 @@ def monitor():
             current_user.neomonitor.save_ignore_ids(clear_update_ids)
             return {"message": "Success."}, 200
 
+        if operation == "restore-ids":
+            logger.debug(f"Restoring updates on monitor page for user {current_user.id}")
+
+            restore_update_ids = request.get_json()
+            current_user.neomonitor.remove_ignore_ids(restore_update_ids)
+            return {"message": "Success."}, 200
+
     return render_template("monitor.html", mode=_color_mode()), 200
 
 

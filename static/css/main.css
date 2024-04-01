@@ -705,6 +705,12 @@ title * {
     background-color: rgba(255, 0, 0, 0.1);
 }
 
+#m-data div.object-removal:hover, #m-clear-data div.object-removal:hover {
+    border-left: 4px darkred solid;
+    background-color: rgba(255, 0, 0, 0.3);
+    cursor: pointer;
+}
+
 #m-data div.object-addition, #m-clear-data div.object-addition {
     border-left: 2px darkgreen solid;
     background-color: rgba(0, 255, 0, 0.1);
@@ -729,12 +735,51 @@ title * {
     cursor: pointer;
 }
 
+.m-widget-dropdown {
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 0;
+    border-top: 0;
+    height: 0;
+    border-bottom: none;
+    width: 100%;
+}
+
+div.active-dropdown {
+    height: auto;
+    margin: 0 auto;
+    border-bottom: 1px var(--main-border-color) solid;
+    transition: height 1s ease-out;
+}
+
+.dropdown-button:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.dropdown-clear {
+    text-align: -moz-right;
+}
+
+.dropdown-clear span {
+    color: red;
+}
+
+.dd-content {
+    width: 100%;
+}
+
 div.m-widget {
     margin-bottom: 10px;
 }
 
 div.m-widget-header {
     align-content: stretch;
+}
+
+div.m-widget-header > * {
+    user-select: none;
+    -moz-user-select: none;
 }
 
 div.m-widget-header table {
@@ -1099,6 +1144,8 @@ table#m-update-section-header tr th.table-head {
 
 #m-clear-data.invisible {
     visibility: hidden;
+    overflow-y: hidden;
+    max-height: 0;
 }
 
 .m-section-header {

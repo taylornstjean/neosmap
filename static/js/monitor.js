@@ -27,6 +27,21 @@ function fetchUpdate() {
             }
         }
 
+        const dropdownIds = $(".m-widget-dropdown").map(function() {
+            return this.id;
+        }).get();
+
+        let idExpanded = [];
+
+        if (dropdownIds !== null) {
+            for (let i in dropdownIds) {
+                let dropdown = document.getElementById(dropdownIds[i]);
+                if (dropdown.classList.contains("active-dropdown")) {
+                    idExpanded.push(dropdownIds[i]);
+                }
+            }
+        }
+
         const xhrMonitorUpdate = new XMLHttpRequest();
 
         xhrMonitorUpdate.onreadystatechange = function() {
@@ -35,6 +50,10 @@ function fetchUpdate() {
 
                 if (expanded === true) {
                     toggleClearedUpdates();
+                }
+
+                for (let i in idExpanded) {
+                    toggleWidgetDropdown(idExpanded[i]);
                 }
 
                 const updated = document.querySelector('meta[name="updated"]').content;
@@ -70,7 +89,7 @@ function toggleClearedUpdates() {
     $("#monitor-expand").toggleClass("selected");
 }
 
-function clearUpdates() {
+function clearAllUpdates() {
     const ids = $(".current-update").map(function() {
         return this.id;
     }).get();
@@ -86,6 +105,40 @@ function clearUpdates() {
     xhrClearUpdates.open("POST", "/monitor?op=clear-ids", true);
     xhrClearUpdates.setRequestHeader("Content-Type", "application/json");
     xhrClearUpdates.send(JSON.stringify(ids));
+}
+
+function clearUpdates(_id) {
+
+    const xhrClearUpdates = new XMLHttpRequest();
+
+    xhrClearUpdates.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            fetchUpdate();
+        }
+    }
+
+    xhrClearUpdates.open("POST", "/monitor?op=clear-ids", true);
+    xhrClearUpdates.setRequestHeader("Content-Type", "application/json");
+    xhrClearUpdates.send(JSON.stringify([_id]));
+}
+
+function restoreUpdates(_id) {
+
+    const xhrRestoreUpdates = new XMLHttpRequest();
+
+    xhrRestoreUpdates.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            fetchUpdate();
+        }
+    }
+
+    xhrRestoreUpdates.open("POST", "/monitor?op=restore-ids", true);
+    xhrRestoreUpdates.setRequestHeader("Content-Type", "application/json");
+    xhrRestoreUpdates.send(JSON.stringify([_id]));
+}
+
+function toggleWidgetDropdown(_id) {
+    $(`#${_id}`).toggleClass("active-dropdown");
 }
 
 function audioWarning() {

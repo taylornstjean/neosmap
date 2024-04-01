@@ -64,9 +64,9 @@ class NEOMonitor(NEOMonitorBase):
         with open(self._ignore_id_path, "w") as f:
             json.dump(data, f, indent=4)
 
-    def _remove_ignore_id(self, _id):
+    def remove_ignore_ids(self, ids):
         data = self.get_ignore_ids(timestamp=True)
-        filtered_data = [entry for entry in data if entry["id"] != _id]
+        filtered_data = [entry for entry in data if entry["id"] not in ids]
 
         with open(self._ignore_id_path, "w") as f:
             json.dump(filtered_data, f, indent=4)

@@ -340,20 +340,25 @@ class NEOData:
         for column in COLUMNS:
             if column in ["objectName", "tEphem", "lastRun"]:
                 parsed.append(entry[column])
+
             elif column in ["ra"]:
                 # Convert ra unit (original form hh:mm) to hour angle
                 ra_split = entry[column].split(":")
                 ra_ha = round(float(ra_split[0]) + (float(ra_split[1]) / 60), 2)
                 parsed.append(ra_ha)
+
             elif column in ["vis"]:
                 parsed.append(self._get_visibility(entry))
+
             elif column in ["fullScore"]:
                 pass
+
             else:
                 try:
                     parsed.append(float(entry[column]) if entry[column] else None)
                 except KeyError:
                     parsed.append(np.nan)
+
         parsed.append(self._full_score(tuple(parsed)))
         return parsed
 
