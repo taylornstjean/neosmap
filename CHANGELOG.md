@@ -12,6 +12,7 @@ All notable changes to the program will be documented here.
 
 #### Changed
 - Added a background job to periodically pull data from the MPC. Originally used an awful method involving an open route and a server cron job.
+- Significant improvements to the monitor page (more functionality, such as ability to clear and restore individual updates, and easier to navigate)
 
 #### Fixed
 - Fixed the formatting of some files to be more consistent.
