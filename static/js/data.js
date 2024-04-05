@@ -21,16 +21,16 @@ function addFilter() {
 
     const content = `
     <div id=${filter + "_filterBox"} style="margin-bottom: 15px;">
-        <div class="c-row" style="flex-grow: 1;">
+        <div class="container-flex--row" style="flex-grow: 1;">
             <h5 style="align-self: stretch; margin: 10px 0; flex-grow: 1;" class="filter-label">${filter}</h5>
             <a onclick="removeFilter(${filter})" class="filter-remove">X</a>
         </div>
-        <div class="c-row filter-item" id=${filter + "_filterItem"} style="flex-grow: 1; padding: 5px 0 10px;">
-            <div class="c-row" style="align-self: center;">
+        <div class="container-flex--row filter-item" id=${filter + "_filterItem"} style="flex-grow: 1; padding: 5px 0 10px;">
+            <div class="container-flex--row" style="align-self: center;">
                 <label for=${"min_" + filter}>Min&nbsp</label>
                 <input class="filter-input" type="text" id=${"min_" + filter}>
             </div>
-            <div class="c-row" style="align-self: center; margin-left: 10px;">
+            <div class="container-flex--row" style="align-self: center; margin-left: 10px;">
                 <label for=${"max_" + filter}>Max&nbsp</label>
                 <input class="filter-input" type="text" id=${"max_" + filter}>
             </div>

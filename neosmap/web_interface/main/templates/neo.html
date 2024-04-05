@@ -16,134 +16,138 @@
     <body>
         <!-- <img id="background" src="/static/img/background.jpg" alt="" onload="document.getElementById('background').style.opacity='1'"> -->
         <div class="header">
-            <a href="/data" class="logo"><img alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
-            <div class="header-right">
-                <a class="logout" href="/auth/logout">Logout</a>
-                <a href="/data">Data Panel</a>
-                <a href="/monitor">Monitor</a>
-                <a href="/info">Info</a>
-                <a class="settings-icon" onclick="window.location.href='/settings';"><img {% if mode == "dark" %}class="filter-white"{% endif %} alt="Settings" src="/static/img/settings.svg"></a>
+            <a href="/data" class="header__logo-box"><img class="header__logo" alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
+            <div class="header__menu">
+                <a class="header__button header__logout-button" href="/auth/logout">Logout</a>
+                <a class="header__button header__button--inactive" href="/data">Data Panel</a>
+                <a class="header__button header__button--inactive" href="/monitor">Monitor</a>
+                <a class="header__button header__button--inactive" href="/info">Info</a>
+                <a class="header__button header__settings-button" onclick="window.location.href='/settings';"><img {% if mode == "dark" %} class="header__settings-icon--white" {% else %} class="header__settings-icon" {% endif %} alt="Settings" src="/static/img/settings.svg"></a>
             </div>
         </div>
         <noscript>
             <style type="text/css">
-                .c-main {display:none;}
+                .main {display:none;}
             </style>
-            <div class="c-no-js">
+            <div class="main--no-js">
                 <p>
                     You don't have javascript enabled.  Please enable javascript and reload the page.
                 </p>
             </div>
         </noscript>
-        <div class="c-main">
-            {% include "includes/scripting-popup.html" %}
+        <div class="main">
             <div id="side-menu" class="side-menu">
-                <h3 class="nav-title">
+                <h3 class="side-menu__title">
                     Navigation
                 </h3>
-                <div class="wait-for-eph c-col">
-                    <button class="tablinks" onclick="openContent(event,overview)" id="default-open">Overview</button>
-                    <button class="tablinks" onclick="openContent(event,ephemerides)">Ephemerides</button>
+                <div class="container-flex--col await-ephemerides">
+                    <button class="side-menu__tab-link" onclick="openContent(event,overview)" id="default-open">Overview</button>
+                    <button class="side-menu__tab-link" onclick="openContent(event,ephemerides)">Ephemerides</button>
                 </div>
-                <h3 class="side-title">
+                <h3 class="side-menu__title">
                     Clock [UTC]
                 </h3>
-                <p id="clock"></p>
+                <div class="side-menu__section">
+                    <p id="clock"></p>
+                </div>
             </div>
-            <div id="overview" class="tabcontent c-col workspace-container">
-                <div class="c-row title-underline">
-                    <div class="c-col" style="align-self: flex-start;">
-                        <p class="title-header">
+            <div id="overview" class="tab-content container-primary--col">
+                <div class="data">
+                    <div class="data__header">
+                        <p class="data__header__title">
                             Overview for NEO <a class="desig-title">{{ desig }}</a>
                         </p>
                     </div>
-                    <!-- <div class="container-row wait-for-eph" style="justify-content: flex-end; align-self: center; flex-grow: 1;">
-                        <button type="button" class="main-data-button animate drop-in" onclick="openPopup()" id="script">Generate Script</button>
-                    </div> -->
-                </div>
-                <div id="eph-loader" class="c-col" style="background-color: rgba(85, 85, 85, 0.6); padding: 15px; border-radius: 10px; margin-top: 20vh;">
-                    <div class="loader" style="align-self: center;">
+                    <div id="eph-loader" class="loader-box--center">
+                        <div class="loader"></div>
+                        <p class="loader-box__text">
+                            Fetching data...
+                        </p>
+                        <p class="loader-box__text">
+                            This may take a few seconds.
+                        </p>
                     </div>
-                    <p style="align-self: center; color: whitesmoke !important; margin-bottom: 3px;">
-                        Fetching data...
-                    </p>
-                    <p style="align-self: center; color: whitesmoke !important; margin-top: 3px;">
-                        This may take a few seconds.
-                    </p>
-                </div>
-                <div class="c-row wait-for-eph" id="eph-content">
-                    <div class="c-col neo-left-col">
-                        <div class="c-row dashboard-item" id="gauge-row">
-                            {% for col in score_cols %}
-                            <div class="c-col gauge" id={{"gauge-"~col}}>
-                                {% set gauge_title = col.split('Score')[0] %}
-                                <p class="panel-section-title gauge-title">
-                                    {% if gauge_title in ['neo', 'pha', 'ieo'] %}
-                                        {{ gauge_title|upper }} Score
-                                    {% else %}
-                                        {{ gauge_title|capitalize }} Score
-                                    {% endif %}
-                                </p>
-                                <p class="gauge-value">
-                                    {% if data[col][0] %}
-                                        {{ '%d' % data[col][0]|int }}
-                                    {% else %}
-                                        -
-                                    {% endif %}
-                                </p>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <div id="overview-box" class="c-row dashboard-item">
-                            <div class="c-row" style="flex-wrap: wrap; align-items: center; justify-content: center; width: 100%;">
-                                <div id="vis-data" class="c-col">
-                                    {% if data["vis"][0] %}
-                                        <div class="vis-status-box">
-                                            <p>
-                                                Currently Visible
-                                            </p>
-                                        </div>
-                                    {% else %}
-                                        <div class="vis-status-box neo-invisible">
-                                            <p>
-                                                Not Currently Visible
-                                            </p>
-                                        </div>
-                                    {% endif %}
-                                    <h3 class="panel-section-title">
-                                        Median Orbit Data
-                                    </h3>
-                                    <table id="vis-table">
-                                    </table>
+                    <div class="container-flex--row await-ephemerides" id="eph-content">
+                        <div class="container-flex--col neo-left-col">
+                            <div class="container-flex--row dashboard-item" id="gauge-row">
+
+                                {% for col in score_cols %}
+                                <div class="container-flex--col gauge" id={{"gauge-"~col}}>
+
+                                    {% set gauge_title = col.split('Score')[0] %}
+                                    <p class="panel-section-title gauge-title">
+
+                                        {% if gauge_title in ['neo', 'pha', 'ieo'] %}
+                                            {{ gauge_title|upper }} Score
+                                        {% else %}
+                                            {{ gauge_title|capitalize }} Score
+                                        {% endif %}
+
+                                    </p>
+                                    <p class="gauge-value">
+
+                                        {% if data[col][0] %}
+                                            {{ '%d' % data[col][0]|int }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+
+                                    </p>
+
                                 </div>
-                                <div id="radec-box">
-                                    <div class="loader" id="radec-loader" style="align-self: center; margin: 50px auto;"></div>
+                                {% endfor %}
+
+                            </div>
+                            <div id="overview-box" class="container-flex--row dashboard-item">
+                                <div class="container-flex--row" style="flex-wrap: wrap; align-items: center; justify-content: center; width: 100%;">
+                                    <div id="vis-data" class="container-flex--col">
+                                        {% if data["vis"][0] %}
+                                            <div class="vis-status-box">
+                                                <p>
+                                                    Currently Visible
+                                                </p>
+                                            </div>
+                                        {% else %}
+                                            <div class="vis-status-box neo-invisible">
+                                                <p>
+                                                    Not Currently Visible
+                                                </p>
+                                            </div>
+                                        {% endif %}
+                                        <h3 class="panel-section-title">
+                                            Median Orbit Data
+                                        </h3>
+                                        <table id="vis-table">
+                                        </table>
+                                    </div>
+                                    <div id="radec-box">
+                                        <div class="loader loader--plot" id="radec-loader"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="c-col dashboard-item" id="plot-col">
-                        <div id="altaz-box">
-                            <div class="loader" id="altaz-loader" style="align-self: center; margin: 50px auto;"></div>
-                        </div>
-                        <div id="sigmapos-box">
-                            <div class="loader" id="sigmapos-loader" style="align-self: center; margin: 50px auto;"></div>
-                        </div>
-                        <div id="airmass-box">
-                            <div class="loader" id="airmass-loader" style="align-self: center; margin: 50px auto;"></div>
+                        <div class="container-flex--col dashboard-item" id="plot-col">
+                            <div id="altaz-box">
+                                <div class="loader loader--plot" id="altaz-loader"></div>
+                            </div>
+                            <div id="sigmapos-box">
+                                <div class="loader loader--plot" id="sigmapos-loader"></div>
+                            </div>
+                            <div id="airmass-box">
+                                <div class="loader loader--plot" id="airmass-loader"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="ephemerides" class="tabcontent c-col workspace-container">
-                <div class="title-header-box title-underline">
-                    <p class="title-header" style="padding-bottom: 0">
-                        Raw Ephemerides for NEO <a class="desig-title">{{ desig }}</a>
-                    </p>
-                </div>
-                <div class="c-col" style="flex-grow: 1;">
-                    <div id="eph-table">
+            <div id="ephemerides" class="tab-content container-primary--col">
+                <div class="data">
+                    <div class="data__header">
+                        <p class="data__header__title">
+                            Raw Ephemerides for NEO <a class="desig-title">{{ desig }}</a>
+                        </p>
                     </div>
+                    <div class="data__display" id="eph-table"></div>
                 </div>
             </div>
         </div>

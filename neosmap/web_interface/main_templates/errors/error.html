@@ -9,9 +9,9 @@
     </head>
     <body>
         <div class="header">
-            <a href="/data" class="logo"><img alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
+            <a href="/data" class="header__logo-box"><img class="header__logo" alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
         </div>
-        <div class="c-main-no-left">
+        <div class="main--no-side-menu">
             <div class="welcome-text-box">
                 <p class="welcome-text" style="background-color: rgba(105, 105, 105, 0.4); padding: 15px; border-radius: 10px; margin: 30vh 30vw 0 30vw;">
                     {{ error }}: {{ message}}

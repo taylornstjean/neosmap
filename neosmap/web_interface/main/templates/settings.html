@@ -13,58 +13,58 @@
     </head>
     <body>
         <div class="header">
-            <a href="/data" class="logo"><img alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
-            <div class="header-right">
-                <a class="logout" href="/auth/logout">Logout</a>
-                <a href="/data">Data Panel</a>
-                <a href="/monitor">Monitor</a>
-                <a href="/info">Info</a>
-                <a class="settings-icon"><img {% if mode == "dark" %}class="filter-white"{% endif %} alt="Settings" src="/static/img/settings.svg"></a>
+            <a href="/data" class="header__logo-box"><img class="header__logo" alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
+            <div class="header__menu">
+                <a class="header__button header__logout-button" href="/auth/logout">Logout</a>
+                <a class="header__button header__button--inactive" href="/data">Data Panel</a>
+                <a class="header__button header__button--inactive" href="/monitor">Monitor</a>
+                <a class="header__button header__button--inactive" href="/info">Info</a>
+                <a class="header__button header__settings-button"><img {% if mode == "dark" %} class="header__settings-icon--white" {% else %} class="header__settings-icon" {% endif %} alt="Settings" src="/static/img/settings.svg"></a>
             </div>
         </div>
         <noscript>
             <style type="text/css">
-                .c-main {display:none;}
+                .main {display:none;}
             </style>
-            <div class="c-no-js">
+            <div class="main--no-js">
                 <p>
                     You don't have javascript enabled.  Please enable javascript and reload the page.
                 </p>
             </div>
         </noscript>
-        <div class="c-main">
+        <div class="main">
             <div id="side-menu" class="side-menu">
-                <h3 class="side-title">
+                <h3 class="side-menu__title">
                     Clock [UTC]
                 </h3>
-                <p id="clock"></p>
+                <div class="side-menu__section">
+                    <p id="clock"></p>
+                </div>
             </div>
-            <div class="c-row workspace-container" style="align-items: stretch;">
-                <div class="c-col" style="align-items: stretch; align-self: stretch; flex-grow: 1;">
-                    <div id="configuration" class="c-col">
-                        <div class="c-row title-underline" style="flex-grow: 1; align-content: stretch;">
-                            <div class="c-col" style="align-self: flex-start;">
-                                <p class="title-header">
-                                    Settings
-                                </p>
-                            </div>
+            <div class="container-primary--row">
+                <div class="container-flex--col" style="align-items: stretch; align-self: stretch; flex-grow: 1;">
+                    <div id="configuration" class="container-flex--col">
+                        <div class="data__header" style="flex-grow: 1; align-content: stretch;">
+                            <p class="data__header__title">
+                                Settings
+                            </p>
                         </div>
-                        <div class="settings-box c-col">
+                        <div class="settings-box container-flex--col">
                             <form method="POST" action="/settings">
                                 {{ form.csrf_token }}
                                 <p class="subtitle-header">
                                     Observatory
                                 </p>
-                                <div class="c-row settings-row" style="align-items: self-start;">
-                                    <div class="input-section c-col">
+                                <div class="container-flex--row settings-row" style="align-items: self-start;">
+                                    <div class="input-section container-flex--col">
                                         {{ form.latitude.label(class_="config-label", style_="padding-bottom: 5px;") }}
                                         {{ form.latitude(class_="text-input set-width-200", value_=conf.observatory_latitude) }}
                                     </div>
-                                    <div class="input-section c-col">
+                                    <div class="input-section container-flex--col">
                                         {{ form.longitude.label(class_="config-label", style_="padding-bottom: 5px;") }}
                                         {{ form.longitude(class_="text-input set-width-200", value_=conf.observatory_longitude) }}
                                     </div>
-                                    <div class="input-section c-col">
+                                    <div class="input-section container-flex--col">
                                         {{ form.min_altitude.label(class_="config-label", style_="padding-bottom: 5px;") }}
                                         {{ form.min_altitude(class_="text-input set-width-200", value_=conf.minimum_altitude) }}
                                     </div>
@@ -73,23 +73,25 @@
                                 <p class="subtitle-header" style="margin-top: 20px;">
                                     Telescope
                                 </p>
-                                <div class="c-row settings-row">
-                                    <div class="input-section c-col">
+                                <div class="container-flex--row settings-row">
+                                    <div class="input-section container-flex--col">
                                         {{ form.ts_primary_mirror_diameter.label(class_="config-label", style_="padding-bottom: 5px;") }}
                                         {{ form.ts_primary_mirror_diameter(class_="text-input set-width-200", value_=conf.primary_mirror_diameter) }}
                                     </div>
-                                    <div class="input-section c-col">
+                                    <div class="input-section container-flex--col">
                                         {{ form.ts_focal_ratio.label(class_="config-label", style_="padding-bottom: 5px;") }}
                                         {{ form.ts_focal_ratio(class_="text-input set-width-200", value_=conf.focal_ratio) }}
                                     </div>
                                 </div>
                                 <hr class="sep-line">
                                 <div style="width: 100%; margin: 10px 0;">
+
                                     {% for field, errors in form.errors.items() %}
                                     <div class="alert alert-error" style="text-align: left;">
                                         {{ '\n'.join(errors) }}
                                     </div>
                                     {% endfor %}
+
                                 </div>
                                 {{ form.submit(class_="form-submit-button set-width-200") }}
                             </form>

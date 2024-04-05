@@ -1,5 +1,5 @@
-<meta name="updated" content={{ updated }}>
-<table id="m-update-section-header" style="padding: 0; width: 100%;" translate="no">
+<meta name="update-flag" content={{ updated }}>
+<table id="m-data-header" translate="no">
     <tr class="m-section-header">
         <th class="table-head m-section-title">
             Updates
@@ -9,24 +9,27 @@
         </td>
     </tr>
 </table>
-<div id="m-data" style="padding: 0; margin-top: 0; width: 100%;" translate="no">
+<div id="m-data" translate="no">
     {% set counter = namespace(p=0) %}
     {% set counter.p = 0 %}
+
     {% for index, update in updates.iterrows() %}
         {% if update["old"] == "false" %}
             {% set counter.p = counter.p + 1 %}
         {% endif %}
     {% endfor %}
+
     {% set old_false_len = counter.p %}
     {% if old_false_len == 0 %}
-        <p class="dim-info-text">
+        <p class="m-info-text">
             Nothing to see yet.
         </p>
     {% endif %}
+
     {% for index, update in updates.iterrows() %}
     {% if update["old"] == "false" %}
-        <div class="current-update m-widget c-col" id="{{ update['id'] }}">
-            <div class="m-widget-header c-col {{ update['action'] }}" onclick="toggleWidgetDropdown(`{{ update['id'] }}_dd`)">
+        <div class="m-widget m-widget-current container-flex--col" id="{{ update['id'] }}">
+            <div class="m-widget-header container-flex--col {{ update['action'] }}" onclick="toggleWidgetDropdown(`{{ update['id'] }}_dd`)">
                 <table>
                     <tr>
                         <td>
@@ -50,21 +53,21 @@
                     {% endif %}
                 </table>
             </div>
-            <div id="{{ update['id'] }}_dd" class="m-widget-dropdown">
-                <table class="dd-content">
+            <div id="{{ update['id'] }}_dd" class="m-widget-dd">
+                <table class="m-dd-content">
                     <tr>
                         <td>
                             {% if update["action"] != "object-removal" %}
-                                <span class="dropdown-button" onclick="window.open('https://cgi.minorplanetcenter.net/cgi-bin/showobsorbs.cgi?Obj={{ update["objectName"] }}&obs=y','_blank')">View Observations</span>
+                                <span class="m-dd-button" onclick="window.open('https://cgi.minorplanetcenter.net/cgi-bin/showobsorbs.cgi?Obj={{ update["objectName"] }}&obs=y','_blank')">View Observations</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if update["action"] != "object-removal" %}
-                                <span class="dropdown-button" onclick="window.open('/neo?tdes={{ update["objectName"] }}','_blank')">View Data Panel</span>
+                                <span class="m-dd-button" onclick="window.open('/neo?tdes={{ update["objectName"] }}','_blank')">View Data Panel</span>
                             {% endif %}
                         </td>
-                        <td class="right-cell dropdown-clear">
-                            <span class="dropdown-button" onclick="clearUpdates(`{{ update['id'] }}`)">Clear</span>
+                        <td class="right-cell m-dd-clear">
+                            <span class="m-dd-button" onclick="clearUpdates(`{{ update['id'] }}`)">Clear</span>
                         </td>
                     </tr>
                 </table>
@@ -73,7 +76,7 @@
     {% endif %}
     {% endfor %}
 </div>
-<table id="m-update-section-header" style="padding: 0; width: 100%; margin-top: 30px;" translate="no">
+<table id="m-clear-data-header" translate="no">
     <tr class="m-section-header">
         <th class="table-head m-section-title">
             Cleared Updates
@@ -83,24 +86,27 @@
         </td>
     </tr>
 </table>
-<div id="m-clear-data" class="invisible" style="padding: 0; margin-top: 0; width: 100%;" translate="no">
+<div id="m-clear-data" class="invisible" translate="no">
     {% set counter = namespace(p=0) %}
     {% set counter.p = 0 %}
+
     {% for index, update in updates.iterrows() %}
         {% if update["old"] == "true" %}
             {% set counter.p = counter.p + 1 %}
         {% endif %}
     {% endfor %}
+
     {% set old_true_len = counter.p %}
     {% if old_true_len == 0 %}
-        <p class="dim-info-text">
+        <p class="m-info-text">
             Nothing to see yet.
         </p>
     {% endif %}
+
     {% for index, update in updates.iterrows() %}
     {% if update["old"] == "true" %}
-        <div class="m-widget c-col" id="{{ update['id'] }}">
-            <div class="m-widget-header c-row {{ update['action'] }}" onclick="toggleWidgetDropdown(`{{ update['id'] }}_dd`)">
+        <div class="m-widget container-flex--col" id="{{ update['id'] }}">
+            <div class="m-widget-header container-flex--row {{ update['action'] }}" onclick="toggleWidgetDropdown(`{{ update['id'] }}_dd`)">
                 <table>
                     <tr>
                         <td>
@@ -124,21 +130,21 @@
                     {% endif %}
                 </table>
             </div>
-            <div id="{{ update['id'] }}_dd" class="m-widget-dropdown">
-                <table class="dd-content">
+            <div id="{{ update['id'] }}_dd" class="m-widget-dd">
+                <table class="m-dd-content">
                     <tr>
                         <td>
                             {% if update["action"] != "object-removal" %}
-                                <span class="dropdown-button" onclick="window.open('https://cgi.minorplanetcenter.net/cgi-bin/showobsorbs.cgi?Obj={{ update["objectName"] }}&obs=y','_blank')">View Observations</span>
+                                <span class="m-dd-button" onclick="window.open('https://cgi.minorplanetcenter.net/cgi-bin/showobsorbs.cgi?Obj={{ update["objectName"] }}&obs=y','_blank')">View Observations</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if update["action"] != "object-removal" %}
-                                <span class="dropdown-button" onclick="window.open('/neo?tdes={{ update["objectName"] }}','_blank')">View Data Panel</span>
+                                <span class="m-dd-button" onclick="window.open('/neo?tdes={{ update["objectName"] }}','_blank')">View Data Panel</span>
                             {% endif %}
                         </td>
-                        <td class="right-cell dropdown-clear">
-                            <span class="dropdown-button" onclick="restoreUpdates(`{{ update['id'] }}`)">Restore</span>
+                        <td class="right-cell m-dd-clear">
+                            <span class="m-dd-button" onclick="restoreUpdates(`{{ update['id'] }}`)">Restore</span>
                         </td>
                     </tr>
                 </table>

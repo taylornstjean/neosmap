@@ -13,117 +13,115 @@
     </head>
     <body>
         <div class="header">
-            <a href="/data" class="logo"><img alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
-            <div class="header-right">
-                <a class="logout" href="/auth/logout">Logout</a>
-                <a class="active">Data Panel</a>
-                <a href="/monitor">Monitor</a>
-                <a href="/info">Info</a>
-                <a class="settings-icon" onclick="window.location.href='/settings';"><img {% if mode == "dark" %}class="filter-white"{% endif %} alt="Settings" src="/static/img/settings.svg"></a>
+            <a href="/data" class="header__logo-box"><img class="header__logo" alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
+            <div class="header__menu">
+                <a class="header__button header__logout-button" href="/auth/logout">Logout</a>
+                <a class="header__button header__button--active">Data Panel</a>
+                <a class="header__button header__button--inactive" href="/monitor">Monitor</a>
+                <a class="header__button header__button--inactive" href="/info">Info</a>
+                <a class="header__button header__settings-button" onclick="window.location.href='/settings';"><img {% if mode == "dark" %} class="header__settings-icon--white" {% else %} class="header__settings-icon" {% endif %} alt="Settings" src="/static/img/settings.svg"></a>
             </div>
         </div>
         <noscript>
             <style type="text/css">
-                .c-main {display:none;}
+                .main {display:none;}
             </style>
-            <div class="c-no-js">
+            <div class="main--no-js">
                 <p>
                     You don't have javascript enabled.  Please enable javascript and reload the page.
                 </p>
             </div>
         </noscript>
-        <div class="c-main">
+        <div class="main">
             <div id="side-menu" class="side-menu">
-                <h3 class="nav-title">
+                <h3 class="side-menu__title">
                     Clock [UTC]
                 </h3>
-                <p id="clock"></p>
-                <h3 class="side-title">
+                <div class="side-menu__section">
+                    <p id="clock"></p>
+                </div>
+                <h3 class="side-menu__title">
                     Data Options
                 </h3>
-                <div class="c-col data-manage-box">
-                    <div>
-                        <h4 class="side-subtitle">
-                            Display
-                        </h4>
-                    </div>
-                    <div class="c-col" style="padding: 0 0 10px;">
-                        <div class="c-row">
-                            <p class="sort-label">
+                <div class="side-menu__section">
+                    <h4 class="side-menu__sub-title">
+                        Display
+                    </h4>
+                    <div class="side-menu__sub-section">
+                        <div class="container-flex--row">
+                            <p class="side-menu__drop-down-label">
                                 Sort by:
                             </p>
-                            <select name="sort-selector" id="sort-selector">
+                            <select class="side-menu__drop-down" id="sort-selector">
                                 <option value="Index" selected>Index</option>
+
                                 {% for k in filt_cols %}
                                     <option value={{k}}>{{k}}</option>
                                 {% endfor %}
+
                             </select>
                         </div>
-                        <div style="align-self: flex-start; margin-bottom: 10px;">
-                            <input class="check-box" type="checkbox" id="visible-selector" name="visible" value="visible">
-                            <label class="check-box-label" for="visible-selector">Show Visible Only</label><br>
+                        <div class="side-menu__option-box">
+                            <input class="side-menu__check-box" type="checkbox" id="visible-selector" name="visible" value="visible">
+                            <label class="side-menu__check-box-label" for="visible-selector">Show Visible Only</label><br>
                         </div>
                     </div>
                 </div>
-                <div class="c-col data-manage-box">
-                    <div>
-                        <h4 class="side-subtitle">
-                            Filters
-                        </h4>
+                <div class="side-menu__section">
+                    <h4 class="side-menu__sub-title">
+                        Filters
+                    </h4>
+                    <div class="side-menu__filter-box">
+                        <select class="side-menu__drop-down" id="filter-selector">
+                            <option value="none" selected>-</option>
+
+                            {% for k in filt_cols %}
+                                <option value={{k}}>{{k}}</option>
+                            {% endfor %}
+
+                        </select>
+                        <button id="add-filter" onclick="addFilter()">Add</button>
                     </div>
-                    <div class="c-col filter-parent" id="filter-box">
-                        <div class="c-row" style="padding: 10px 0;">
-                            <select name="sort-selector" id="filter-selector">
-                                <option value="none" selected>-</option>
-                                {% for k in filt_cols %}
-                                    <option value={{k}}>{{k}}</option>
-                                {% endfor %}
-                            </select>
-                            <button id="add-filter" onclick="addFilter()">Add</button>
-                        </div>
-                    </div>
+                    <div id="filter-box"></div>
                 </div>
-                <div class="c-col data-manage-box">
-                    <div>
-                        <h4 class="side-subtitle">
-                            Show Column(s)
-                        </h4>
-                    </div>
-                    <div class="c-col" style="padding: 20px 0;">
+                <div class="side-menu__section">
+                    <h4 class="side-menu__sub-title">
+                        Show Column(s)
+                    </h4>
+                    <div class="side-menu__column-selector-box">
+
                         {% for i in columns %}
-                        <div style="margin-top: 3px;" translate="no">
-                            <input class="check-box" type="checkbox" id={{i}} name={{i}} value={{i}} checked>
-                            <label class="check-box-label" for={{i}}>{{i}}</label><br>
+                        <div class="side-menu__column-selector" translate="no">
+                            <input class="side-menu__check-box" type="checkbox" id={{i}} name={{i}} value={{i}} checked>
+                            <label class="side-menu__check-box-label" for={{i}}>{{i}}</label>
+                            <br>
                         </div>
                         {% endfor %}
+
                     </div>
                 </div>
             </div>
-            <div class="c-row workspace-container" style="align-items: stretch;">
-                <div class="c-col" style="align-items: stretch; align-self: stretch; flex-grow: 1;">
-                    <div id="data">
-                        <div class="c-row title-underline">
-                            <div class="c-col" style="align-self: flex-start;">
-                                <p class="title-header">
-                                    Data Panel
-                                </p>
-                            </div>
-                            <div class="tooltip" style="width: 2em; height: 2em; align-self: flex-end; padding: 0.2em; margin-left: 1em;">
-                                <img src="/static/img/warning.png" alt="Warning" style="width: 100%; height: 100%;">
-                                <span class="tooltiptext">May be up to 5 minutes out of date. See monitor page for live data.</span>
-                            </div>
-                            <div class="c-row" style="justify-content: flex-end; align-self: center; flex-grow: 1;">
-                                <button type="button" class="main-data-button animate drop-in" onclick="loadDoc()" id="table-generator">Regenerate Table</button>
-                                <button type="button" class="main-data-button animate drop-in time-400" onclick="exportFile(id)" id="csv">Export to CSV</button>
-                                <button type="button" class="main-data-button animate drop-in time-500" onclick="exportFile(id)" id="json">Export to JSON</button>
-                            </div>
+            <div id="main-data" class="container-primary--row">
+                <div class="data">
+                    <div class="data__header">
+                        <p class="data__header__title">
+                            Data Panel
+                        </p>
+                        <div class="data__header__tool-tip">
+                            <img class="data__header__tool-tip-icon" src="/static/img/warning.png" alt="Warning">
+                            <span class="data__header__tool-tip-text">May be up to 5 minutes out of date. See monitor page for live data.</span>
                         </div>
-                        <div class="c-col" id="table-loader-box">
-                            <div class="loader" id="table-loader">
-                            </div>
+                        <div class="data__header__button-box">
+                            <button type="button" class="data__header__button animate drop-in" onclick="loadDoc()" id="table-generator">Refresh</button>
+                            <button type="button" class="data__header__button animate drop-in time-400" onclick="exportFile(id)" id="csv">Export to CSV</button>
+                            <button type="button" class="data__header__button animate drop-in time-500" onclick="exportFile(id)" id="json">Export to JSON</button>
                         </div>
-                        <div class="c-row" id="data-display">
+                    </div>
+                    <div class="loader-box">
+                        <div class="loader" id="table-loader">
                         </div>
+                    </div>
+                    <div class="data__display" id="data-display">
                     </div>
                 </div>
             </div>

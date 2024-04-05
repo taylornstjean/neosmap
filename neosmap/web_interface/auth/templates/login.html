@@ -4,46 +4,47 @@
         <title>Login</title>
         <link rel="stylesheet" href={{ "/static/css/color-"~mode~".css" }}>
         <link rel="stylesheet" href="/static/css/main.css">
+        <link rel="stylesheet" href="/static/css/auth.css">
         <link rel="shortcut icon" href="/favicon.ico">
     </head>
     <body>
-        <img id="background" src="https://images-assets.nasa.gov/image/hubble-observes-one-of-a-kind-star-nicknamed-nasty_17754652960_o/hubble-observes-one-of-a-kind-star-nicknamed-nasty_17754652960_o~orig.jpg" alt="" onload="document.getElementById('background').style.opacity='1'">
+        <img id="background" src="https://images-assets.nasa.gov/image/PIA23961/PIA23961~orig.jpg" alt="" onload="document.getElementById('background').style.opacity='1'">
         <div class="header">
-            <a href="/data" class="logo"><img alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
+            <a href="/data" class="header__logo-box"><img class="header__logo" alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
         </div>
-        <div class="c-main-no-left">
-            <div class="login-box c-col">
-                <h3 class="title">
+        <div class="main--no-side-menu">
+            <div class="container--auth">
+                <h3 class="container--auth__title">
                     Login
                 </h3>
-                <form method="POST" action="/auth/login">
-                    <div class="c-col">
-                        {{ form.csrf_token }}
-                        <div class="input-section c-col">
-                            {{ form.email.label(class_="login-label") }}
-                            {{ form.email(class_="text-input") }}
+                <form class="form--auth" method="POST" action="/auth/login">
+                    {{ form.csrf_token }}
+                    <div class="form--auth__input-box">
+                        {{ form.email.label(class_="form--auth__input-label") }}
+                        {{ form.email(class_="form--auth__input-text") }}
+                    </div>
+                    <div class="form--auth__input-box">
+                        {{ form.password.label(class_="form--auth__input-label") }}
+                        {{ form.password(class_="form--auth__input-text") }}
+                    </div>
+                    <div class="form--auth__input-box--row">
+                        {{ form.remember(class_="form--auth__check-box") }}
+                        {{ form.remember.label(class_="form--auth__check-box-label") }}
+                    </div>
+                    <div class="form--auth__error-box">
+
+                        {% for field, errors in form.errors.items() %}
+                        <div class="form--auth__alert">
+                            {{ ', '.join(errors) }}
                         </div>
-                        <div class="input-section c-col">
-                            {{ form.password.label(class_="login-label") }}
-                            {{ form.password(class_="text-input") }}
-                        </div>
-                        <div class="input-section c-row">
-                            {{ form.remember(class_="login-check-box") }}
-                            {{ form.remember.label(class_="login-label check-box-label") }}
-                        </div>
-                        <div class="error-box">
-                            {% for field, errors in form.errors.items() %}
-                            <div class="alert alert-error">
-                                {{ ', '.join(errors) }}
-                            </div>
-                            {% endfor %}
-                        </div>
-                        {{ form.submit(class_="form-submit-button") }}
-                        <div class="login-link-box">
-                            <p>
-                                New? <a class="register-link" href="/auth/register">Register here.</a>
-                            </p>
-                        </div>
+                        {% endfor %}
+
+                    </div>
+                    {{ form.submit(class_="form--auth__btn--submit") }}
+                    <div class="form--auth__link-box">
+                        <p>
+                            New? <a class="form--auth__link" href="/auth/register">Register here.</a>
+                        </p>
                     </div>
                 </form>
             </div>

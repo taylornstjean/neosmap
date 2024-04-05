@@ -27,7 +27,7 @@ function fetchUpdate() {
             }
         }
 
-        const dropdownIds = $(".m-widget-dropdown").map(function() {
+        const dropdownIds = $(".m-widget-dd").map(function() {
             return this.id;
         }).get();
 
@@ -56,7 +56,7 @@ function fetchUpdate() {
                     toggleWidgetDropdown(idExpanded[i]);
                 }
 
-                const updated = document.querySelector('meta[name="updated"]').content;
+                const updated = document.querySelector('meta[name="update-flag"]').content;
                 if (updated === "True") {
                     audioWarning();
                 }
@@ -90,7 +90,7 @@ function toggleClearedUpdates() {
 }
 
 function clearAllUpdates() {
-    const ids = $(".current-update").map(function() {
+    const ids = $(".m-widget-current").map(function() {
         return this.id;
     }).get();
 
@@ -138,7 +138,7 @@ function restoreUpdates(_id) {
 }
 
 function toggleWidgetDropdown(_id) {
-    $(`#${_id}`).toggleClass("active-dropdown");
+    $(`#${_id}`).toggleClass("m-dd-active");
 }
 
 function audioWarning() {

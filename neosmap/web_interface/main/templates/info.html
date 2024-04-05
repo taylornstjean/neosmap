@@ -3,82 +3,81 @@
     <head>
         <title>Info</title>
         <link rel="stylesheet" href={{ "/static/css/color-"~mode~".css" }}>
-        <link rel="stylesheet" href="static/css/main.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+        <link rel="stylesheet" href="/static/css/info.css">
         <script src="/static/js/info.js"></script>
         <script src="/static/js/serverDate.js"></script>
         <link rel="shortcut icon" href="/favicon.ico">
     </head>
     <body>
         <div class="header">
-            <a href="/data" class="logo"><img alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
-            <div class="header-right">
-                <a class="logout" href="/auth/logout">Logout</a>
-                <a href="/data">Data Panel</a>
-                <a href="/monitor">Monitor</a>
-                <a class="active">Info</a>
-                <a class="settings-icon" onclick="window.location.href='/settings';"><img {% if mode == "dark" %}class="filter-white"{% endif %} alt="Settings" src="/static/img/settings.svg"></a>
+            <a href="/data" class="header__logo-box"><img class="header__logo" alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
+            <div class="header__menu">
+                <a class="header__button header__logout-button" href="/auth/logout">Logout</a>
+                <a class="header__button header__button--inactive" href="/data">Data Panel</a>
+                <a class="header__button header__button--inactive" href="/monitor">Monitor</a>
+                <a class="header__button header__button--active">Info</a>
+                <a class="header__button header__settings-button" onclick="window.location.href='/settings';"><img {% if mode == "dark" %} class="header__settings-icon--white" {% else %} class="header__settings-icon" {% endif %} alt="Settings" src="/static/img/settings.svg"></a>
             </div>
         </div>
-        <div class="c-main">
+        <div class="main">
             <div id="side-menu" class="side-menu">
-                <h3 class="nav-title">
+                <h3 class="side-menu__title">
                     Navigation
                 </h3>
-                <div class="c-col">
-                    <button class="tablinks active" onclick="openContent(event,about)" id="default-open">About</button>
-                    <button class="tablinks" onclick="openContent(event,acknowledgements)">Acknowledgements</button>
-                    <button class="tablinks" onclick="openContent(event,attributions)">Attributions</button>
+                <div class="container-flex--col">
+                    <button class="side-menu__tab-link header__button--active" onclick="openContent(event,about)" id="default-open">About</button>
+                    <button class="side-menu__tab-link" onclick="openContent(event,acknowledgements)">Acknowledgements</button>
+                    <button class="side-menu__tab-link" onclick="openContent(event,attributions)">Attributions</button>
                 </div>
-                <h3 class="side-title">
+                <h3 class="side-menu__title">
                     Clock [UTC]
                 </h3>
-                <p id="clock"></p>
-            </div>
-            <div id="about" class="c-col tabcontent workspace-container">
-                <div class="c-row title-underline">
-                    <div class="c-col" style="align-self: flex-start;">
-                        <p class="title-header">
-                            About
-                        </p>
-                    </div>
+                <div class="side-menu__section">
+                    <p id="clock"></p>
                 </div>
-                <div class="c-col info-section">
-                    <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
+            </div>
+            <div id="about" class="tab-content container-primary--col">
+                <div class="info__header">
+                    <p class="info__header__title">
+                        About
+                    </p>
+                </div>
+                <div class="info__section">
+                    <p class="info__sub-section">
                         The Near-Earth Object Statistical Management Program (NEOSMAP) was built for the University of Washington NEO observation follow-up team to aid in object tracking and selection.
                     </p>
-                    <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
+                    <p class="info__sub-section">
                         If you find any bugs, or have any suggestions or criticism you would like to share, please feel free to raise an issue on the project <a href="https://github.com/taylornstjean/neosmap" target="_blank">GitHub</a> repository.
                     </p>
                 </div>
             </div>
 
-            <div id="acknowledgements" class="c-col tabcontent workspace-container">
-                <div class="c-row title-underline">
-                    <div class="c-col" style="align-self: flex-start;">
-                        <p class="title-header">
-                            Acknowledgements
-                        </p>
-                    </div>
+            <div id="acknowledgements" class="tab-content container-primary--col">
+                <div class="info__header">
+                    <p class="info__header__title">
+                        Acknowledgements
+                    </p>
                 </div>
-                <div class="c-col info-section">
-                    <h3 style="margin: 0 10px; padding: 10px 10px 10px 0; flex-grow: 1;">
-                        <a href="https://www.jpl.nasa.gov/" style="text-decoration: none;" target="_blank">
+                <div class="container-flex--col info__section">
+                    <h3 class="info__sub-title">
+                        <a href="https://www.jpl.nasa.gov/" class="info__sub-title_link" target="_blank">
                             Jet Propulsion Laboratory (JPL)
                         </a>
                     </h3>
-                    <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
+                    <p class="info__sub-section">
                         This software uses data retrieved from the CNEOS Scout API. The API is hosted by Jet Propulsion Laboratory (JPL), a research and development lab federally funded by NASA and managed by Caltech. This project is not affiliated with nor was it endorsed by NASA, JPL, or Caltech.
                         <br><br>
                         The API documentation can be accessed <a href="https://ssd-api.jpl.nasa.gov/doc/scout.html" target="_blank">here</a>.
                     </p>
                 </div>
-                <div class="c-col info-section">
-                    <h3 style="margin: 0 10px; padding: 10px 10px 10px 0; flex-grow: 1;">
-                        <a href="https://www.minorplanetcenter.net/" style="text-decoration: none;" target="_blank">
+                <div class="info__section">
+                    <h3 class="info__sub-title">
+                        <a href="https://www.minorplanetcenter.net/" class="info__sub-title_link" target="_blank">
                             Minor Planet Center (MPC)
                         </a>
                     </h3>
-                    <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
+                    <p class="info__sub-section">
                         This software uses data and/or services provided by the International Astronomical Union's (IAU) Minor Planet Center (MPC). This project is not affiliated with nor was it endorsed by the IAU.
                         <br><br>
                         The MPC NEO confirmation page can be found <a href="https://minorplanetcenter.net/iau/NEO/toconfirm_tabular.html" target="_blank">here</a>.
@@ -86,20 +85,18 @@
                 </div>
             </div>
 
-            <div id="attributions" class="c-col tabcontent workspace-container">
-                <div class="c-row title-underline">
-                    <div class="c-col" style="align-self: flex-start;">
-                        <p class="title-header">
-                            Attributions
-                        </p>
-                    </div>
+            <div id="attributions" class="tab-content container-primary--col">
+                <div class="info__header">
+                    <p class="info__header__title">
+                        Attributions
+                    </p>
                 </div>
-                <div class="c-col info-section">
-                    <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
+                <div class="info__section">
+                    <p class="info__sub-section">
                         The favicon for this website was obtained from <a href="https://www.flaticon.com/free-icons/comet" target="_blank">flaticon.com</a>.
                     </p>
-                    <p style="margin: 0 10px; padding: 10px 10px 10px 0;">
-                        The background image is of the Wolf-Rayet star "Nasty 1" and was obtained from <a href="https://images.nasa.gov/details/hubble-observes-one-of-a-kind-star-nicknamed-nasty_17754652960_o" target="_blank">nasa.gov</a>.
+                    <p class="info__sub-section">
+                        The background image was obtained from <a href="https://images.nasa.gov/details/hubble-observes-one-of-a-kind-star-nicknamed-nasty_17754652960_o" target="_blank">nasa.gov</a>.
                     </p>
                 </div>
             </div>
