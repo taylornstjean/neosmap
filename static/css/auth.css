@@ -1,0 +1,123 @@
+
+/* MAIN CONTAINERS */
+
+.container--auth {
+    border: 1px solid var(--main-border-color);
+    margin-top: 12vh;
+    align-self: center;
+    min-width: 20%;
+    background-color: var(--login-box-bg-color);
+    padding: 30px;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+}
+
+.container--auth__title {
+    margin-top: 5px;
+    text-align: center;
+    font-size: 2em;
+}
+
+/* FORM */
+
+.form--auth__check-box {
+    width: 20px;
+    height: 20px;
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+.form--auth__check-box:hover {
+    cursor: pointer;
+}
+
+.form--auth__input-label {
+    color: var(--font-color);
+    font-size: 1em;
+    padding-bottom: 5px;
+}
+
+.form--auth__link {
+    color: var(--font-color);
+    text-decoration: none;
+}
+
+.form--auth__link:hover {
+    color: var(--font-color);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.form--auth {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+
+.form--auth__input-box {
+    margin: 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+
+.form--auth__input-box--row {
+    margin: 0 0 20px;
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+}
+
+.form--auth__error-box {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.form--auth__link-box {
+    width: 100%;
+}
+
+.form--auth__link-box p {
+    margin: 10px 0 10px;
+    text-align: center;
+}
+
+.form--auth__input-text {
+    height: 1.9em;
+    padding-left: 7px;
+}
+
+.form--auth__check-box-label {
+    margin: auto 15px auto 0;
+}
+
+.form--auth__check-box-label:hover {
+    cursor: pointer;
+}
+
+.form--auth__alert {
+    color: red !important;
+    text-align: center;
+}
+
+.form--auth__btn--submit {
+    background: var(--button-bg-color);
+    border: 1px solid var(--button-border-color);
+    color: var(--font-color);
+    height: 2em;
+    width: 100%;
+    margin-right: 0;
+    margin-top: 20px;
+    float: left;
+}
+
+.form--auth__btn--submit:hover {
+    background: var(--button-bg-color-hover);
+    cursor: pointer;
+}
+
+.form--auth__btn--submit:active {
+    background: var(--button-bg-color-active);
+    cursor: pointer;
+}
