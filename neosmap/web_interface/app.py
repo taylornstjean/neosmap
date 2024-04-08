@@ -91,7 +91,7 @@ def error_page(error):
     except AttributeError:
         name = error.__class__.__name__
 
-    logger.critical(f"Code {code}; {name}")
+    logger.warning(f"Code {code}; {name}")
 
     return render_template("errors/error.html", mode=_color_mode(), error=str(code), message=name), code
 

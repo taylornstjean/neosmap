@@ -69,7 +69,7 @@ function fetchUpdate() {
         xhrMonitorUpdate.open("GET", `/monitor/fetch?content=updates`, true);
 
         xhrMonitorUpdate.send();
-        setTimeout(function(){xhrMonitorTable.send();}, 500)
+        xhrMonitorTable.send();
     }
 
 function initMonitor() {

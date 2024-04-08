@@ -36,7 +36,7 @@ body {
     object-fit: cover;
     opacity: 0;
     z-index: -1;
-    transform: scale(1.1);
+    transform: scale(1);
 }
 
 /* ######################################### */
@@ -120,11 +120,11 @@ body {
 }
 
 .header__logout-button:hover {
-    background-color: var(--header-button-bg-color-hover);
+    background-color: var(--header-button-bg-color-hover) !important;
 }
 
 .header__button--active {
-    background-color: var(--light-accent-color);
+    background-color: var(--light-accent-color--opaque) !important;
 }
 
 .header__button--inactive:hover {
@@ -663,11 +663,6 @@ title * {
     cursor: pointer;
 }
 
-.side-menu button.header__button--active {
-    background-color: var(--light-accent-color);
-    color: black;
-}
-
 .tab-content {
     display: none;
 }
@@ -1062,7 +1057,7 @@ table.full-table {
 
 tr.selectable-row:hover {
     transform: scale(1.005, 1);
-    background-color: var(--light-accent-color);
+    background-color: var(--light-accent-color--opaque);
 }
 
 tr.selectable-row:hover > * {
