@@ -128,9 +128,10 @@ class User(db.Model, UserMixin):
             pass
 
     @classmethod
-    def activate_ping(cls):
-        User.query.update({User.monitor_ping: True})
-        db.session.commit()
+    def activate_ping(cls, app):
+        with app.app_context():
+            User.query.update({User.monitor_ping: True})
+            db.session.commit()
 
     def deactivate_ping(self):
         self.monitor_ping = False

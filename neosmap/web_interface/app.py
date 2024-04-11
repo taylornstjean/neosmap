@@ -104,13 +104,12 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 
 def _run_monitor() -> None:
-    neomonitor = NEOMonitorDaemon(User)
+    neomonitor = NEOMonitorDaemon(app, User)
     neomonitor.check_update()
 
 
-with app.app_context():
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(_run_monitor, "interval", seconds=60)
-    scheduler.start()
+scheduler = BackgroundScheduler()
+scheduler.add_job(_run_monitor, "interval", seconds=60)
+scheduler.start()
 
 # ------------------------------ END OF FILE ------------------------------

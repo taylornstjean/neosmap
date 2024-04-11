@@ -7,6 +7,7 @@ from wtforms.validators import InputRequired, NumberRange
 # FLASK FORMS
 
 class ConfigForm(FlaskForm):
+    """User settings change form."""
     longitude = FloatField(
         "Longitude",
         validators=[

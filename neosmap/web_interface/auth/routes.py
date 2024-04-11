@@ -14,6 +14,7 @@ mod_auth = Blueprint("auth", __name__, url_prefix="/auth/", template_folder="./t
 # DEFINE ROUTES
 
 def _color_mode():
+    """Retrieve the color setting for the user. Defaults to `"dark"` if the user is not logged in."""
     if not current_user.is_authenticated:
         return "dark"
     return current_user.color_mode

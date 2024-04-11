@@ -32,8 +32,7 @@ mod_main = Blueprint("main", __name__, url_prefix="/", template_folder="./templa
 # DEFINE ROUTES
 
 def _color_mode():
-    """Retrieve the current GUI mode."""
-
+    """Retrieve the color setting for the user. Defaults to `"dark"` if the user is not logged in."""
     if not current_user.is_authenticated:
         return "dark"
     return current_user.color_mode
