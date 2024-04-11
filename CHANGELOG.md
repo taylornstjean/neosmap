@@ -17,6 +17,7 @@ All notable changes to the program will be documented here.
 
 #### Fixed
 - Fixed the formatting of some files to be more consistent.
+- Fixed an issue where simultaneous calls to fetch monitor data would create duplicate update records. Only backend can run an update now.
 
 ### [0.2.3] QOL Fixes and Changes
 
