@@ -26,9 +26,9 @@
                     Navigation
                 </h3>
                 <div class="container-flex--col">
-                    <button class="side-menu__tab-link header__button--active" onclick="openContent(event,about)" id="default-open">About</button>
-                    <button class="side-menu__tab-link" onclick="openContent(event,acknowledgements)">Acknowledgements</button>
-                    <button class="side-menu__tab-link" onclick="openContent(event,attributions)">Attributions</button>
+                    <button class="button side-menu__tab-link header__button--active" onclick="openContent(event,about)" id="default-open">About</button>
+                    <button class="button side-menu__tab-link" onclick="openContent(event,acknowledgements)">Acknowledgements</button>
+                    <button class="button side-menu__tab-link" onclick="openContent(event,attributions)">Attributions</button>
                 </div>
                 <h3 class="side-menu__title">
                     Clock [UTC]
@@ -37,23 +37,21 @@
                     <p id="clock"></p>
                 </div>
             </div>
-            <div id="about" class="tab-content container-primary--col">
+            <div id="about" class="container-primary--col tab-content">
                 <div class="info__header">
                     <p class="info__header__title">
                         About
                     </p>
                 </div>
-                <div class="info__section">
-                    <p class="info__sub-section">
-                        The Near-Earth Object Statistical Management Program (NEOSMAP) was built for the University of Washington NEO observation follow-up team to aid in object tracking and selection.
-                    </p>
-                    <p class="info__sub-section">
-                        If you find any bugs, or have any suggestions or criticism you would like to share, please feel free to raise an issue on the project <a href="https://github.com/taylornstjean/neosmap" target="_blank">GitHub</a> repository.
-                    </p>
-                </div>
+                <p class="info__sub-section">
+                    The Near-Earth Object Statistical Management Program (NEOSMAP) was built for the University of Washington NEO observation follow-up team to aid in object tracking and selection.
+                </p>
+                <p class="info__sub-section">
+                    If you find any bugs, or have any suggestions or criticism you would like to share, please feel free to raise an issue on the project <a href="https://github.com/taylornstjean/neosmap" target="_blank">GitHub</a> repository.
+                </p>
             </div>
 
-            <div id="acknowledgements" class="tab-content container-primary--col">
+            <div id="acknowledgements" class="container-primary--col tab-content">
                 <div class="info__header">
                     <p class="info__header__title">
                         Acknowledgements
@@ -85,20 +83,18 @@
                 </div>
             </div>
 
-            <div id="attributions" class="tab-content container-primary--col">
+            <div id="attributions" class="container-primary--col tab-content">
                 <div class="info__header">
                     <p class="info__header__title">
                         Attributions
                     </p>
                 </div>
-                <div class="info__section">
-                    <p class="info__sub-section">
-                        The favicon for this website was obtained from <a href="https://www.flaticon.com/free-icons/comet" target="_blank">flaticon.com</a>.
-                    </p>
-                    <p class="info__sub-section">
-                        The background image was obtained from <a href="https://images.nasa.gov/details/hubble-observes-one-of-a-kind-star-nicknamed-nasty_17754652960_o" target="_blank">nasa.gov</a>.
-                    </p>
-                </div>
+                <p class="info__sub-section">
+                    The favicon for this website was obtained from <a href="https://www.flaticon.com/free-icons/comet" target="_blank">flaticon.com</a>.
+                </p>
+                <p class="info__sub-section">
+                    The background image was obtained from <a href="https://images.nasa.gov/details/hubble-observes-one-of-a-kind-star-nicknamed-nasty_17754652960_o" target="_blank">nasa.gov</a>.
+                </p>
             </div>
         </div>
     </body>

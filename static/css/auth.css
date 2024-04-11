@@ -55,7 +55,7 @@
     align-self: stretch;
 }
 
-.form--auth__input-box {
+.form--auth__input-box--col {
     margin: 0 0 20px;
     display: flex;
     flex-direction: column;
@@ -69,7 +69,7 @@
     align-self: stretch;
 }
 
-.form--auth__error-box {
+.form--settings__error-box {
     width: 100%;
     margin: 10px 0;
 }
@@ -93,31 +93,5 @@
 }
 
 .form--auth__check-box-label:hover {
-    cursor: pointer;
-}
-
-.form--auth__alert {
-    color: red !important;
-    text-align: center;
-}
-
-.form--auth__btn--submit {
-    background: var(--button-bg-color);
-    border: 1px solid var(--button-border-color);
-    color: var(--font-color);
-    height: 2em;
-    width: 100%;
-    margin-right: 0;
-    margin-top: 20px;
-    float: left;
-}
-
-.form--auth__btn--submit:hover {
-    background: var(--button-bg-color-hover);
-    cursor: pointer;
-}
-
-.form--auth__btn--submit:active {
-    background: var(--button-bg-color-active);
     cursor: pointer;
 }

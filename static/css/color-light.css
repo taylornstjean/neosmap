@@ -6,6 +6,7 @@
     --footer-bg-color: #C1C1C1;
     --secondary-bg-color: #bbb;
     --light-accent-color: lightskyblue;
+    --light-accent-color--opaque: rgba(135, 206, 250, 0.5);
     --accent-color: dodgerblue;
     --obj-desig-color: darkblue;
     --secondary-accent-color: #ff9248;

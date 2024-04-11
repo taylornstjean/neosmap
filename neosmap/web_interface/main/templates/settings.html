@@ -6,6 +6,7 @@
         <script src="/static/js/config.js"></script>
         <link rel="stylesheet" href={{ "/static/css/color-"~mode~".css" }}>
         <link rel="stylesheet" href="/static/css/main.css">
+        <link rel="stylesheet" href="/static/css/settings.css">
         <link rel="shortcut icon" href="/favicon.ico">
         <meta charset="UTF-8">
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
@@ -41,61 +42,58 @@
                     <p id="clock"></p>
                 </div>
             </div>
-            <div class="container-primary--row">
-                <div class="container-flex--col" style="align-items: stretch; align-self: stretch; flex-grow: 1;">
-                    <div id="configuration" class="container-flex--col">
-                        <div class="data__header">
-                            <p class="data__header__title">
-                                Settings
+            <div id="configuration" class="container-primary--col">
+                <div class="data">
+                    <div class="data__header">
+                        <p class="data__header__title">
+                            Settings
+                        </p>
+                    </div>
+                    <div class="settings container-flex--col">
+                        <form method="POST" action="/settings">
+                            {{ form.csrf_token }}
+                            <p class="settings__sub-title">
+                                Observatory
                             </p>
-                        </div>
-                        <div class="settings-box container-flex--col">
-                            <form method="POST" action="/settings">
-                                {{ form.csrf_token }}
-                                <p class="subtitle-header">
-                                    Observatory
-                                </p>
-                                <div class="container-flex--row settings-row" style="align-items: self-start;">
-                                    <div class="input-section container-flex--col">
-                                        {{ form.latitude.label(class_="config-label", style_="padding-bottom: 5px;") }}
-                                        {{ form.latitude(class_="text-input set-width-200", value_=conf.observatory_latitude) }}
-                                    </div>
-                                    <div class="input-section container-flex--col">
-                                        {{ form.longitude.label(class_="config-label", style_="padding-bottom: 5px;") }}
-                                        {{ form.longitude(class_="text-input set-width-200", value_=conf.observatory_longitude) }}
-                                    </div>
-                                    <div class="input-section container-flex--col">
-                                        {{ form.min_altitude.label(class_="config-label", style_="padding-bottom: 5px;") }}
-                                        {{ form.min_altitude(class_="text-input set-width-200", value_=conf.minimum_altitude) }}
-                                    </div>
+                            <div class="settings__section" style="align-items: self-start;">
+                                <div class="settings__input">
+                                    {{ form.latitude.label(class_="config-label", style_="padding-bottom: 5px;") }}
+                                    {{ form.latitude(class_="text-input set-width-200", value_=conf.observatory_latitude) }}
                                 </div>
-                                <hr class="sep-line">
-                                <p class="subtitle-header" style="margin-top: 20px;">
-                                    Telescope
-                                </p>
-                                <div class="container-flex--row settings-row">
-                                    <div class="input-section container-flex--col">
-                                        {{ form.ts_primary_mirror_diameter.label(class_="config-label", style_="padding-bottom: 5px;") }}
-                                        {{ form.ts_primary_mirror_diameter(class_="text-input set-width-200", value_=conf.primary_mirror_diameter) }}
-                                    </div>
-                                    <div class="input-section container-flex--col">
-                                        {{ form.ts_focal_ratio.label(class_="config-label", style_="padding-bottom: 5px;") }}
-                                        {{ form.ts_focal_ratio(class_="text-input set-width-200", value_=conf.focal_ratio) }}
-                                    </div>
+                                <div class="settings__input">
+                                    {{ form.longitude.label(class_="config-label", style_="padding-bottom: 5px;") }}
+                                    {{ form.longitude(class_="text-input set-width-200", value_=conf.observatory_longitude) }}
                                 </div>
-                                <hr class="sep-line">
-                                <div style="width: 100%; margin: 10px 0;">
+                                <div class="settings__input">
+                                    {{ form.min_altitude.label(class_="config-label", style_="padding-bottom: 5px;") }}
+                                    {{ form.min_altitude(class_="text-input set-width-200", value_=conf.minimum_altitude) }}
+                                </div>
+                            </div>
+                            <p class="settings__sub-title">
+                                Telescope
+                            </p>
+                            <div class="settings__section">
+                                <div class="settings__input">
+                                    {{ form.ts_primary_mirror_diameter.label(class_="config-label", style_="padding-bottom: 5px;") }}
+                                    {{ form.ts_primary_mirror_diameter(class_="text-input set-width-200", value_=conf.primary_mirror_diameter) }}
+                                </div>
+                                <div class="settings__input">
+                                    {{ form.ts_focal_ratio.label(class_="config-label", style_="padding-bottom: 5px;") }}
+                                    {{ form.ts_focal_ratio(class_="text-input set-width-200", value_=conf.focal_ratio) }}
+                                </div>
+                            </div>
+                            <div class="form--settings__error-box">
 
-                                    {% for field, errors in form.errors.items() %}
-                                    <div class="alert alert-error" style="text-align: left;">
-                                        {{ '\n'.join(errors) }}
-                                    </div>
-                                    {% endfor %}
-
+                                {% for field, errors in form.errors.items() %}
+                                <div class="form__alert form__alert--left-align">
+                                    {{ '\n'.join(errors) }}
                                 </div>
-                                {{ form.submit(class_="form-submit-button set-width-200") }}
-                            </form>
-                        </div>
+                                {% endfor %}
+
+                            </div>
+                            {{ form.submit(class_="button button--blue-hover form__button--submit form__button--submit--width-200") }}
+                        </form>
+
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
-<table class="full-table" id="m-data-table" style="padding: 0; width: 100%;" translate="no">
-    <tr class="sticky-header">
+<table class="data-table data-table--main" translate="no">
+    <tr class="data-table__header">
     {% for i in data.keys() %}
-        <th class="table-head">
+        <th class="data-table__header-cell">
             {% if i == "ra" %}
                 {{ i~" [ha]" }}
             {% elif i == "dec" %}
@@ -13,9 +13,9 @@
     {% endfor %}
     </tr>
     {% for k in data["objectName"].keys() %}
-        <tr onclick="window.open(`/neo?tdes={{ data["objectName"][k] }}`, '_blank').focus()" class="selectable-row table-body">
+        <tr onclick="window.open(`/neo?tdes={{ data["objectName"][k] }}`, '_blank').focus()" class="data-table__row--selectable">
         {% for j in data.keys() %}
-            <td class="table-cell">
+            <td class="data-table__table-cell">
                 {{ data[j][k] }}
             </td>
         {% endfor %}

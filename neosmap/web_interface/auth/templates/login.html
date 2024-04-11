@@ -19,11 +19,11 @@
                 </h3>
                 <form class="form--auth" method="POST" action="/auth/login">
                     {{ form.csrf_token }}
-                    <div class="form--auth__input-box">
+                    <div class="form--auth__input-box--col">
                         {{ form.email.label(class_="form--auth__input-label") }}
                         {{ form.email(class_="form--auth__input-text") }}
                     </div>
-                    <div class="form--auth__input-box">
+                    <div class="form--auth__input-box--col">
                         {{ form.password.label(class_="form--auth__input-label") }}
                         {{ form.password(class_="form--auth__input-text") }}
                     </div>
@@ -34,13 +34,13 @@
                     <div class="form--auth__error-box">
 
                         {% for field, errors in form.errors.items() %}
-                        <div class="form--auth__alert">
+                        <div class="form__alert">
                             {{ ', '.join(errors) }}
                         </div>
                         {% endfor %}
 
                     </div>
-                    {{ form.submit(class_="form--auth__btn--submit") }}
+                    {{ form.submit(class_="button button--blue-hover form__button--submit") }}
                     <div class="form--auth__link-box">
                         <p>
                             New? <a class="form--auth__link" href="/auth/register">Register here.</a>

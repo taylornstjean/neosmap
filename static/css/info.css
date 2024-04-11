@@ -1,3 +1,9 @@
+.info {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+
 .info__header {
     border-bottom: 2px solid var(--font-color);
     margin-bottom: var(--title-bottom-margin);
@@ -32,16 +38,20 @@
 }
 
 .info__sub-section {
-    margin: 0 10px;
+    margin: 0;
     padding: 10px 10px 10px 0;
 }
 
 .info__sub-title {
-    margin: 0 10px;
+    margin: 0;
     padding: 10px 10px 10px 0;
     flex-grow: 1;
 }
 
 .info__sub-title_link {
     text-decoration: none;
+}
+
+.info__sub-title_link:hover {
+    text-decoration: underline;
 }

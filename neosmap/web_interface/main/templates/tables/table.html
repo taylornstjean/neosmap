@@ -1,22 +1,22 @@
-<table class="full-table animate table-fade" id="main-data-table" style="padding: 0; width: 100%;" translate="no">
-    <tr class="sticky-header">
+<table class="data-table data-table--main animate table-fade" translate="no">
+    <tr class="data-table__header">
     {% for i in data.keys() %}
-        <th class="table-head">
+        <th class="data-table__header-cell">
             {{i}}
         </th>
     {% endfor %}
     </tr>
     {% for k in data["objectName"].keys() %}
-        <tr onclick='document.location.href=`/neo?tdes={{ data["objectName"][k] }}`' class="selectable-row table-body">
+        <tr onclick='document.location.href=`/neo?tdes={{ data["objectName"][k] }}`' class="data-table__row--selectable">
         {% for j in data.keys() %}
             {% if j == "moid" %}
                 {% if data[j][k] | float <= 0.01 %}
-                    {% set warn_class = " warning-moid" %}
+                    {% set warn_class = " data-table__table-cell--warning-moid" %}
                 {% endif %}
             {% else %}
                     {% set warn_class = "" %}
             {% endif %}
-            <td class='{{ "table-cell"~warn_class }}' id={{ data["objectName"][k]~"-"~j }}>
+            <td class='{{ "data-table__table-cell"~warn_class }}' id={{ data["objectName"][k]~"-"~j }}>
                 {{ data[j][k] }}
             </td>
         {% endfor %}

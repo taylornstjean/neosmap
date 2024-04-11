@@ -1,0 +1,51 @@
+.form--settings {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+
+.form--settings__error-box {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.form__alert--left-align {
+    text-align: left;
+}
+
+.settings {
+    border: 1px solid var(--main-border-color);
+    align-self: stretch;
+    background-color: var(--item-color);
+    padding: 30px;
+    margin-top: 10px;
+    border-radius: 3px;
+}
+
+.settings__section > :not(:first-child) {
+    margin-left: 20px;
+}
+
+.settings__section {
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+    margin-bottom: 30px;
+}
+
+.settings__sub-title {
+    flex-grow: 1;
+    text-align: left;
+    color: var(--font-color);
+    font-size: 1.5em;
+    padding: 0;
+    margin: 0 0 20px;
+    font-weight: bold;
+}
+
+.settings__input {
+    margin: 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}

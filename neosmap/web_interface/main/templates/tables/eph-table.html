@@ -1,62 +1,62 @@
-<table class="full-table" id="eph-main-data-table" style="margin: 0 20px 20px 0; padding: 0; width: 100%;">
+<table class="data-table data-table--ephemerides" id="eph-main-data-table">
     <tr>
-        <th class="table-head" rowspan="2">
+        <th class="data-table__header-cell data-table__header-cell--ephemerides" rowspan="2">
             Time (UTC)
         </th>
-        <th class="table-head" colspan="3">
+        <th class="data-table__header-cell data-table__header-cell--ephemerides" colspan="3">
             Declination (deg)
         </th>
-        <th class="table-head" colspan="3">
+        <th class="data-table__header-cell data-table__header-cell--ephemerides" colspan="3">
             Right Ascension (deg)
         </th>
-        <th class="table-head" rowspan="2">
+        <th class="data-table__header-cell data-table__header-cell--ephemerides" rowspan="2">
             Sigma Position (arcmin)
         </th>
     </tr>
     <tr>
-        <th class="table-head">
+        <th class="data-table__header-cell data-table__header-cell--ephemerides">
             Min
         </th>
-        <th class="table-head">
+        <th class="data-table__header-cell data-table__header-cell--ephemerides">
             Median
         </th>
-        <th class="table-head">
+        <th class="data-table__header-cell data-table__header-cell--ephemerides">
             Max
         </th>
-        <th class="table-head">
+        <th class="data-table__header-cell data-table__header-cell--ephemerides">
             Min
         </th>
-        <th class="table-head">
+        <th class="data-table__header-cell data-table__header-cell--ephemerides">
             Median
         </th>
-        <th class="table-head">
+        <th class="data-table__header-cell data-table__header-cell--ephemerides">
             Max
         </th>
     </tr>
     {% for i in data %}
         <tr>
-            <td class="table-cell">
+            <td class="data-table__table-cell">
                 {{ i["time"] }}
             </td>
-            <td class="table-cell">
+            <td class="data-table__table-cell">
                 {{ '%0.2f' % i["limits"]["dec"]["min"]|float }}
             </td>
-            <td class="table-cell">
+            <td class="data-table__table-cell">
                 {{ '%0.2f' % i["median"]["dec"]|float }}
             </td>
-            <td class="table-cell">
+            <td class="data-table__table-cell">
                 {{ '%0.2f' % i["limits"]["dec"]["max"]|float }}
             </td>
-            <td class="table-cell">
+            <td class="data-table__table-cell">
                 {{ '%0.2f' % i["limits"]["ra"]["min"]|float }}
             </td>
-            <td class="table-cell">
+            <td class="data-table__table-cell">
                 {{ '%0.2f' % i["median"]["ra"]|float }}
             </td>
-            <td class="table-cell">
+            <td class="data-table__table-cell">
                 {{ '%0.2f' % i["limits"]["ra"]["max"]|float }}
             </td>
-            <td class="table-cell">
+            <td class="data-table__table-cell">
                 {{ i["sigma-pos"] }}
             </td>
         </tr>

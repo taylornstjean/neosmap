@@ -52,7 +52,7 @@
                             <p class="side-menu__drop-down-label">
                                 Sort by:
                             </p>
-                            <select class="side-menu__drop-down" id="sort-selector">
+                            <select class="side-menu__drop-down side-menu__drop-down--left-margin" id="sort-selector">
                                 <option value="Index" selected>Index</option>
 
                                 {% for k in filt_cols %}
@@ -80,7 +80,7 @@
                             {% endfor %}
 
                         </select>
-                        <button id="add-filter" onclick="addFilter()">Add</button>
+                        <button class="button button--blue-hover button--add-filter" onclick="addFilter()">Add</button>
                     </div>
                     <div id="filter-box"></div>
                 </div>
@@ -112,9 +112,9 @@
                             <span class="data__header__tool-tip-text">May be up to 5 minutes out of date. See monitor page for live data.</span>
                         </div>
                         <div class="data__header__button-box">
-                            <button type="button" class="data__header__button animate drop-in" onclick="loadDoc()" id="table-generator">Refresh</button>
-                            <button type="button" class="data__header__button animate drop-in time-400" onclick="exportFile(id)" id="csv">Export to CSV</button>
-                            <button type="button" class="data__header__button animate drop-in time-500" onclick="exportFile(id)" id="json">Export to JSON</button>
+                            <button type="button" class="button button--blue-hover data__header__button animate drop-in" onclick="loadDoc()" id="table-generator">Refresh</button>
+                            <button type="button" class="button button--blue-hover data__header__button animate drop-in time-400" onclick="exportFile(id)" id="csv">Export to CSV</button>
+                            <button type="button" class="button button--blue-hover data__header__button animate drop-in time-500" onclick="exportFile(id)" id="json">Export to JSON</button>
                         </div>
                     </div>
                     <div class="loader-box">

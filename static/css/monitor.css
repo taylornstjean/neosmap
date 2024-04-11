@@ -172,7 +172,7 @@ table#m-clear-data-header, table#m-data-header {
     border-collapse: collapse;
 }
 
-table#m-clear-data-header tr th.table-head, table#m-data-header tr th.table-head {
+table#m-clear-data-header tr th.data-table__header-cell, table#m-data-header tr th.data-table__header-cell {
     border: 2px solid var(--table-border-color);
     width: 100%;
 }
