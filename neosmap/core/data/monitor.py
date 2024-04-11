@@ -82,8 +82,9 @@ class NEOMonitor(NEOMonitorBase):
 
     @property
     def data(self):
-        self.check_update()
-        logger.debug("NEO Monitor data update complete")
+        if not hasattr(self, "_updates"):
+            self.check_update()
+
         _data = {
             "df": self._load_last_df(),
             "updates": pd.DataFrame(self._updates)
