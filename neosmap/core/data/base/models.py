@@ -8,6 +8,10 @@ from dataclasses import dataclass, asdict
 import pandas as pd
 import os
 import json
+from threading import Lock
+
+
+thread_lock = Lock()
 
 
 ###########################################################################
@@ -65,28 +69,29 @@ class NEOMonitorBase:
         return parsed
 
     def check_update(self) -> None:
-        logger.debug("Checking for updates to NEO Monitor data")
+        with thread_lock:
+            logger.debug("Checking for updates to NEO Monitor data")
 
-        try:
-            _cache = APICache.get_instance(name="monitor")
-            update_required = not _cache.valid or not _cache.verify
-            first_pull = not _cache.verify
-            logger.debug("Found cached NEO Monitor data")
+            try:
+                _cache = APICache.get_instance(name="monitor")
+                update_required = not _cache.valid or not _cache.verify
+                first_pull = not _cache.verify
+                logger.debug("Found cached NEO Monitor data")
 
-        except ValueError:
-            update_required = True
-            first_pull = True
+            except ValueError:
+                update_required = True
+                first_pull = True
 
-        if update_required:
-            self._update(first_pull=first_pull)
-        else:
-            self._update_occurred = False
-            self.load_record()
+            if update_required:
+                self._update(first_pull=first_pull)
+            else:
+                self._update_occurred = False
+                self.load_record()
 
-        if self._update_occurred:
-            logger.debug("Update occurred, activating ping")
+            if self._update_occurred:
+                logger.debug("Update occurred, activating ping")
 
-            self._user_model.activate_ping(self._app)
+                self._user_model.activate_ping(self._app)
 
     def _load_last_df(self):
         cache_ = APICache.get_instance("monitor")
