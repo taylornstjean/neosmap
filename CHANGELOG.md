@@ -11,7 +11,7 @@ All notable changes to the program will be documented here.
 - Added loading indicators to plots on NEO page.
 
 #### Changed
-- Added a background job to periodically pull data from the MPC. Originally used an awful method involving an open route and a server cron job.
+- Implemented a properly run cron job to periodically update monitor data. Eliminates issue with job running on multiple workers simultaneously.
 - Significant improvements to the monitor page (more functionality, such as ability to clear and restore individual updates, and easier to navigate)
 - Began implementation of BEM for frontend.
 

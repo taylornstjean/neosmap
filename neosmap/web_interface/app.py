@@ -95,12 +95,12 @@ def error_page(error):
 
 
 ###########################################################################
-# START BACKGROUND JOBS
+# DEFINE ENTRY POINT FOR BACKGROUND JOBS
 
 from .models import User, NEOMonitorDaemon
-from apscheduler.schedulers.background import BackgroundScheduler
 
 
+# cli command for backend cron job, updates monitor data via a daemon user
 @app.cli.command("run-monitor")
 def run_monitor() -> None:
     neomonitor = NEOMonitorDaemon(app, User)

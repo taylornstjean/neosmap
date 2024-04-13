@@ -1,4 +1,4 @@
-![logo-dark.png](static%2Fimg%2Flogo-dark.png)
+![logo-dark.png](static/img/logo-dark.png)
 
 # Near Earth Object Statistical Management Program (NEOSMAP)
 
@@ -10,7 +10,7 @@ Contributors:
 
 Version: 0.2.3 ([CHANGELOG](./CHANGELOG.md))
 
-Last updated April 10th, 2024.
+Last updated April 12th, 2024.
 
 ---
 
@@ -19,8 +19,6 @@ Last updated April 10th, 2024.
 Designed for use by the NEO undergraduate observation team at the University of Washington.
 
 This program provides convenience to view and analyze data provided via the JPL SSD/CNEOS API Service. Provides means to sort data and visualize properties such as airmass, altitude and orbit uncertainty. This program is designed to be visually simple and easy to use (in contrast to many other data management systems).
-
-Capable of generating automated observation scripts for telescopes running ACP Observatory Control Software. The script generating algorithm is currently under construction, although a very basic version is available for use.
 
 ---
 
