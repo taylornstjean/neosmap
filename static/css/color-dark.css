@@ -12,7 +12,7 @@
     --obj-desig-color: dodgerblue;
     --secondary-accent-color: #ff9248;
     --tertiary-bg-color: #444;
-    --font-color: whitesmoke;
+    --font-color: #ddd;
     --dim-font-color: grey;
     --autofill-color: darkgrey;
     --table-bg-color: #111;
@@ -23,7 +23,7 @@
     --item-color: #111;
     --login-box-bg-color: rgba(17, 17, 17, 0.8);
     --info-item-color: rgba(17, 17, 17, 0.8);
-    --main-border-color: #aaa;
+    --main-border-color: #777;
     --secondary-border-color: black;
     --table-border-color: #333;
     --table-bg-color-header: #333;

@@ -24,8 +24,6 @@ app = Flask(app_name, instance_relative_config=True,
 
 from neosmap.logger import logger
 
-logger.info("App started.")
-
 # http://flask.pocoo.org/docs/api/#configuration
 app.config.from_object(DefaultConfig)
 
@@ -103,13 +101,9 @@ from .models import User, NEOMonitorDaemon
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
-def _run_monitor() -> None:
+@app.cli.command("run-monitor")
+def run_monitor() -> None:
     neomonitor = NEOMonitorDaemon(app, User)
     neomonitor.check_update()
-
-
-scheduler = BackgroundScheduler()
-scheduler.add_job(_run_monitor, "interval", seconds=60)
-scheduler.start()
 
 # ------------------------------ END OF FILE ------------------------------
