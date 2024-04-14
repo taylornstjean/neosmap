@@ -44,8 +44,35 @@
                     </p>
                 </div>
                 <p class="info__sub-section">
-                    The Near-Earth Object Statistical Management Program (NEOSMAP) was built for the University of Washington NEO observation follow-up team to aid in object tracking and selection.
+                    The Near-Earth Object Statistical Management Program (NEOSMAP) was built for the University of Washington NEO observation follow-up team to aid in object tracking and selection. The system has two primary functionalities; NEO data visualization and live MPC database monitoring.
                 </p>
+                <hr class="info__sub-title__hr">
+                <h3 class="info__sub-title info__sub-title--underline info__sub-title--pad-top">
+                    Data Panel
+                </h3>
+                <p class="info__sub-section">
+                    The data panel provides a list of all active objects from the NEO confirmation page. On the left side of the page is a collection of self-explanatory data sorting tools. All data displayed on this page is retrieved from the JPL Scout API (see acknowledgements), meaning information could be up to 5 minutes out of date with respect to MPC data.
+                </p>
+                <p class="info__sub-section">
+                    Further information about an object - including visualizations, approximate movement, and ephemerides - can be obtained by clicking on its row in the table. The NEO detail page may take a few seconds to load as the server needs to gather data from JPL and generate the relevant graphics.
+                </p>
+                <p class="info__sub-section">
+                    The graphics and some of the data provided in the main table (vis and fullScore) are heavily position dependent, thus it is important the observatory location (defined under settings) is correct.
+                </p>
+                <hr class="info__sub-title__hr">
+                <h3 class="info__sub-title info__sub-title--underline info__sub-title--pad-top">
+                    Monitor
+                </h3>
+                <p class="info__sub-section">
+                    The monitor page provides real time updates to changes in MPC NEO confirmation page data. The confirmation page is checked once every 60 seconds, and will provide a notification to all users with the monitor page open via an audio cue and a banner in the left panel (I plan to include an option for a visual cue in the near future, such as a flashing screen, to improve accessibility to those who are hard of hearing). Selecting the notification banner opens a dropdown option menu, allowing easy access to the observations submitted to the MPC and the native NEO overview page.
+                </p>
+                <p class="info__sub-section">
+                    On the right side of the page is a table including a list of information regarding current NEO positions. This data is obtained from the MPC, so it is up-to-date to within 60 seconds. This table behaves in the same way as the main table in the data panel; selecting a row opens the NEO detail page for that object.
+                </p>
+                <p class="info__sub-section">
+                    Each individual update can be "cleared", moving it to a collapsible section so it can be ignored. An update can be restored by clicking on its banner in the Cleared Updates dropdown and selecting "Restore". Updates on the monitor page will be visible for 12 hours after detection, after which time they will be deleted.
+                </p>
+                <h3 class="info__sub-title info__sub-title--underline info__sub-title--pad-top"></h3>
                 <p class="info__sub-section">
                     If you find any bugs, or have any suggestions or criticism you would like to share, please feel free to raise an issue on the project <a href="https://github.com/taylornstjean/neosmap" target="_blank">GitHub</a> repository.
                 </p>
@@ -93,7 +120,7 @@
                     The favicon for this website was obtained from <a href="https://www.flaticon.com/free-icons/comet" target="_blank">flaticon.com</a>.
                 </p>
                 <p class="info__sub-section">
-                    The background image was obtained from <a href="https://images.nasa.gov/details/hubble-observes-one-of-a-kind-star-nicknamed-nasty_17754652960_o" target="_blank">nasa.gov</a>.
+                    The background image was obtained from <a href="https://images.nasa.gov/details/PIA12348" target="_blank">nasa.gov</a>.
                 </p>
             </div>
         </div>

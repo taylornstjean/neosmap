@@ -2,9 +2,9 @@
 
 :root {
     color-scheme: dark;
-    --main-bg-color: #222;
-    --header-bg-color: #333;
-    --footer-bg-color: #333;
+    --main-bg-color: #1d1d1d;
+    --header-bg-color: #2f2f2f;
+    --footer-bg-color: #2f2f2f;
     --secondary-bg-color: #555;
     --light-accent-color: dodgerblue;
     --light-accent-color--opaque: rgba(30, 143, 255, 0.5);
@@ -27,7 +27,7 @@
     --secondary-border-color: black;
     --table-border-color: #333;
     --table-bg-color-header: #333;
-    --side-panel-bg-color: #555;
+    --side-panel-bg-color: #333;
     --header-button-bg-color-hover: #888;
     --section-button-bg-color: #555;
     --sidemenu-button-bg-color-hover: #888;

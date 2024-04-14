@@ -40,12 +40,26 @@
 .info__sub-section {
     margin: 0;
     padding: 10px 10px 10px 0;
+    text-align: justify;
 }
 
 .info__sub-title {
     margin: 0;
     padding: 10px 10px 10px 0;
     flex-grow: 1;
+}
+
+.info__sub-title--underline {
+    border-bottom: solid 1px var(--main-border-color);
+}
+
+.info__sub-title--pad-top {
+    padding-top: 20px;
+}
+
+.info__sub-title__hr {
+    margin-bottom: 10px;
+    color: transparent;
 }
 
 .info__sub-title_link {
