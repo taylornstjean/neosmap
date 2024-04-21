@@ -9,7 +9,7 @@ charset-normalizer==3.2.0
 click==8.1.7
 contourpy==1.0.7
 cycler==0.11.0
-dnspython==2.4.2
+dnspython==2.6.1
 docutils==0.18.1
 email-validator==2.0.0.post2
 Flask==2.3.2
@@ -18,7 +18,7 @@ Flask-SQLAlchemy==3.1.1
 Flask-WTF==1.1.1
 fonttools==4.43.0
 greenlet==3.0.0
-gunicorn==21.2.0
+gunicorn==22.0.0
 idna==3.4
 imagesize==1.4.1
 importlib-resources==5.12.0
@@ -32,7 +32,7 @@ numpy==1.26.2
 packaging==23.1
 pandas==2.0.2
 pdftex==1.0.0
-Pillow==10.2.0
+Pillow==10.3.0
 pyerfa==2.0.0.3
 Pygments==2.15.1
 PyMySQL==1.1.0
