@@ -4,7 +4,8 @@ All notable changes to the program will be documented here.
 
 ### [Unreleased]
 
-Nothing to see yet.
+#### Changed
+- Made dark mode darker (and objectively better).
 
 ### [0.2.4] GUI Updates/Backend Optimisations
 

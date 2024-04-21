@@ -2,33 +2,33 @@
 
 :root {
     color-scheme: dark;
-    --main-bg-color: #1d1d1d;
-    --header-bg-color: #2f2f2f;
-    --footer-bg-color: #2f2f2f;
-    --secondary-bg-color: #555;
+    --main-bg-color: #0a0a0a;
+    --header-bg-color: #121316;
+    --footer-bg-color: #121316;
+    --secondary-bg-color: #0e0e0e;
     --light-accent-color: dodgerblue;
     --light-accent-color--opaque: rgba(30, 143, 255, 0.5);
     --accent-color: dodgerblue;
     --obj-desig-color: dodgerblue;
     --secondary-accent-color: #ff9248;
-    --tertiary-bg-color: #444;
+    --tertiary-bg-color: #202226;
     --font-color: #ddd;
     --dim-font-color: grey;
     --autofill-color: darkgrey;
     --table-bg-color: #111;
-    --button-bg-color: #555;
+    --button-bg-color: #202226;
     --button-bg-color-hover: #888;
     --button-bg-color-active: #999;
     --button-border-color: #333;
     --item-color: #111;
     --login-box-bg-color: rgba(17, 17, 17, 0.8);
     --info-item-color: rgba(17, 17, 17, 0.8);
-    --main-border-color: #777;
+    --main-border-color: #444;
     --secondary-border-color: black;
     --table-border-color: #333;
-    --table-bg-color-header: #333;
-    --side-panel-bg-color: #333;
-    --header-button-bg-color-hover: #555;
-    --section-button-bg-color: #333;
+    --table-bg-color-header: #202226;
+    --side-panel-bg-color: #0e0e0e;
+    --header-button-bg-color-hover: #333;
+    --section-button-bg-color: #202226;
     --sidemenu-button-bg-color-hover: #555;
 }
