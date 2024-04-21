@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name='NEOSMAP',
-    version="0.2.3",
+    version="0.2.4",
     packages=['neosmap'],
     url='https://github.com/taylornstjean/neosmap',
     license='MIT',

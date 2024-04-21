@@ -5,7 +5,7 @@
 }
 
 .info__header {
-    border-bottom: 2px solid var(--font-color);
+    border-bottom: 1px solid var(--main-border-color);
     margin-bottom: var(--title-bottom-margin);
     display: flex;
     flex-direction: row;

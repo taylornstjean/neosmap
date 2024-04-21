@@ -16,7 +16,7 @@
     --dim-font-color: grey;
     --autofill-color: darkgrey;
     --table-bg-color: #111;
-    --button-bg-color: #666;
+    --button-bg-color: #555;
     --button-bg-color-hover: #888;
     --button-bg-color-active: #999;
     --button-border-color: #333;
@@ -28,7 +28,7 @@
     --table-border-color: #333;
     --table-bg-color-header: #333;
     --side-panel-bg-color: #333;
-    --header-button-bg-color-hover: #888;
-    --section-button-bg-color: #555;
-    --sidemenu-button-bg-color-hover: #888;
+    --header-button-bg-color-hover: #555;
+    --section-button-bg-color: #333;
+    --sidemenu-button-bg-color-hover: #555;
 }

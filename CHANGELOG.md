@@ -4,6 +4,10 @@ All notable changes to the program will be documented here.
 
 ### [Unreleased]
 
+Nothing to see yet.
+
+### [0.2.4] GUI Updates/Backend Optimisations
+
 #### Added
 - Began reintroduction of a logging system.
 - Added some comments, more will come.
@@ -14,6 +18,7 @@ All notable changes to the program will be documented here.
 - Implemented a properly run cron job to periodically update monitor data. Eliminates issue with job running on multiple workers simultaneously.
 - Significant improvements to the monitor page (more functionality, such as ability to clear and restore individual updates, and easier to navigate)
 - Began implementation of BEM for frontend.
+- Other GUI updates; moved logout and settings to a dropdown menu. Changed some looks and colors.
 
 #### Fixed
 - Fixed the formatting of some files to be more consistent.

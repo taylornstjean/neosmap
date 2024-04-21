@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Settings</title>
+        <script src="/static/js/main.js"></script>
         <script src="/static/js/serverDate.js"></script>
         <script src="/static/js/config.js"></script>
         <link rel="stylesheet" href={{ "/static/css/color-"~mode~".css" }}>
@@ -16,12 +17,16 @@
         <div class="header">
             <a href="/data" class="header__logo-box"><img class="header__logo" alt="NEOSMAP Web Interface" src={{ "/static/img/logo-"~mode~".png" }}></a>
             <div class="header__menu">
-                <a class="header__button header__logout-button" href="/auth/logout">Logout</a>
                 <a class="header__button header__button--inactive" href="/data">Data Panel</a>
                 <a class="header__button header__button--inactive" href="/monitor">Monitor</a>
                 <a class="header__button header__button--inactive" href="/info">Info</a>
-                <a class="header__button header__settings-button"><img {% if mode == "dark" %} class="header__settings-icon--white" {% else %} class="header__settings-icon" {% endif %} alt="Settings" src="/static/img/settings.svg"></a>
+                <a class="header__button header__menu-button header__menu-dropdown" onclick="toggleHeaderMenuDropdown()"><img {% if mode == "dark" %} class="header__menu-icon--white" {% else %} class="header__menu-icon" {% endif %} alt="Menu" src="/static/img/menu.svg"></a>
             </div>
+        </div>
+        <div id="header-dropdown" class="header__menu-dropdown-content header__menu-dropdown-content--inactive">
+            <a class="header__menu-dropdown-content__button" href="/settings">Settings</a>
+            <hr class="header__menu-dropdown-content__separator">
+            <a class="header__menu-dropdown-content__button header__logout-button" href="/auth/logout">Logout</a>
         </div>
         <noscript>
             <style type="text/css">
