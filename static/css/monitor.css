@@ -168,12 +168,10 @@ table#m-data-table {
 
 table#m-clear-data-header, table#m-data-header {
     margin-bottom: 10px;
-    border: 2px solid var(--table-border-color);
     border-collapse: collapse;
 }
 
 table#m-clear-data-header tr th.data-table__header-cell, table#m-data-header tr th.data-table__header-cell {
-    border: 2px solid var(--table-border-color);
     width: 100%;
 }
 
