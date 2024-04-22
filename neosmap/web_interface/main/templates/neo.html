@@ -5,6 +5,7 @@
         <script src="/static/js/main.js"></script>
         <script src="/static/js/neo.js"></script>
         <script src="/static/js/serverDate.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
         <link rel="stylesheet" href={{ "/static/css/color-"~mode~".css" }}>
         <link rel="stylesheet" href="/static/css/main.css">
         <link rel="stylesheet" href="/static/css/neo.css">
@@ -66,9 +67,7 @@
                     <div id="eph-loader" class="loader-box--center">
                         <div class="loader"></div>
                         <p class="loader-box__text">
-                            Fetching data...
-                        </p>
-                        <p class="loader-box__text">
+                            Fetching data...<br>
                             This may take a few seconds.
                         </p>
                     </div>
@@ -132,13 +131,13 @@
                             </div>
                         </div>
                         <div class="container-flex--col dashboard-item" id="plot-col">
-                            <div id="altaz-box">
+                            <div id="altaz-box" class="plot-box--html">
                                 <div class="loader loader--plot" id="altaz-loader"></div>
                             </div>
-                            <div id="sigmapos-box">
+                            <div id="sigmapos-box" class="plot-box--html">
                                 <div class="loader loader--plot" id="sigmapos-loader"></div>
                             </div>
-                            <div id="airmass-box">
+                            <div id="airmass-box" class="plot-box--html">
                                 <div class="loader loader--plot" id="airmass-loader"></div>
                             </div>
                         </div>

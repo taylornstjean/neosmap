@@ -36,6 +36,7 @@
     color: var(--font-color);
     font-size: 1em;
     padding-bottom: 5px;
+    font-weight: bold;
 }
 
 .form--auth__link {
@@ -85,7 +86,15 @@
 
 .form--auth__input-text {
     height: 1.9em;
-    padding-left: 7px;
+    border: none;
+    margin-top: 5px;
+    margin-left: 0;
+    border-bottom: 2px solid var(--main-border-color);
+    background: transparent !important;
+}
+
+.form--auth__input-text:focus {
+    outline: none;
 }
 
 .form--auth__check-box-label {

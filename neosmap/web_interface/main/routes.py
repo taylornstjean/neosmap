@@ -209,20 +209,17 @@ def get_plot():
     desig = request.args.to_dict().get("tdes")
 
     if plot_type == "altaz":
-        if generate_altaz_plot(current_user.neodata, current_user.observatory, desig):
-            return send_from_directory(TEMP_SUBDIRS["plot"], f"altaz-{desig}.png"), 200
+        return generate_altaz_plot(current_user.neodata, current_user.observatory, desig), 200
 
     elif plot_type == "radec":
         if generate_radec_plot(current_user.neodata, current_user.observatory, desig):
             return send_from_directory(TEMP_SUBDIRS["plot"], f"radec-{desig}.png"), 200
 
     elif plot_type == "airmass":
-        if generate_airmass_plot(current_user.neodata, current_user.observatory, desig):
-            return send_from_directory(TEMP_SUBDIRS["plot"], f"airmass-{desig}.png"), 200
+        return generate_airmass_plot(current_user.neodata, current_user.observatory, desig), 200
 
     elif plot_type == "sigmapos":
-        if generate_sigmapos_plot(current_user.neodata, desig):
-            return send_from_directory(TEMP_SUBDIRS["plot"], f"sigmapos-{desig}.png"), 200
+        return generate_sigmapos_plot(current_user.neodata, desig), 200
 
     else:
         return "Invalid plot type", 400

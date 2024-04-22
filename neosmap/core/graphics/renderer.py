@@ -12,6 +12,7 @@ import cartopy.feature as cfeature
 from cartopy.feature.nightshade import Nightshade
 import warnings
 from flask_login import current_user
+import plotly.graph_objects as go
 
 import matplotlib
 
@@ -47,27 +48,6 @@ def _get_greenwich_sidereal_time():
     return sidereal
 
 
-def _get_fig_ax(ylim, tick_spacing):
-    fig = plt.figure(figsize=(6, 3), facecolor='#333')
-    ax = fig.add_axes(111)
-
-    ax.xaxis.label.set_color(_text_color())
-    ax.yaxis.label.set_color(_text_color())
-    ax.tick_params(axis='x', colors=_text_color())
-    ax.tick_params(axis='y', colors=_text_color())
-
-    fig.patch.set_alpha(0.0)
-    fig.tight_layout(pad=4)
-
-    ax.set_ylim(ylim)
-    if tick_spacing:
-        ax.yaxis.set_major_locator(matplotlib.ticker.MultipleLocator(tick_spacing))
-
-    ax.grid(True)
-
-    return fig, ax
-
-
 def _get_ephemerides(neo_data, tdes):
     ephemeris = neo_data.ephemerides(tdes)
     try:
@@ -78,43 +58,40 @@ def _get_ephemerides(neo_data, tdes):
     return ephemeris_data
 
 
-def _get_timings(ephemeris_data):
-    start_time = dt.strptime(ephemeris_data[0]["time"], "%Y-%m-%d %X")
-    t0 = Time(start_time)
-    time_grid = t0 + np.linspace(0, OBS_TIME, int(((OBS_TIME * 60) / EPH_TIME_INCR) + 1)) * u.hour
-    return t0, time_grid
-
-
-def _generate_chrono_plot(**kwargs):
-    ax = kwargs.get("ax")
-    fig = kwargs.get("fig")
-    tdes = kwargs.get("tdes")
-
-    ax.set_title(f"{tdes} {kwargs.get('title')}", pad=10, color=_text_color())
-
-    ax.plot(kwargs.get("x_time").datetime, kwargs.get("y"), marker='', alpha=0.5, label="Median Orbit", color="blue")
-
-    ax.set_xlabel('Date/Time [UTC mm-dd hh]')
-    ax.set_ylabel(kwargs.get("y_label"))
-
-    ax.legend()
-
-    plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
-
-    fig.savefig(
-        os.path.join(
-            TEMP_SUBDIRS["plot"],
-            f"{kwargs.get('file_prefix')}-{tdes}.png"
-        ),
-        bbox_inches="tight",
-        dpi=PLOT_DPI
+def _get_plotly_layout():
+    layout = go.Layout(
+        font_family="Ubuntu",
+        height=300,
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        showlegend=True,
+        xaxis={
+            "title": "Time [UTC]",
+            "mirror": True,
+            "ticks": "outside",
+            "showline": True,
+            "gridwidth": 0.5,
+            "gridcolor": "#444"
+        },
+        yaxis={
+            "mirror": True,
+            "ticks": "outside",
+            "showline": True,
+            "gridwidth": 0.5,
+            "gridcolor": "#444"
+        },
+        legend={
+            "x": 0.75,
+            "y": 0.95,
+            "bgcolor": "rgba(0, 0, 0, 0.5)"
+        }
     )
 
-    plt.close(fig)
+    return layout
 
 
 ###########################################################################
-# GENERATE PLOTS WITH MATPLOTLIB
+# GENERATE PLOTS WITH MATPLOTLIB AND PLOTLY
 
 def generate_radec_plot(neo_data, observatory, tdes) -> bool:
 
@@ -212,10 +189,12 @@ def generate_radec_plot(neo_data, observatory, tdes) -> bool:
     return True
 
 
-def generate_altaz_plot(neo_data, observatory, tdes) -> bool:
+def generate_altaz_plot(neo_data, observatory, tdes) -> str:
 
     ephemeris_data = _get_ephemerides(neo_data, tdes)
-    t0, time_grid = _get_timings(ephemeris_data)
+
+    start_time = dt.strptime(ephemeris_data[0]["time"], "%Y-%m-%d %X")
+    t0 = Time(start_time)
 
     eph_ra = [float(j["median"]["ra"]) * u.degree for j in ephemeris_data]
     eph_dec = [float(j["median"]["dec"]) * u.degree for j in ephemeris_data]
@@ -227,22 +206,45 @@ def generate_altaz_plot(neo_data, observatory, tdes) -> bool:
         coord = SkyCoord(ra=a, dec=d, frame="icrs", unit=u.deg)
         altaz_median.append(coord.transform_to(altaz).alt.degree.T)
 
-    # plot using matplotlib
+    # plot using plotly
 
-    fig, ax = _get_fig_ax([-90, 90], 30)
+    time_grid = [start_time + timedelta(minutes=EPH_TIME_INCR * i) for i, _ in enumerate(eph_ra)]
 
-    ax.axhline(observatory.min_altitude.value, zorder=-10, linestyle='--', color='tab:red', label="Observatory Min. Alt.")
+    layout = _get_plotly_layout()
 
-    _generate_chrono_plot(fig=fig, ax=ax, tdes=tdes, x_time=time_grid, y=altaz_median, file_prefix="altaz",
-                          title="Altitude Viewed from Observatory", y_label="Altitude [deg]")
+    data = go.Scatter(
+        x=time_grid,
+        y=altaz_median,
+        name="Median Orbit",
+        mode="lines",
+        line={
+            "color": "dodgerblue"
+        }
+    )
 
-    return True
+    fig = go.Figure(
+        data=data,
+        layout=layout
+    )
+
+    fig.update_layout(font=dict(color=_text_color()), title="Altitude Viewed from Observatory")
+    fig.update_yaxes(color=_text_color(), title="Altitude [deg]", range=[-90, 90])
+    fig.update_legends(font_color=_text_color())
+
+    fig.add_hline(y=observatory.min_altitude.value, line_width=1, line_dash="dash", line_color="red")
+    fig.update_layout(margin=dict(l=0, r=0, b=0, t=30))
+
+    plot_html = fig.to_html()
+
+    return plot_html
 
 
-def generate_airmass_plot(neo_data, observatory, tdes) -> bool:
+def generate_airmass_plot(neo_data, observatory, tdes) -> str:
 
     ephemeris_data = _get_ephemerides(neo_data, tdes)
-    t0, time_grid = _get_timings(ephemeris_data)
+
+    start_time = dt.strptime(ephemeris_data[0]["time"], "%Y-%m-%d %X")
+    t0 = Time(start_time)
 
     eph_ra = [float(j["median"]["ra"]) * u.degree for j in ephemeris_data]
     eph_dec = [float(j["median"]["dec"]) * u.degree for j in ephemeris_data]
@@ -258,31 +260,76 @@ def generate_airmass_plot(neo_data, observatory, tdes) -> bool:
         else:
             airmass_median.append(1 / np.cos((90 - altitude) * (np.pi / 180)))
 
-    # plot using matplotlib
+    # plot using plotly
 
-    fig, ax = _get_fig_ax([0, 10], 2)
+    time_grid = [start_time + timedelta(minutes=EPH_TIME_INCR * i) for i, _ in enumerate(eph_ra)]
 
-    _generate_chrono_plot(fig=fig, ax=ax, tdes=tdes, x_time=time_grid, y=airmass_median, file_prefix="airmass",
-                          title="Airmass Viewed from Observatory", y_label="Airmass")
+    layout = _get_plotly_layout()
 
-    return True
+    data = go.Scatter(
+        x=time_grid,
+        y=airmass_median,
+        name="Median Orbit",
+        mode="lines",
+        line={
+            "color": "dodgerblue"
+        }
+    )
+
+    fig = go.Figure(
+        data=data,
+        layout=layout
+    )
+
+    fig.update_layout(font=dict(color=_text_color()), title="Airmass Viewed from Observatory")
+    fig.update_yaxes(color=_text_color(), title="Airmass", range=[0, 10])
+    fig.update_legends(font_color=_text_color())
+
+    fig.update_layout(margin=dict(l=0, r=0, b=0, t=30))
+
+    plot_html = fig.to_html()
+
+    return plot_html
 
 
-def generate_sigmapos_plot(neo_data, tdes) -> bool:
+def generate_sigmapos_plot(neo_data, tdes) -> str:
 
     ephemeris_data = _get_ephemerides(neo_data, tdes)
-    t0, time_grid = _get_timings(ephemeris_data)
+
+    start_time = dt.strptime(ephemeris_data[0]["time"], "%Y-%m-%d %X")
 
     sigmapos_median = [float(i["sigma-pos"]) for i in ephemeris_data]
 
-    # plot using matplotlib
+    # plot using plotly
 
-    fig, ax = _get_fig_ax([0, max(sigmapos_median) * 1.2], None)
+    time_grid = [start_time + timedelta(minutes=EPH_TIME_INCR * i) for i, _ in enumerate(ephemeris_data)]
 
-    _generate_chrono_plot(fig=fig, ax=ax, tdes=tdes, x_time=time_grid, y=sigmapos_median, file_prefix="sigmapos",
-                          title="1-Sigma Position Uncertainty", y_label="Uncertainty [arcmin]")
+    layout = _get_plotly_layout()
 
-    return True
+    data = go.Scatter(
+        x=time_grid,
+        y=sigmapos_median,
+        name="Median Orbit",
+        mode="lines",
+        line={
+            "color": "dodgerblue"
+        }
+    )
+
+    fig = go.Figure(
+        data=data,
+        layout=layout
+    )
+
+    fig.update_layout(font=dict(color=_text_color()), title="1-Sigma Position Uncertainty")
+    fig.update_yaxes(color=_text_color(), title="Uncertainty [arcmin]", range=[0, max(sigmapos_median) * 1.2])
+    fig.update_legends(font_color=_text_color())
+
+    fig.update_layout(margin=dict(l=0, r=0, b=0, t=30))
+
+    plot_html = fig.to_html()
+
+    return plot_html
 
 
 # ------------------------------ END OF FILE ------------------------------

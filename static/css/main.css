@@ -16,12 +16,6 @@ html * {
     color: var(--font-color);
 }
 
-
-input:-webkit-autofill {
-    background-color: transparent !important;
-    -webkit-box-shadow: 0 0 0 50px #222 inset;
-}
-
 /* ######################################### */
 /* BACKGROUND */
 
@@ -798,6 +792,7 @@ title * {
     align-self: center;
     color: whitesmoke;
     margin-bottom: 6px;
+    text-align: center;
 }
 
 .loader {
@@ -915,6 +910,10 @@ label {
 .data-table__table-cell--warning-moid {
     background: rgba(255, 0, 0, .2);
     animation: cell-blinker 1.6s infinite;
+}
+
+.plot-box--html {
+    width: 100%;
 }
 
 /* ######################################### */

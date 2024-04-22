@@ -104,40 +104,55 @@ function loadPlots(desig) {
     document.getElementById("airmass-loader").style.display = "flex";
 
     const altaz_container = document.getElementById("altaz-box");
-
-    const altaz_img = new Image();
     const altaz_url = "/plot?type=altaz&tdes=" + desig;
 
-    altaz_img.onload = function () {
-        document.getElementById("altaz-loader").style.display = "none";
-        altaz_container.appendChild(altaz_img);
-    };
+    const xhrAltaz = new XMLHttpRequest();
 
-    altaz_img.src = altaz_url;
+    xhrAltaz.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            document.getElementById("altaz-loader").style.display = "none";
+            let plot = document.createRange().createContextualFragment(this.responseText);
+            altaz_container.appendChild(plot);
+        }
+    }
+
+    xhrAltaz.open("GET", altaz_url, true);
+    xhrAltaz.responseType = "text";
+    xhrAltaz.send();
 
     const airmass_container = document.getElementById("airmass-box");
-
-    const airmass_img = new Image();
     const airmass_url = "/plot?type=airmass&tdes=" + desig;
 
-    airmass_img.onload = function () {
-        document.getElementById("airmass-loader").style.display = "none";
-        airmass_container.appendChild(airmass_img);
-    };
+    const xhrAirmass = new XMLHttpRequest();
 
-    airmass_img.src = airmass_url;
+    xhrAirmass.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            document.getElementById("airmass-loader").style.display = "none";
+            let plot = document.createRange().createContextualFragment(this.responseText);
+            airmass_container.appendChild(plot);
+        }
+    }
+
+    xhrAirmass.open("GET", airmass_url, true);
+    xhrAirmass.responseType = "text";
+    xhrAirmass.send();
 
     const sp_container = document.getElementById("sigmapos-box");
-
-    const sp_img = new Image();
     const sp_url = "/plot?type=sigmapos&tdes=" + desig;
 
-    sp_img.onload = function () {
-        document.getElementById("sigmapos-loader").style.display = "none";
-        sp_container.appendChild(sp_img);
-    };
+    const xhrSigmapos = new XMLHttpRequest();
 
-    sp_img.src = sp_url;
+    xhrSigmapos.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            document.getElementById("sigmapos-loader").style.display = "none";
+            let plot = document.createRange().createContextualFragment(this.responseText);
+            sp_container.appendChild(plot);
+        }
+    }
+
+    xhrSigmapos.open("GET", sp_url, true);
+    xhrSigmapos.responseType = "text";
+    xhrSigmapos.send();
 }
 
 

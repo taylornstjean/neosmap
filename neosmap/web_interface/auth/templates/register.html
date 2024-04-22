@@ -17,7 +17,7 @@
                 <h3 class="container--auth__title">
                     Register
                 </h3>
-                <form class="form--auth" method="POST" action="/auth/register">
+                <form class="form--auth" method="POST" action="/auth/register" autocomplete="off">
                     {{ form.csrf_token }}
                     <div class="form--auth__input-box--col">
                         {{ form.email.label(class_="form--auth__input-label") }}
