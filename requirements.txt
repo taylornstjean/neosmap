@@ -35,7 +35,7 @@ pdftex==1.0.0
 Pillow==10.3.0
 pyerfa==2.0.0.3
 Pygments==2.15.1
-PyMySQL==1.1.0
+PyMySQL==1.1.1
 pyparsing==3.1.1
 pyproj==3.6.1
 pyrsistent==0.19.3
